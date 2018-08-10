@@ -27,6 +27,7 @@ class Transitioner extends React.Component {
 
     this.state = {
       layout,
+      transitioning: new Animated.Value(0),
       position: new Animated.Value(this.props.navigation.state.index),
       progress: new Animated.Value(1),
       scenes: NavigationScenesReducer(
@@ -89,7 +90,10 @@ class Transitioner extends React.Component {
       scenes: nextScenes,
     };
 
-    const { position, progress } = nextState;
+    const { position, progress, transitioning } = nextState;
+
+    const transitionDirection =
+      nextScenes.length > this.state.scenes.length ? 1 : -1;
 
     progress.setValue(0);
 
@@ -99,6 +103,7 @@ class Transitioner extends React.Component {
     const toValue = nextProps.navigation.state.index;
 
     if (!this._transitionProps.navigation.state.isTransitioning) {
+      transitioning.setValue(transitionDirection);
       this.setState(nextState, async () => {
         const result = nextProps.onTransitionStart(
           this._transitionProps,
@@ -107,6 +112,7 @@ class Transitioner extends React.Component {
         if (result instanceof Promise) {
           await result;
         }
+        transitioning.setValue(0);
         progress.setValue(1);
         position.setValue(toValue);
         this._onTransitionEnd();
@@ -150,6 +156,7 @@ class Transitioner extends React.Component {
     // update scenes and play the transition
     this._isTransitionRunning = true;
     this.setState(nextState, async () => {
+      transitioning.setValue(transitionDirection);
       if (nextProps.onTransitionStart) {
         const result = nextProps.onTransitionStart(
           this._transitionProps,
@@ -212,6 +219,7 @@ class Transitioner extends React.Component {
       ...this.state,
       scenes,
     };
+    nextState.transitioning.setValue(0);
 
     this._transitionProps = buildTransitionProps(this.props, nextState);
 
@@ -244,7 +252,7 @@ class Transitioner extends React.Component {
 function buildTransitionProps(props, state) {
   const { navigation } = props;
 
-  const { layout, position, progress, scenes } = state;
+  const { layout, position, progress, scenes, transitioning } = state;
 
   const scene = scenes.find(isSceneActive);
 
@@ -257,6 +265,7 @@ function buildTransitionProps(props, state) {
     progress,
     scenes,
     scene,
+    transitioning,
     index: scene.index,
   };
 }
