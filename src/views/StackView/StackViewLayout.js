@@ -277,13 +277,19 @@ class StackViewLayout extends React.Component {
         mode,
       } = this.props;
       const { index } = navigation.state;
-      const isVertical = mode === 'modal';
       const { options } = scene.descriptor;
       const gestureDirection = options.gestureDirection;
 
+      const isVertical =
+        mode === 'modal' ||
+        gestureDirection === 'up' ||
+        gestureDirection === 'down';
+
       const gestureDirectionInverted =
         typeof gestureDirection === 'string'
-          ? gestureDirection === 'inverted'
+          ? gestureDirection === 'inverted' ||
+            gestureDirection === 'left' ||
+            gestureDirection === 'up'
           : I18nManager.isRTL;
 
       if (index !== scene.index) {
@@ -334,9 +340,13 @@ class StackViewLayout extends React.Component {
         mode,
       } = this.props;
       const { index } = navigation.state;
-      const isVertical = mode === 'modal';
       const { options } = scene.descriptor;
       const gestureDirection = options.gestureDirection;
+
+      const isVertical =
+        mode === 'modal' ||
+        gestureDirection === 'up' ||
+        gestureDirection === 'down';
 
       const gestureDirectionInverted =
         typeof gestureDirection === 'string'
@@ -366,9 +376,13 @@ class StackViewLayout extends React.Component {
         mode,
       } = this.props;
       const { index } = navigation.state;
-      const isVertical = mode === 'modal';
       const { options } = scene.descriptor;
       const gestureDirection = options.gestureDirection;
+
+      const isVertical =
+        mode === 'modal' ||
+        gestureDirection === 'up' ||
+        gestureDirection === 'down';
 
       const gestureDirectionInverted =
         typeof gestureDirection === 'string'
@@ -578,13 +592,20 @@ class StackViewLayout extends React.Component {
   }
 
   _getTransitionConfig = () => {
-    const isModal = this.props.mode === 'modal';
+    const { scene } = this.props.transitionProps;
+    const { options } = scene.descriptor;
+    const gestureDirection = options.gestureDirection;
+
+    const isVertical =
+      mode === 'modal' ||
+      gestureDirection === 'up' ||
+      gestureDirection === 'down';
 
     return TransitionConfigs.getTransitionConfig(
       this.props.transitionConfig,
       this.props.transitionProps,
       this.props.lastTransitionProps,
-      isModal
+      isVertical
     );
   };
 
