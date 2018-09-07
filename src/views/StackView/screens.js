@@ -38,7 +38,8 @@ if (UIManager['RNSScreen']) {
         <NativeScreen
           {...rest}
           ref={ref => (this._ref = ref)}
-          style={StyleSheet.absoluteFill}>
+          style={StyleSheet.absoluteFill}
+        >
           {/*
             We need to wrap children in additional Animated.View because
             of a bug in native driver preventing from both `active` and `styles`
