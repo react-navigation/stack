@@ -34,7 +34,7 @@ class Card extends React.Component {
 
     const active = position.interpolate({
       inputRange: [index, index + 1 - EPS, index + 1],
-      outputRange: [1, 1, 0],
+      outputRange: [1, 1, isActive ? 1 : 0],
       extrapolate: 'clamp',
     });
 
