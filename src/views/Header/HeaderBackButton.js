@@ -93,7 +93,7 @@ class HeaderBackButton extends React.PureComponent {
 
     return (
       <Text
-        accessible={false}
+        accessible={true}
         onLayout={this._onTextLayout}
         style={[styles.title, !!tintColor && { color: tintColor }, titleStyle]}
         numberOfLines={1}
