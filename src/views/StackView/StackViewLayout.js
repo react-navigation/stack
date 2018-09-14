@@ -605,7 +605,7 @@ class StackViewLayout extends React.Component {
     const hasHeader = options.header !== null;
     const headerMode = this._getHeaderMode();
     let paddingTop = 0;
-    if (hasHeader && headerMode === 'float') {
+    if (hasHeader && headerMode === 'float' && !options.headerTransparent) {
       paddingTop = this.state.floatingHeaderHeight;
     }
 
