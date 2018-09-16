@@ -3,9 +3,6 @@
   "version": "0.5.1",
   "description": "Stack navigator component for React Navigation",
   "main": "dist/index.js",
-  "files": [
-    "dist/"
-  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
