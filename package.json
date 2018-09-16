@@ -3,6 +3,7 @@
   "version": "0.5.1",
   "description": "Stack navigator component for React Navigation",
   "main": "dist/index.js",
+  "react-native": "src/index.js",
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
