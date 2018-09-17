@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/react-navigation/react-navigation-stack#readme",
   "dependencies": {
+    "clamp": "^1.0.1",
     "react-native-screens": "^1.0.0-alpha.10"
   },
   "devDependencies": {
