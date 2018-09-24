@@ -76,7 +76,7 @@ export default createStackNavigator(
     mode: 'modal',
     headerMode: 'none',
     navigationOptions: {
-      gesturesEnables: false,
+      gesturesEnabled: false,
     },
     transitionConfig: () => ({
       transitionSpec: {
