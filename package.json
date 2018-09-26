@@ -3,6 +3,12 @@
   "version": "0.5.1",
   "description": "Stack navigator component for React Navigation",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "src",
+    "LICENSE.md",
+    "README.md"
+   ],
   "react-native": "src/index.js",
   "scripts": {
     "test": "jest",
