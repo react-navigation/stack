@@ -592,6 +592,18 @@ class Header extends React.PureComponent {
     }
 
     // TODO: warn if any unsafe styles are provided
+    const animatedViewStyles = [
+      this.props.layoutInterpolator(this.props),
+      Platform.OS === 'ios' && !options.headerTransparent
+        ? {
+            backgroundColor:
+              safeHeaderStyle.backgroundColor || DEFAULT_BACKGROUND_COLOR,
+          }
+        : Platform.OS === 'android' && mode === 'float' && options.headerTransparent
+            ? { height: safeHeaderStyle.height || appBarHeight }
+            : null
+    ];
+
     const containerStyles = [
       options.headerTransparent
         ? styles.transparentContainer
@@ -604,17 +616,7 @@ class Header extends React.PureComponent {
     const forceInset = headerForceInset || { top: 'always', bottom: 'never' };
 
     return (
-      <Animated.View
-        style={[
-          this.props.layoutInterpolator(this.props),
-          Platform.OS === 'ios' && !options.headerTransparent
-            ? {
-                backgroundColor:
-                  safeHeaderStyle.backgroundColor || DEFAULT_BACKGROUND_COLOR,
-              }
-            : null,
-        ]}
-      >
+      <Animated.View style={animatedViewStyles}>
         <SafeAreaView forceInset={forceInset} style={containerStyles}>
           {background}
           <View style={styles.flexOne}>{appBar}</View>
