@@ -599,9 +599,11 @@ class Header extends React.PureComponent {
             backgroundColor:
               safeHeaderStyle.backgroundColor || DEFAULT_BACKGROUND_COLOR,
           }
-        : Platform.OS === 'android' && mode === 'float' && options.headerTransparent
-            ? { height: safeHeaderStyle.height || appBarHeight }
-            : null
+        : Platform.OS === 'android' &&
+          mode === 'float' &&
+          options.headerTransparent
+          ? { height: safeHeaderStyle.height || appBarHeight }
+          : null,
     ];
 
     const containerStyles = [
