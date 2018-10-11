@@ -523,7 +523,6 @@ class Header extends React.PureComponent {
       });
       const scenesProps = Object.values(scenesByIndex).map(scene => ({
         position: this.props.position,
-        progress: this.props.progress,
         scene,
       }));
       appBar = scenesProps.map(this._renderHeader, this);
@@ -531,7 +530,6 @@ class Header extends React.PureComponent {
     } else {
       const headerProps = {
         position: new Animated.Value(this.props.scene.index),
-        progress: new Animated.Value(0),
         scene: this.props.scene,
       };
 
@@ -654,7 +652,7 @@ if (Platform.OS === 'ios') {
   };
 }
 
-const DEFAULT_BACKGROUND_COLOR = Platform.OS === 'ios' ? '#F7F7F7' : '#FFF';
+const DEFAULT_BACKGROUND_COLOR = '#FFF';
 
 const styles = StyleSheet.create({
   container: {

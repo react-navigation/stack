@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Platform } from 'react-native';
-import { Screen } from './screens';
+import { Animated, StyleSheet, Platform } from 'react-native';
+import { Screen } from 'react-native-screens';
 import createPointerEventsContainer from './createPointerEventsContainer';
 
 const EPS = 1e-5;
@@ -9,7 +9,6 @@ function getAccessibilityProps(isActive) {
   if (Platform.OS === 'ios') {
     return {
       accessibilityElementsHidden: !isActive,
-      accessible: isActive,
     };
   } else if (Platform.OS === 'android') {
     return {
@@ -26,41 +25,83 @@ function getAccessibilityProps(isActive) {
 class Card extends React.Component {
   render() {
     const {
+      animatedStyle,
       children,
       pointerEvents,
       style,
       position,
+      transparent,
       scene: { index, isActive },
     } = this.props;
 
-    const active = position.interpolate({
-      inputRange: [index, index + 1 - EPS, index + 1],
-      outputRange: [1, 1, 0],
-      extrapolate: 'clamp',
-    });
+    const active =
+      transparent || isActive
+        ? 1
+        : position.interpolate({
+            inputRange: [index, index + 1 - EPS, index + 1],
+            outputRange: [1, 1, 0],
+            extrapolate: 'clamp',
+          });
+
+    const {
+      shadowOpacity,
+      overlayOpacity,
+      ...containerAnimatedStyle
+    } = animatedStyle;
 
     return (
       <Screen
         pointerEvents={pointerEvents}
         onComponentRef={this.props.onComponentRef}
-        style={[styles.main, style]}
+        style={[StyleSheet.absoluteFill, containerAnimatedStyle, style]}
         active={active}
-        {...getAccessibilityProps(isActive)}
       >
-        {children}
+        {shadowOpacity ? (
+          <Animated.View
+            style={[styles.shadow, { shadowOpacity }]}
+            pointerEvents="none"
+          />
+        ) : null}
+        <Animated.View
+          {...getAccessibilityProps(isActive)}
+          style={[transparent ? styles.transparent : styles.card]}
+        >
+          {children}
+        </Animated.View>
+        {overlayOpacity ? (
+          <Animated.View
+            pointerEvents="none"
+            style={[styles.overlay, { opacity: overlayOpacity }]}
+          />
+        ) : null}
       </Screen>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  main: {
+  card: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#E9E9EF',
-    shadowColor: 'black',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.2,
+    backgroundColor: '#000',
+  },
+  shadow: {
+    top: 0,
+    left: 0,
+    bottom: 0,
+    width: 3,
+    position: 'absolute',
+    backgroundColor: '#fff',
+    shadowOffset: { width: -1, height: 1 },
     shadowRadius: 5,
+    shadowColor: '#000',
+  },
+  transparent: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'transparent',
   },
 });
 

@@ -27,6 +27,7 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
         Object {
           "flex": 1,
           "flexDirection": "column-reverse",
+          "overflow": "hidden",
         },
         Object {
           "backgroundColor": "#000",
@@ -43,7 +44,6 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
     >
       <View
         accessibilityElementsHidden={false}
-        accessible={true}
         collapsable={undefined}
         pointerEvents="auto"
         style={
@@ -51,8 +51,8 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
             "backgroundColor": "#E9E9EF",
             "bottom": 0,
             "left": 0,
-            "marginTop": 0,
             "opacity": 1,
+            "paddingTop": 64,
             "position": "absolute",
             "right": 0,
             "shadowColor": "black",
@@ -78,6 +78,14 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
     <View
       onLayout={[Function]}
       pointerEvents="box-none"
+      style={
+        Object {
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
     >
       <View
         collapsable={undefined}
@@ -149,7 +157,7 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
               >
                 <Text
                   accessibilityTraits="header"
-                  accessible={true}
+                  accessible={false}
                   allowFontScaling={true}
                   collapsable={undefined}
                   ellipsizeMode="tail"
@@ -222,6 +230,7 @@ exports[`StackNavigator renders successfully 1`] = `
         Object {
           "flex": 1,
           "flexDirection": "column-reverse",
+          "overflow": "hidden",
         },
         Object {
           "backgroundColor": "#000",
@@ -238,7 +247,6 @@ exports[`StackNavigator renders successfully 1`] = `
     >
       <View
         accessibilityElementsHidden={false}
-        accessible={true}
         collapsable={undefined}
         pointerEvents="auto"
         style={
@@ -246,8 +254,8 @@ exports[`StackNavigator renders successfully 1`] = `
             "backgroundColor": "#E9E9EF",
             "bottom": 0,
             "left": 0,
-            "marginTop": 0,
             "opacity": 1,
+            "paddingTop": 64,
             "position": "absolute",
             "right": 0,
             "shadowColor": "black",
@@ -273,6 +281,14 @@ exports[`StackNavigator renders successfully 1`] = `
     <View
       onLayout={[Function]}
       pointerEvents="box-none"
+      style={
+        Object {
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
     >
       <View
         collapsable={undefined}
@@ -344,7 +360,7 @@ exports[`StackNavigator renders successfully 1`] = `
               >
                 <Text
                   accessibilityTraits="header"
-                  accessible={true}
+                  accessible={false}
                   allowFontScaling={true}
                   collapsable={undefined}
                   ellipsizeMode="tail"
