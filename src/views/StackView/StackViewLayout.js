@@ -681,7 +681,14 @@ class StackViewLayout extends React.Component {
   }
 
   _getTransitionConfig = () => {
-    const isModal = this.props.mode === 'modal';
+    const { scene } = this.props.transitionProps;
+    const { options } = scene.descriptor;
+    const gestureDirection = options.gestureDirection;
+
+    const isVertical =
+      this.props.mode === 'modal' ||
+      gestureDirection === 'up' ||
+      gestureDirection === 'down';
 
     return TransitionConfigs.getTransitionConfig(
       this.props.transitionConfig,
@@ -690,7 +697,7 @@ class StackViewLayout extends React.Component {
         position: this._getPosition(),
       },
       this.props.lastTransitionProps,
-      isModal
+      isVertical
     );
   };
 
