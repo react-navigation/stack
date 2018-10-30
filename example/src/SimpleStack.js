@@ -9,24 +9,29 @@ const Buttons = withNavigation(props => (
       title="Go to Details"
       onPress={() => props.navigation.navigate('Details')}
     />
-    <Button title="Go and then go to details quick" onPress={() => {
-      let routeName = props.navigation.state.routeName;
-      props.navigation.pop();
-      setTimeout(() => {
-        props.navigation.navigate('Details');
-      }, 100);
-    }} />
+    <Button
+      title="Go and then go to details quick"
+      onPress={() => {
+        props.navigation.pop();
+        setTimeout(() => {
+          props.navigation.navigate('Details');
+        }, 100);
+      }}
+    />
     <Button
       title="Go to Headerless"
       onPress={() => props.navigation.navigate('Headerless')}
     />
     <Button title="Go back" onPress={() => props.navigation.goBack()} />
-    <Button title="Go back quick" onPress={() => {
-      props.navigation.pop();
-      setTimeout(() => {
+    <Button
+      title="Go back quick"
+      onPress={() => {
         props.navigation.pop();
-      }, 100);
-    }} />
+        setTimeout(() => {
+          props.navigation.pop();
+        }, 100);
+      }}
+    />
     <Button
       title="Go back to all examples"
       onPress={() => props.navigation.navigate('Home')}

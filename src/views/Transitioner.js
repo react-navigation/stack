@@ -336,26 +336,6 @@ function filterStale(scenes) {
   return filtered;
 }
 
-function filterNotInState(scenes, state) {
-  let activeKeys = state.routes.map(r => r.key);
-  let filtered = scenes.filter(scene =>
-    activeKeys.includes(scene.descriptor.key)
-  );
-
-  if (__DEV__ && DEBUG) {
-    console.log({
-      activeKeys,
-      filtered: filtered.map(s => s.descriptor.key),
-      scenes: scenes.map(s => s.descriptor.key),
-    });
-  }
-
-  if (filtered.length === scenes.length) {
-    return scenes;
-  }
-  return filtered;
-}
-
 function isSceneActive(scene) {
   return scene.isActive;
 }
