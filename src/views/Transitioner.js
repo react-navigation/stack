@@ -51,6 +51,7 @@ class Transitioner extends React.Component {
 
     this._prevTransitionProps = null;
     this._transitionProps = buildTransitionProps(props, this.state);
+
     this._isMounted = false;
     this._isTransitionRunning = false;
     this._queuedTransition = null;
@@ -68,8 +69,8 @@ class Transitioner extends React.Component {
 
   // eslint-disable-next-line react/no-deprecated
   componentWillReceiveProps(nextProps) {
-    if (this._isTransitionRunning) {
-      this._queuedTransition = { nextProps, props: this.props };
+    if (this._isTransitionRunning && !this._queuedTransition) {
+      this._queuedTransition = { prevProps: this.props };
       return;
     }
 
@@ -113,15 +114,6 @@ class Transitioner extends React.Component {
   };
 
   _startTransition(nextProps, nextScenes, indexHasChanged) {
-    if (!nextScenes) {
-      console.log({
-        nextScenes,
-        scenes: this.state.scenes.map(s => s.descriptor.navigation.state.routeName),
-        state: nextProps.navigation.state.routes.length,
-        indexHasChanged,
-      })
-      nextScenes = this.state.scenes;
-    }
     const nextState = {
       ...this.state,
       scenes: nextScenes,
@@ -143,6 +135,7 @@ class Transitioner extends React.Component {
     // compute transitionProps
     this._prevTransitionProps = this._transitionProps;
     this._transitionProps = buildTransitionProps(nextProps, nextState);
+
     let { isTransitioning } = this._transitionProps.navigation.state;
 
     // if the state isn't transitioning that is meant to signal that we should
@@ -291,22 +284,19 @@ class Transitioner extends React.Component {
 
       if (this._queuedTransition) {
         const indexHasChanged =
-          this._queuedTransition.nextProps.navigation.state.index !==
-          this._queuedTransition.props.navigation.state.index;
+          this.props.navigation.state.index !==
+          this._queuedTransition.prevProps.navigation.state.index;
         let nextScenes = this._computeScenes(
-          this._queuedTransition.props,
-          this._queuedTransition.nextProps
+          this._queuedTransition.prevProps,
+          this.props
         );
 
         if (nextScenes) {
-          this._startTransition(
-            this._queuedTransition.nextProps,
-            nextScenes,
-            indexHasChanged
-          );
+          this._startTransition(this.props, nextScenes, indexHasChanged);
+        } else {
+          this._isTransitionRunning = false;
         }
         this._queuedTransition = null;
-        this._isTransitionRunning = false;
       } else {
         this._isTransitionRunning = false;
       }
