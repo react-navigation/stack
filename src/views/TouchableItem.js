@@ -48,9 +48,7 @@ export default class TouchableItem extends React.Component {
             this.props.borderless
           )}
         >
-          <View style={[style, { backgroundColor: '#fff' }]}>
-            {React.Children.only(this.props.children)}
-          </View>
+          <View style={style}>{React.Children.only(this.props.children)}</View>
         </TouchableNativeFeedback>
       );
     } else if (Platform.OS === 'ios') {
