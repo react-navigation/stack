@@ -827,6 +827,10 @@ class StackViewLayout extends React.Component {
       paddingTop = this.state.floatingHeaderHeight;
     }
 
+    const transparentCard = this.props.transparentCardByRouteName ?
+      this.props.transparentCardByRouteName(scene.route.routeName) :
+      this.props.transparentCard
+    
     return (
       <Card
         {...this.props.transitionProps}
@@ -834,7 +838,7 @@ class StackViewLayout extends React.Component {
         position={this._getPosition()}
         realPosition={this.props.transitionProps.position}
         animatedStyle={style}
-        transparent={this.props.transparentCard}
+        transparent={transparentCard}
         style={[{ paddingTop }, this.props.cardStyle]}
         scene={scene}
       >
