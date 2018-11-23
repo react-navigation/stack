@@ -64,7 +64,10 @@ class Card extends React.Component {
         ) : null}
         <Animated.View
           {...getAccessibilityProps(isActive)}
-          style={[transparent ? styles.transparent : styles.card]}
+          style={[
+                 transparent ? styles.transparent : styles.card, 
+                 style && style.backgroundColor ? { backgroundColor: style.backgroundColor } : {}
+                 ]}
         >
           {children}
         </Animated.View>
