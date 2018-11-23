@@ -66,7 +66,7 @@ class Card extends React.Component {
           {...getAccessibilityProps(isActive)}
           style={[
                  transparent ? styles.transparent : styles.card, 
-                 style && style.backgroundColor ? { backgroundColor: style.backgroundColor } : {}
+                 style ? { backgroundColor: style.backgroundColor } : {}
                  ]}
         >
           {children}
