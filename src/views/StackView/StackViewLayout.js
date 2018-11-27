@@ -822,9 +822,9 @@ class StackViewLayout extends React.Component {
     const { options } = scene.descriptor;
     const hasHeader = options.header !== null;
     const headerMode = this._getHeaderMode();
-    let paddingTop = 0;
+    let top = 0;
     if (hasHeader && headerMode === 'float' && !options.headerTransparent) {
-      paddingTop = this.state.floatingHeaderHeight;
+      top = this.state.floatingHeaderHeight;
     }
 
     return (
@@ -835,7 +835,7 @@ class StackViewLayout extends React.Component {
         realPosition={this.props.transitionProps.position}
         animatedStyle={style}
         transparent={this.props.transparentCard}
-        style={[{ paddingTop }, this.props.cardStyle]}
+        style={[{ top }, this.props.cardStyle]}
         scene={scene}
       >
         {this._renderInnerScene(scene)}
