@@ -368,7 +368,14 @@ class StackViewLayout extends React.Component {
   };
 
   _isMotionVertical = () => {
-    return this._isModal();
+    const {
+      transitionProps: { scene },
+    } = this.props;
+    const { options } = scene.descriptor;
+    const { gestureDirection } = options;
+    return this._isModal() ||
+      gestureDirection === 'up' ||
+      gestureDirection === 'down';
   };
 
   _isModal = () => {
