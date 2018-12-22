@@ -621,7 +621,7 @@ class Header extends React.PureComponent {
       >
         <SafeAreaView forceInset={forceInset} style={containerStyles}>
           {background}
-          <View style={styles.flexOne}>{appBar}</View>
+          <View style={styles.flexOne}>{this.props.children?this.props.children:appBar}</View>
         </SafeAreaView>
       </Animated.View>
     );
