@@ -205,7 +205,10 @@ class Transitioner extends React.Component {
           requestAnimationFrame(this._onTransitionEnd);
         });
       } else {
-        this._onTransitionEnd();
+        // In case the animation is immediately interrupted for some reason,
+        // we move this to the next frame so that onTransitionStart can fire
+        // first (https://github.com/react-navigation/react-navigation/issues/5247)
+        requestAnimationFrame(this._onTransitionEnd);
       }
     }
   }
