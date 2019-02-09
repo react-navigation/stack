@@ -169,7 +169,7 @@ class Transitioner extends React.Component {
             this._prevTransitionProps
           );
 
-          // why do we bother awaiting the result here?
+          // Wait for the onTransitionStart to resolve if needed.
           if (result instanceof Promise) {
             await result;
           }
