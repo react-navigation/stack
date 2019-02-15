@@ -17,22 +17,20 @@ const DefaultNavigationConfig = {
 };
 
 class StackView extends React.Component {
-  render() {
-    return (
-      <Transitioner
-        render={this._render}
-        configureTransition={this._configureTransition}
-        screenProps={this.props.screenProps}
-        navigation={this.props.navigation}
-        descriptors={this.props.descriptors}
-        onTransitionStart={
-          this.props.onTransitionStart ||
-          this.props.navigationConfig.onTransitionStart
-        }
-        onTransitionEnd={this._onTransitionEnd}
-      />
-    );
-  }
+  render = () => (
+    <Transitioner
+      render={this._render}
+      configureTransition={this._configureTransition}
+      screenProps={this.props.screenProps}
+      navigation={this.props.navigation}
+      descriptors={this.props.descriptors}
+      onTransitionStart={
+        this.props.onTransitionStart ||
+        this.props.navigationConfig.onTransitionStart
+      }
+      onTransitionEnd={this._onTransitionEnd}
+    />
+  );
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -45,51 +43,42 @@ class StackView extends React.Component {
     }
   }
 
-  _configureTransition = (transitionProps, prevTransitionProps) => {
-    return {
-      ...TransitionConfigs.getTransitionConfig(
-        this.props.navigationConfig.transitionConfig,
-        transitionProps,
-        prevTransitionProps,
-        this.props.navigationConfig.mode === 'modal'
-      ).transitionSpec,
-      useNativeDriver: USE_NATIVE_DRIVER,
-    };
-  };
+  _configureTransition = (transitionProps, prevTransitionProps) => ({
+    ...TransitionConfigs.getTransitionConfig(
+      this.props.navigationConfig.transitionConfig,
+      transitionProps,
+      prevTransitionProps,
+      this.props.navigationConfig.mode === 'modal'
+    ).transitionSpec,
+    useNativeDriver: USE_NATIVE_DRIVER,
+  });
 
-  _getShadowEnabled = () => {
-    const { navigationConfig } = this.props;
-    return navigationConfig &&
-      navigationConfig.hasOwnProperty('cardShadowEnabled')
-      ? navigationConfig.cardShadowEnabled
+  _getShadowEnabled = () =>
+    this.props.navigationConfig &&
+    this.props.navigationConfig.hasOwnProperty('cardShadowEnabled')
+      ? this.props.navigationConfig.cardShadowEnabled
       : DefaultNavigationConfig.cardShadowEnabled;
-  };
 
-  _getCardOverlayEnabled = () => {
-    const { navigationConfig } = this.props;
-    return navigationConfig &&
-      navigationConfig.hasOwnProperty('cardOverlayEnabled')
-      ? navigationConfig.cardOverlayEnabled
+  _getCardOverlayEnabled = () =>
+    this.props.navigationConfig &&
+    this.props.navigationConfig.hasOwnProperty('cardOverlayEnabled')
+      ? this.props.navigationConfig.cardOverlayEnabled
       : DefaultNavigationConfig.cardOverlayEnabled;
-  };
 
-  _render = (transitionProps, lastTransitionProps) => {
-    const { screenProps, navigationConfig } = this.props;
-    return (
-      <StackViewLayout
-        {...navigationConfig}
-        shadowEnabled={this._getShadowEnabled()}
-        cardOverlayEnabled={this._getCardOverlayEnabled()}
-        onGestureBegin={this.props.onGestureBegin}
-        onGestureCanceled={this.props.onGestureCanceled}
-        onGestureEnd={this.props.onGestureEnd}
-        screenProps={screenProps}
-        descriptors={this.props.descriptors}
-        transitionProps={transitionProps}
-        lastTransitionProps={lastTransitionProps}
-      />
-    );
-  };
+  _render = (transitionProps, lastTransitionProps) => (
+    <StackViewLayout
+      {...this.props.navigationConfig}
+      shadowEnabled={this._getShadowEnabled()}
+      cardOverlayEnabled={this._getCardOverlayEnabled()}
+      onGestureBegin={this.props.onGestureBegin}
+      onGestureCanceled={this.props.onGestureCanceled}
+      onGestureEnd={this.props.onGestureEnd}
+      screenProps={this.props.screenProps}
+      descriptors={this.props.descriptors}
+      transitionProps={transitionProps}
+      lastTransitionProps={lastTransitionProps}
+    />
+  );
 
   _onTransitionEnd = (transition, lastTransition) => {
     const {

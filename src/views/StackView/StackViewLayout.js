@@ -270,53 +270,41 @@ class StackViewLayout extends React.Component {
     this._prepareTransitionConfig();
   }
 
-  render() {
-    this._prepareAnimated();
-
-    const { transitionProps } = this.props;
-    const {
-      navigation: {
-        state: { index },
-      },
-      scenes,
-    } = transitionProps;
-
-    const headerMode = this._getHeaderMode();
-    let floatingHeader = null;
-    if (headerMode === 'float') {
-      const { scene } = transitionProps;
-      floatingHeader = (
-        <View
-          style={styles.floatingHeader}
-          pointerEvents="box-none"
-          onLayout={this._onFloatingHeaderLayout}
-        >
-          {this._renderHeader(scene, headerMode)}
-        </View>
-      );
-    }
-
-    return (
-      <PanGestureHandler
-        {...this._gestureActivationCriteria()}
-        ref={this.panGestureRef}
-        onGestureEvent={this.gestureEvent}
-        onHandlerStateChange={this._handlePanGestureStateChange}
-        enabled={index > 0 && this._isGestureEnabled()}
+  renderLayout = headerMode => (
+    <PanGestureHandler
+      {...this._gestureActivationCriteria()}
+      ref={this.panGestureRef}
+      onGestureEvent={this.gestureEvent}
+      onHandlerStateChange={this._handlePanGestureStateChange}
+      enabled={
+        this.props.transitionProps.navigation.state.index > 0 &&
+        this._isGestureEnabled()
+      }
+    >
+      <Animated.View
+        style={[styles.container, this._transitionConfig.containerStyle]}
       >
-        <Animated.View
-          style={[styles.container, this._transitionConfig.containerStyle]}
-        >
-          <StackGestureContext.Provider value={this.panGestureRef}>
-            <ScreenContainer style={styles.scenes}>
-              {scenes.map(this._renderCard)}
-            </ScreenContainer>
-            {floatingHeader}
-          </StackGestureContext.Provider>
-        </Animated.View>
-      </PanGestureHandler>
-    );
-  }
+        <StackGestureContext.Provider value={this.panGestureRef}>
+          <ScreenContainer style={styles.scenes}>
+            {this.props.transitionProps.scenes.map(this._renderCard)}
+          </ScreenContainer>
+          {headerMode === 'float' && (
+            <View
+              style={styles.floatingHeader}
+              pointerEvents="box-none"
+              onLayout={this._onFloatingHeaderLayout}
+            >
+              {this._renderHeader(this.props.transitionProps.scene, headerMode)}
+            </View>
+          )}
+        </StackGestureContext.Provider>
+      </Animated.View>
+    </PanGestureHandler>
+  );
+
+  render = () => (
+    this._prepareAnimated(), this.renderLayout(this._getHeaderMode())
+  );
 
   componentDidUpdate(prevProps) {
     const { state: prevState } = prevProps.transitionProps.navigation;

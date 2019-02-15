@@ -25,7 +25,7 @@ export default class TouchableItem extends React.Component {
     pressColor: 'rgba(0, 0, 0, .32)',
   };
 
-  render() {
+  render = () =>
     /*
      * TouchableNativeFeedback.Ripple causes a crash on old Android versions,
      * therefore only enable it on Android Lollipop and above.
@@ -34,39 +34,29 @@ export default class TouchableItem extends React.Component {
      * platform design guidelines.
      * We need to pass the background prop to specify a borderless ripple effect.
      */
-    if (
-      Platform.OS === 'android' &&
-      Platform.Version >= ANDROID_VERSION_LOLLIPOP
-    ) {
-      const { style, ...rest } = this.props;
-      return (
-        <TouchableNativeFeedback
-          {...rest}
-          style={null}
-          background={TouchableNativeFeedback.Ripple(
-            this.props.pressColor,
-            this.props.borderless
-          )}
-        >
-          <View style={style}>{React.Children.only(this.props.children)}</View>
-        </TouchableNativeFeedback>
-      );
-    } else if (Platform.OS === 'ios') {
-      return (
-        <BorderlessButton
-          hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
-          disallowInterruption
-          {...this.props}
-        >
-          {this.props.children}
-        </BorderlessButton>
-      );
-    } else {
-      return (
-        <TouchableOpacity {...this.props}>
-          {this.props.children}
-        </TouchableOpacity>
-      );
-    }
-  }
+    Platform.OS === 'android' &&
+    Platform.Version >= ANDROID_VERSION_LOLLIPOP ? (
+      <TouchableNativeFeedback
+        {...this.props}
+        style={null}
+        background={TouchableNativeFeedback.Ripple(
+          this.props.pressColor,
+          this.props.borderless
+        )}
+      >
+        <View style={this.props.style}>
+          {React.Children.only(this.props.children)}
+        </View>
+      </TouchableNativeFeedback>
+    ) : Platform.OS === 'ios' ? (
+      <BorderlessButton
+        hitSlop={{ top: 10, bottom: 10, right: 10, left: 10 }}
+        disallowInterruption
+        {...this.props}
+      >
+        {this.props.children}
+      </BorderlessButton>
+    ) : (
+      <TouchableOpacity {...this.props}>{this.props.children}</TouchableOpacity>
+    );
 }

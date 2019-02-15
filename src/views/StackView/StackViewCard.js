@@ -22,70 +22,65 @@ function getAccessibilityProps(isActive) {
  * Component that renders the scene as card for the <StackView />.
  */
 class Card extends React.Component {
-  render() {
-    const {
-      children,
-      pointerEvents,
-      style,
-      position,
-      transparent,
-      scene: { index, isActive },
-    } = this.props;
-
-    const active =
-      transparent || isActive
-        ? 1
-        : position.interpolate({
-            inputRange: [index, index + 1 - EPS, index + 1],
-            outputRange: [1, 1, 0],
-            extrapolate: 'clamp',
-          });
-
-    // animatedStyle can be `false` if there is no screen interpolator
-    const animatedStyle = this.props.animatedStyle || {};
-
-    const {
-      shadowOpacity,
-      overlayOpacity,
-      ...containerAnimatedStyle
-    } = animatedStyle;
-
-    let flattenedStyle = StyleSheet.flatten(style) || {};
-    let { backgroundColor, ...screenStyle } = flattenedStyle;
-
-    return (
-      <Screen
-        pointerEvents={pointerEvents}
-        onComponentRef={this.props.onComponentRef}
-        style={[StyleSheet.absoluteFill, containerAnimatedStyle, screenStyle]}
-        active={active}
+  renderScreen = (flattenedStyle, animatedStyle) => (
+    <Screen
+      pointerEvents={this.props.pointerEvents}
+      onComponentRef={this.props.onComponentRef}
+      style={[
+        StyleSheet.absoluteFill,
+        this.props.animatedStyle || {},
+        flattenedStyle,
+      ]}
+      active={
+        this.props.transparent || this.props.scene.isActive
+          ? 1
+          : this.props.position.interpolate({
+              inputRange: [
+                this.props.scene.index,
+                this.props.scene.index + 1 - EPS,
+                this.props.scene.index + 1,
+              ],
+              outputRange: [1, 1, 0],
+              extrapolate: 'clamp',
+            })
+      }
+    >
+      {!this.props.transparent &&
+        animatedStyle.shadowOpacity && (
+          <Animated.View
+            style={[
+              styles.shadow,
+              { shadowOpacity: animatedStyle.shadowOpacity },
+            ]}
+            pointerEvents="none"
+          />
+        )}
+      <Animated.View
+        {...getAccessibilityProps(this.props.scene.isActive)}
+        style={[
+          this.props.transparent ? styles.transparent : styles.card,
+          flattenedStyle.backgroundColor &&
+          flattenedStyle.backgroundColor !== 'transparent'
+            ? { backgroundColor: flattenedStyle.backgroundColor }
+            : null,
+        ]}
       >
-        {!transparent && shadowOpacity ? (
-          <Animated.View
-            style={[styles.shadow, { shadowOpacity }]}
-            pointerEvents="none"
-          />
-        ) : null}
+        {this.props.children}
+      </Animated.View>
+      {animatedStyle.overlayOpacity && (
         <Animated.View
-          {...getAccessibilityProps(isActive)}
-          style={[
-            transparent ? styles.transparent : styles.card,
-            backgroundColor && backgroundColor !== 'transparent'
-              ? { backgroundColor }
-              : null,
-          ]}
-        >
-          {children}
-        </Animated.View>
-        {overlayOpacity ? (
-          <Animated.View
-            pointerEvents="none"
-            style={[styles.overlay, { opacity: overlayOpacity }]}
-          />
-        ) : null}
-      </Screen>
+          pointerEvents="none"
+          style={[styles.overlay, { opacity: animatedStyle.overlayOpacity }]}
+        />
+      )}
+    </Screen>
+  );
+
+  render = () =>
+    this.renderScreen(
+      StyleSheet.flatten(this.props.style) || {},
+      this.props.animatedStyle || {}
     );
-  }
 }
 
 const styles = StyleSheet.create({

@@ -178,9 +178,9 @@ class Transitioner extends React.Component {
         // get the transition spec.
         const transitionUserSpec = nextProps.configureTransition
           ? nextProps.configureTransition(
-            this._transitionProps,
-            this._prevTransitionProps
-          )
+              this._transitionProps,
+              this._prevTransitionProps
+            )
           : null;
 
         const transitionSpec = {
@@ -210,13 +210,11 @@ class Transitioner extends React.Component {
     }
   }
 
-  render() {
-    return (
-      <View onLayout={this._onLayout} style={styles.main}>
-        {this.props.render(this._transitionProps, this._prevTransitionProps)}
-      </View>
-    );
-  }
+  render = () => (
+    <View onLayout={this._onLayout} style={styles.main}>
+      {this.props.render(this._transitionProps, this._prevTransitionProps)}
+    </View>
+  );
 
   _onLayout = event => {
     const { height, width } = event.nativeEvent.layout;
