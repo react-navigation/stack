@@ -132,7 +132,7 @@ class Header extends React.PureComponent {
 
   _renderTitleComponent = props => {
     const { layoutPreset } = this.props;
-    const { options } = props.scene.descriptor;
+    const { options, navigation } = props.scene.descriptor;
     const headerTitle = options.headerTitle;
     if (React.isValidElement(headerTitle)) {
       return headerTitle;
@@ -165,6 +165,7 @@ class Header extends React.PureComponent {
       <HeaderTitleComponent
         onLayout={onLayout}
         allowFontScaling={allowFontScaling == null ? true : allowFontScaling}
+        navigation={navigation}
         style={[
           color ? { color } : null,
           layoutPreset === 'center'
