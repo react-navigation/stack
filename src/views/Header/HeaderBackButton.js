@@ -92,7 +92,7 @@ class HeaderBackButton extends React.PureComponent {
         onLayout={this._onTextLayout}
         style={[styles.title, !!tintColor && { color: tintColor }, titleStyle]}
         numberOfLines={1}
-        allowFontScaling={allowFontScaling}
+        allowFontScaling={!!allowFontScaling}
       >
         {this._getTitleText()}
       </Text>
