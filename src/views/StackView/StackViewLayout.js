@@ -120,14 +120,14 @@ class StackViewLayout extends React.Component {
         useNativeDriver: USE_NATIVE_DRIVER,
       }
     );
-
+    const getHeaderHeight = props.floatingHeaderHeight || getDefaultHeaderHeight;
     this.state = {
       // Used when card's header is null and mode is float to make transition
       // between screens with headers and those without headers smooth.
       // This is not a great heuristic here. We don't know synchronously
       // on mount what the header height is so we have just used the most
       // common cases here.
-      floatingHeaderHeight: getDefaultHeaderHeight(props.isLandscape),
+      floatingHeaderHeight: getHeaderHeight(props.isLandscape),
     };
   }
 
