@@ -206,6 +206,7 @@ function forFade(props) {
 }
 
 export default {
+  forInitial,
   forHorizontal,
   forVertical,
   forFadeFromBottomAndroid,
