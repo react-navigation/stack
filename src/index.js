@@ -60,4 +60,7 @@ module.exports = {
   get StackGestureContext() {
     return require('./utils/StackGestureContext').default;
   },
+  get getSceneIndicesForInterpolationInputRange() {
+    return require('./utils/getSceneIndicesForInterpolationInputRange').default;
+  },
 };
