@@ -101,14 +101,19 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
             style={
               Object {
                 "backgroundColor": "red",
-                "borderBottomColor": "#A7A7AA",
-                "borderBottomWidth": 0.5,
                 "height": 64,
                 "opacity": 0.5,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
                 "paddingRight": 0,
                 "paddingTop": 20,
+                "shadowColor": "rgba(0, 0, 0, 0.3)",
+                "shadowOffset": Object {
+                  "height": 0.5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.85,
+                "shadowRadius": 0,
               }
             }
           >
@@ -294,14 +299,19 @@ exports[`StackNavigator renders successfully 1`] = `
             style={
               Object {
                 "backgroundColor": "red",
-                "borderBottomColor": "#A7A7AA",
-                "borderBottomWidth": 0.5,
                 "height": 64,
                 "opacity": 0.5,
                 "paddingBottom": 0,
                 "paddingLeft": 0,
                 "paddingRight": 0,
                 "paddingTop": 20,
+                "shadowColor": "rgba(0, 0, 0, 0.3)",
+                "shadowOffset": Object {
+                  "height": 0.5,
+                  "width": 0,
+                },
+                "shadowOpacity": 0.85,
+                "shadowRadius": 0,
               }
             }
           >
