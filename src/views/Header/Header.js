@@ -646,8 +646,13 @@ const platformContainerStyles = Platform.select({
     elevation: 4,
   },
   ios: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#A7A7AA',
+    shadowColor: 'rgba(0, 0, 0, 0.3)',
+    shadowOpacity: 0.85,
+    shadowRadius: 0,
+    shadowOffset: {
+      width: 0,
+      height: StyleSheet.hairlineWidth,
+    },
   },
   default: {},
 });
