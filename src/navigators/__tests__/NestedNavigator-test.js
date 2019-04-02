@@ -26,7 +26,7 @@ NavNestedIndirect.prototype.componentDidCatch = null;
 SubNavigator.prototype.componentDidCatch = null;
 
 describe('Nested navigators', () => {
-  it('renders succesfully as direct child', () => {
+  it('render succesfully as direct child', () => {
     const NavApp = createAppContainer(NavNestedDirect);
     const rendered = renderer.create(<NavApp />).toJSON();
     expect(rendered).toMatchSnapshot();
