@@ -562,8 +562,6 @@ class StackViewLayout extends React.Component {
       transitionProps: { navigation, position, layout },
     } = this.props;
     const { index } = navigation.state;
-    const immediateIndex =
-      this._immediateIndex == null ? index : this._immediateIndex;
 
     // Calculate animate duration according to gesture speed and moved distance
     const distance = layout.width.__getValue();
@@ -585,17 +583,32 @@ class StackViewLayout extends React.Component {
     position.setValue(value);
     this.positionSwitch.setValue(1);
 
-    const shouldGoBackCriterion = gestureVelocity > 50 || value <= index - POSITION_THRESHOLD;
+    const shouldGoBackCriterion =
+      gestureVelocity > 50 || value <= index - POSITION_THRESHOLD;
 
     if (shouldGoBackCriterion && this.props.onActionBeforeSwipeBack) {
       this.props.onActionBeforeSwipeBack({
-        onContinue: () => this._navigateWithGesture(this.props.onGestureEnd, goBackDuration, true),
-        onCancel: () => this._navigateWithGesture(this.props.onGestureCanceled, resetDuration, false)
+        onContinue: () =>
+          this._navigateWithGesture(
+            this.props.onGestureEnd,
+            goBackDuration,
+            true
+          ),
+        onCancel: () =>
+          this._navigateWithGesture(
+            this.props.onGestureCanceled,
+            resetDuration,
+            false
+          ),
       });
     } else if (shouldGoBackCriterion) {
       this._navigateWithGesture(this.props.onGestureEnd, goBackDuration, true);
     } else {
-      this._navigateWithGesture(this.props.onGestureCanceled, resetDuration, false);
+      this._navigateWithGesture(
+        this.props.onGestureCanceled,
+        resetDuration,
+        false
+      );
     }
   }
 
