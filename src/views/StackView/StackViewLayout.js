@@ -636,27 +636,34 @@ class StackViewLayout extends React.Component {
     position.setValue(value);
     this.positionSwitch.setValue(1);
 
-    // If the speed of the gesture release is significant, use that as the indication
-    // of intent
-    if (gestureVelocity < -50) {
-      this.props.onGestureCanceled && this.props.onGestureCanceled();
-      this._reset(immediateIndex, resetDuration);
-      return;
-    }
-    if (gestureVelocity > 50) {
-      this.props.onGestureEnd && this.props.onGestureEnd();
-      this._goBack(immediateIndex, goBackDuration);
-      return;
-    }
+    const shouldGoBackCriterion = gestureVelocity > 50 && value <= index - POSITION_THRESHOLD;
 
-    // Then filter based on the distance the screen was moved. Over a third of the way swiped,
-    // and the back will happen.
-    if (value <= index - POSITION_THRESHOLD) {
-      this.props.onGestureEnd && this.props.onGestureEnd();
-      this._goBack(immediateIndex, goBackDuration);
+    if (shouldGoBackCriterion && this.props.onActionBeforeSwipeBack) {
+      this.props.onActionBeforeSwipeBack({
+        onContinue: () => this._navigateWithGesture(this.props.onGestureEnd, goBackDuration, true),
+        onCancel: () => this._navigateWithGesture(this.props.onGestureCanceled, resetDuration, false)
+      });
+    } else if (shouldGoBackCriterion) {
+      this._navigateWithGesture(this.props.onGestureEnd, goBackDuration, true);
     } else {
-      this.props.onGestureCanceled && this.props.onGestureCanceled();
-      this._reset(immediateIndex, resetDuration);
+      this._navigateWithGesture(this.props.onGestureCanceled, resetDuration, false);
+    }
+  }
+
+  _getImmediateIndex() {
+    const { index } = this.props.transitionProps.navigation.state;
+    const immediateIndex =
+      this._immediateIndex == null ? index : this._immediateIndex;
+
+    return immediateIndex;
+  }
+
+  _navigateWithGesture(gestureAction, duration, isGoingBack) {
+    gestureAction && gestureAction();
+    if (isGoingBack) {
+      this._goBack(this._getImmediateIndex(), duration);
+    } else {
+      this._reset(this._getImmediateIndex(), duration);
     }
   }
 
