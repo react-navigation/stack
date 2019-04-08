@@ -60,4 +60,10 @@ module.exports = {
   get StackGestureContext() {
     return require('./utils/StackGestureContext').default;
   },
+  get getAppBarHeight() {
+    return require('./views/Header/Header').getAppBarHeight;
+  },
+  get getDefaultHeaderHeight() {
+    return require('./views/StackView/StackViewLayout').getDefaultHeaderHeight;
+  },
 };

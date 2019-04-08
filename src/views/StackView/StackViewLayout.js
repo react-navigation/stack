@@ -69,7 +69,7 @@ const GESTURE_RESPONSE_DISTANCE_VERTICAL = 135;
 
 const USE_NATIVE_DRIVER = true;
 
-const getDefaultHeaderHeight = isLandscape => {
+export const getDefaultHeaderHeight = isLandscape => {
   if (Platform.OS === 'ios') {
     if (isLandscape && !Platform.isPad) {
       return 32;

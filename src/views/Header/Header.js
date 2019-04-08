@@ -61,7 +61,7 @@ const getTitleOffsets = (
   }
 };
 
-const getAppBarHeight = isLandscape => {
+export const getAppBarHeight = isLandscape => {
   return Platform.OS === 'ios'
     ? isLandscape && !Platform.isPad
       ? 32
