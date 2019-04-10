@@ -11,14 +11,19 @@ import {
 import TouchableItem from '../TouchableItem';
 
 import defaultBackImage from '../assets/back-icon.png';
+import BackButtonWeb from './BackButton.web';
 
 class HeaderBackButton extends React.PureComponent {
   static defaultProps = {
     pressColorAndroid: 'rgba(0, 0, 0, .32)',
     tintColor: Platform.select({
       ios: '#037aff',
+      web: '#5f6368',
     }),
     truncatedTitle: 'Back',
+    backImage: Platform.select({
+      web: BackButtonWeb,
+    }),
   };
 
   state = {};

@@ -17,12 +17,26 @@ import HeaderBackButton from './HeaderBackButton';
 import ModularHeaderBackButton from './ModularHeaderBackButton';
 import HeaderStyleInterpolator from './HeaderStyleInterpolator';
 
-const APPBAR_HEIGHT = Platform.OS === 'ios' ? 44 : 56;
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 20 : 0;
+const APPBAR_HEIGHT = Platform.select({
+  ios: 44,
+  android: 56,
+  default: 64,
+});
+const STATUSBAR_HEIGHT = Platform.select({
+  ios: 20,
+  default: 0,
+});
 
 // These can be adjusted by using headerTitleContainerStyle on navigationOptions
-const TITLE_OFFSET_CENTER_ALIGN = Platform.OS === 'ios' ? 70 : 56;
-const TITLE_OFFSET_LEFT_ALIGN = Platform.OS === 'ios' ? 20 : 56;
+const TITLE_OFFSET_CENTER_ALIGN = Platform.select({
+  ios: 70,
+  default: 56,
+});
+
+const TITLE_OFFSET_LEFT_ALIGN = Platform.select({
+  ios: 20,
+  default: 56,
+});
 
 const getTitleOffsets = (
   layoutPreset,
@@ -62,11 +76,17 @@ const getTitleOffsets = (
 };
 
 const getAppBarHeight = isLandscape => {
-  return Platform.OS === 'ios'
-    ? isLandscape && !Platform.isPad
-      ? 32
-      : 44
-    : 56;
+  if (Platform.OS === 'ios') {
+    if (isLandscape && !Platform.isPad) {
+      return 32;
+    } else {
+      return 44;
+    }
+  } else if (Platform.OS === 'android') {
+    return 56;
+  } else {
+    return 64;
+  }
 };
 
 class Header extends React.PureComponent {
@@ -676,6 +696,10 @@ const styles = StyleSheet.create({
   header: {
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'row',
+    ...Platform.select({
+      default: {},
+      web: { marginHorizontal: 16 },
+    }),
   },
   item: {
     backgroundColor: 'transparent',
