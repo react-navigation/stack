@@ -148,8 +148,13 @@ const styles = StyleSheet.create({
   },
   androidButtonWrapper: {
     margin: 13,
-    marginLeft: Platform.OS === 'web' && 8 + 13,
     backgroundColor: 'transparent',
+    ...Platform.select({
+      web: {
+        marginLeft: 21,
+      },
+      default: {},
+    }),
   },
   container: {
     alignItems: 'center',
