@@ -54,7 +54,7 @@ const getTitleOffsets = (
     };
 
     if (!hasLeftComponent) {
-      style.left = 0;
+      style.left = Platform.OS === 'web' ? 8 : 0;
     }
     if (!hasRightComponent) {
       style.right = 0;
@@ -698,7 +698,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     ...Platform.select({
       default: {},
-      web: { marginHorizontal: 16 },
+      web: { marginHorizontal: 8 },
     }),
   },
   item: {
