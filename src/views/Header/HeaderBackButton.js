@@ -148,6 +148,7 @@ const styles = StyleSheet.create({
   },
   androidButtonWrapper: {
     margin: 13,
+    marginLeft: Platform.OS === 'web' && 8 + 13,
     backgroundColor: 'transparent',
   },
   container: {
@@ -159,26 +160,26 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingRight: 10,
   },
-  icon:
-    Platform.OS === 'ios'
-      ? {
-          backgroundColor: 'transparent',
-          height: 21,
-          width: 13,
-          marginLeft: 9,
-          marginRight: 22,
-          marginVertical: 12,
-          resizeMode: 'contain',
-          transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-        }
-      : {
-          height: 24,
-          width: 24,
-          margin: 3,
-          resizeMode: 'contain',
-          backgroundColor: 'transparent',
-          transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
-        },
+  icon: Platform.select({
+    ios: {
+      backgroundColor: 'transparent',
+      height: 21,
+      width: 13,
+      marginLeft: 9,
+      marginRight: 22,
+      marginVertical: 12,
+      resizeMode: 'contain',
+      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+    },
+    default: {
+      height: 24,
+      width: 24,
+      margin: 3,
+      resizeMode: 'contain',
+      backgroundColor: 'transparent',
+      transform: [{ scaleX: I18nManager.isRTL ? -1 : 1 }],
+    },
+  }),
   iconWithTitle:
     Platform.OS === 'ios'
       ? {

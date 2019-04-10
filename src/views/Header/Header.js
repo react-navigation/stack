@@ -35,7 +35,8 @@ const TITLE_OFFSET_CENTER_ALIGN = Platform.select({
 
 const TITLE_OFFSET_LEFT_ALIGN = Platform.select({
   ios: 20,
-  default: 56,
+  android: 56,
+  default: 64,
 });
 
 const getTitleOffsets = (
@@ -54,7 +55,7 @@ const getTitleOffsets = (
     };
 
     if (!hasLeftComponent) {
-      style.left = Platform.OS === 'web' ? 8 : 0;
+      style.left = Platform.OS === 'web' ? 16 : 0;
     }
     if (!hasRightComponent) {
       style.right = 0;
@@ -696,10 +697,6 @@ const styles = StyleSheet.create({
   header: {
     ...StyleSheet.absoluteFillObject,
     flexDirection: 'row',
-    ...Platform.select({
-      default: {},
-      web: { marginHorizontal: 8 },
-    }),
   },
   item: {
     backgroundColor: 'transparent',
