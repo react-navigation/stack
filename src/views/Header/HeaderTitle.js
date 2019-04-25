@@ -10,7 +10,7 @@ const HeaderTitle = ({ style, ...rest }) => (
     style={[styles.title, style]}
     accessible={true}
     accessibilityTraits="header"
-    accessibilityLabel={'nav_header_title'}
+    accessibilityLabel="header_title"
   />
 );
 

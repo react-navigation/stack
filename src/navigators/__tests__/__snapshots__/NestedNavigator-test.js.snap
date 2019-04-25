@@ -216,7 +216,9 @@ exports[`Nested navigators renders succesfully as direct child 1`] = `
                               }
                             >
                               <Text
+                                accessibilityLabel="header_title"
                                 accessibilityTraits="header"
+                                accessible={true}
                                 allowFontScaling={false}
                                 numberOfLines={1}
                                 onLayout={[Function]}
