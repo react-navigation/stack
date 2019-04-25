@@ -8,7 +8,7 @@ const HeaderTitle = ({ style, ...rest }) => (
     numberOfLines={1}
     {...rest}
     style={[styles.title, style]}
-    accessible={true}
+    accessible
     accessibilityTraits="header"
     accessibilityLabel="header_title"
   />
