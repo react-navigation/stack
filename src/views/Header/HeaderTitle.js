@@ -8,7 +8,9 @@ const HeaderTitle = ({ style, ...rest }) => (
     numberOfLines={1}
     {...rest}
     style={[styles.title, style]}
+    accessible={true}
     accessibilityTraits="header"
+    accessibilityLabel={'nav_header_title'}
   />
 );
 
