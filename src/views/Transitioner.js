@@ -65,7 +65,7 @@ class Transitioner extends React.Component {
       this.state.position.removeListener(this._positionListener);
   }
 
-  UNSAVED_componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this._isTransitionRunning) {
       if (!this._queuedTransition) {
         this._queuedTransition = { prevProps: this.props };
