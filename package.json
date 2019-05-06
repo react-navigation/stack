@@ -117,5 +117,8 @@
       "module",
       "typescript"
     ]
+  },
+  "dependencies": {
+    "@types/react-dom": "^16.8.4"
   }
 }

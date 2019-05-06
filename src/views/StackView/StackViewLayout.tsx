@@ -26,7 +26,7 @@ import {
   GestureHandlerGestureEventNativeEvent,
   PanGestureHandlerEventExtra,
 } from 'react-native-gesture-handler';
-
+import HeaderContainer from '../Header/HeaderContainer';
 import Card from './StackViewCard';
 import Header from '../Header/Header';
 import TransitionConfigs from './StackViewTransitionConfigs';
@@ -358,13 +358,15 @@ class StackViewLayout extends React.Component<Props, State> {
     if (headerMode === 'float') {
       const { scene } = transitionProps;
       floatingHeader = (
-        <View
-          style={styles.floatingHeader}
-          pointerEvents="box-none"
-          onLayout={this.handleFloatingHeaderLayout}
-        >
-          {this.renderHeader(scene, headerMode)}
-        </View>
+        <HeaderContainer>
+          <View
+            style={styles.floatingHeader}
+            pointerEvents="box-none"
+            onLayout={this.handleFloatingHeaderLayout}
+          >
+            {this.renderHeader(scene, headerMode)}
+          </View>
+        </HeaderContainer>
       );
     }
 
