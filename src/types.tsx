@@ -67,6 +67,7 @@ export type HeaderProps = {
   titleInterpolator: (props: SceneInterpolatorProps) => any;
   rightInterpolator: (props: SceneInterpolatorProps) => any;
   backgroundInterpolator: (props: SceneInterpolatorProps) => any;
+  layoutInterpolator?: (props: SceneInterpolatorProps) => any;
   isLandscape: boolean;
 };
 
