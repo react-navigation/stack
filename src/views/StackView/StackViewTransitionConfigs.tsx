@@ -78,8 +78,14 @@ const NoAnimation = {
 function defaultTransitionConfig(
   transitionProps: TransitionProps,
   prevTransitionProps?: TransitionProps,
-  isModal?: boolean
+  isModal?: boolean,
+  isTransparent?: boolean
 ): TransitionConfig {
+  // If modal is not full-screen, user is responsible to implement animation
+  if (isModal && isTransparent) {
+    return NoAnimation;
+  }
+
   if (Platform.OS !== 'ios') {
     // Use the default Android animation no matter if the screen is a modal.
     // Android doesn't have full-screen modals like iOS does, it has dialogs.
@@ -109,12 +115,14 @@ function getTransitionConfig<T = {}>(
       ) => T),
   transitionProps: TransitionProps,
   prevTransitionProps?: TransitionProps,
-  isModal?: boolean
+  isModal?: boolean,
+  isTransparent?: boolean
 ): TransitionConfig & T {
   const defaultConfig = defaultTransitionConfig(
     transitionProps,
     prevTransitionProps,
-    isModal
+    isModal,
+    isTransparent
   );
   if (transitionConfigurer) {
     return {

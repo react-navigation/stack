@@ -912,7 +912,8 @@ class StackViewLayout extends React.Component<Props, State> {
         position: this.position,
       },
       this.props.lastTransitionProps,
-      this.isModal()
+      this.isModal(),
+      this.props.transparentCard
     );
   }
 
