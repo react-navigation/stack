@@ -75,7 +75,9 @@
     "@react-navigation/native": "^3.0.0",
     "react": "*",
     "react-native": "*",
-    "react-native-gesture-handler": "^1.0.0",
+    "react-native-gesture-handler": "^1.0.0"
+  },
+  "optionalDependencies": {
     "react-native-screens": "^1.0.0 || ^1.0.0-alpha"
   },
   "jest": {
