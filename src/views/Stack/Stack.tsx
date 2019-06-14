@@ -7,6 +7,7 @@ import {
   ViewProps,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
+import { ScreenContainer, NativeScreen } from 'react-native-screens';
 import { getDefaultHeaderHeight } from '../Header/HeaderSegment';
 import { Props as HeaderContainerProps } from '../Header/HeaderContainer';
 import StackItem from './StackItem';
@@ -22,7 +23,6 @@ import {
   NavigationProp,
   HeaderScene,
 } from '../../types';
-import { ScreenContainer, NativeScreen } from 'react-native-screens';
 
 type ProgressValues = {
   [key: string]: Animated.Value<number>;
@@ -80,7 +80,7 @@ const AnimatedScreen = Animated.createAnimatedComponent(
 
 const { cond, eq } = Animated;
 
-const animatedOne = new Animated.Value(1);
+const ANIMATED_ONE = new Animated.Value(1);
 
 export default class Stack extends React.Component<Props, State> {
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -221,7 +221,7 @@ export default class Stack extends React.Component<Props, State> {
             const scene = scenes[index];
             const next = self[index + 1]
               ? progress[self[index + 1].key]
-              : animatedOne;
+              : ANIMATED_ONE;
 
             // Display current screen and a screen beneath. On Android screen beneath is hidden on animation finished bs of RNS's issue.
             const isScreenActive =
