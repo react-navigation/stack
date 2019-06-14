@@ -340,7 +340,7 @@ export default class Card extends React.Component<Props> {
           cond(
             greaterThan(
               abs(this.extrapolatedPosition),
-              divide(this.layout.width, 2)
+              divide(this.distance, 2)
             ),
             cond(
               lessThan(
