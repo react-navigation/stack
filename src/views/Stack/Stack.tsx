@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {
-  View,
   StyleSheet,
   LayoutChangeEvent,
   Dimensions,
   Platform,
+  ViewProps,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 import { getDefaultHeaderHeight } from '../Header/HeaderSegment';
@@ -22,6 +22,7 @@ import {
   NavigationProp,
   HeaderScene,
 } from '../../types';
+import { ScreenContainer, NativeScreen } from 'react-native-screens';
 
 type ProgressValues = {
   [key: string]: Animated.Value<number>;
@@ -69,6 +70,16 @@ type State = {
 
 const dimensions = Dimensions.get('window');
 const layout = { width: dimensions.width, height: dimensions.height };
+
+const AnimatedScreen = Animated.createAnimatedComponent(
+  NativeScreen
+) as React.ComponentType<
+  ViewProps & { active: number | Animated.Node<number> }
+>;
+
+const { cond, eq } = Animated;
+
+const animatedOne = new Animated.Value(1);
 
 export default class Stack extends React.Component<Props, State> {
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -200,79 +211,94 @@ export default class Stack extends React.Component<Props, State> {
 
     return (
       <React.Fragment>
-        <View
-          style={styles.container}
-          onLayout={this.handleLayout}
-          pointerEvents={layout.height && layout.width ? 'box-none' : 'none'}
-        >
+        <ScreenContainer style={styles.container} onLayout={this.handleLayout}>
           {routes.map((route, index, self) => {
             const focused = focusedRoute.key === route.key;
             const current = progress[route.key];
             const descriptor = descriptors[route.key];
             const scene = scenes[index];
+            const next = self[index + 1]
+              ? progress[self[index + 1].key]
+              : animatedOne;
+
+            // Display current screen and a screen beneath. On Android screen beneath is hidden on animation finished bs of RNS's issue.
+            const isScreenActive =
+              index === self.length - 1
+                ? 1
+                : Platform.OS === 'android'
+                ? cond(eq(next, 1), 0, 1)
+                : index === self.length - 2
+                ? 1
+                : 0;
 
             return (
-              <Card
+              <AnimatedScreen
                 key={route.key}
-                active={index === self.length - 1}
-                transparent={transparentCard}
-                direction={direction}
-                layout={layout}
-                current={current}
-                next={scene.progress.next}
-                closing={closingRoutes.includes(route.key)}
-                onOpen={() => onOpenRoute({ route })}
-                onClose={() => onCloseRoute({ route })}
-                overlayEnabled={cardOverlayEnabled}
-                shadowEnabled={cardShadowEnabled}
-                gesturesEnabled={index !== 0 && getGesturesEnabled({ route })}
-                onTransitionStart={({ closing }) => {
-                  onTransitionStart &&
-                    onTransitionStart(
-                      { index: closing ? index - 1 : index },
-                      { index }
-                    );
-
-                  closing && onGoBack({ route });
-                }}
-                onGestureBegin={onGestureBegin}
-                onGestureCanceled={onGestureCanceled}
-                onGestureEnd={onGestureEnd}
-                gestureResponseDistance={
-                  descriptor.options.gestureResponseDistance
-                }
-                transitionSpec={transitionSpec}
-                styleInterpolator={cardStyleInterpolator}
-                accessibilityElementsHidden={!focused}
-                importantForAccessibility={
-                  focused ? 'auto' : 'no-hide-descendants'
-                }
+                style={StyleSheet.absoluteFill}
+                active={isScreenActive}
                 pointerEvents="box-none"
-                style={[
-                  StyleSheet.absoluteFill,
-                  headerMode === 'float' &&
-                  descriptor &&
-                  descriptor.options.header !== null
-                    ? { marginTop: floaingHeaderHeight }
-                    : null,
-                ]}
               >
-                {headerMode === 'screen' ? (
-                  <HeaderContainer
-                    mode="screen"
-                    layout={layout}
-                    scenes={[scenes[index - 1], scenes[index]]}
-                    navigation={navigation}
-                    getPreviousRoute={getPreviousRoute}
-                    styleInterpolator={headerStyleInterpolator}
-                    style={styles.header}
-                  />
-                ) : null}
-                {renderScene({ route })}
-              </Card>
+                <Card
+                  active={index === self.length - 1}
+                  transparent={transparentCard}
+                  direction={direction}
+                  layout={layout}
+                  current={current}
+                  next={scene.progress.next}
+                  closing={closingRoutes.includes(route.key)}
+                  onOpen={() => onOpenRoute({ route })}
+                  onClose={() => onCloseRoute({ route })}
+                  overlayEnabled={cardOverlayEnabled}
+                  shadowEnabled={cardShadowEnabled}
+                  gesturesEnabled={index !== 0 && getGesturesEnabled({ route })}
+                  onTransitionStart={({ closing }) => {
+                    onTransitionStart &&
+                      onTransitionStart(
+                        { index: closing ? index - 1 : index },
+                        { index }
+                      );
+
+                    closing && onGoBack({ route });
+                  }}
+                  onGestureBegin={onGestureBegin}
+                  onGestureCanceled={onGestureCanceled}
+                  onGestureEnd={onGestureEnd}
+                  gestureResponseDistance={
+                    descriptor.options.gestureResponseDistance
+                  }
+                  transitionSpec={transitionSpec}
+                  styleInterpolator={cardStyleInterpolator}
+                  accessibilityElementsHidden={!focused}
+                  importantForAccessibility={
+                    focused ? 'auto' : 'no-hide-descendants'
+                  }
+                  pointerEvents="box-none"
+                  style={[
+                    StyleSheet.absoluteFill,
+                    headerMode === 'float' &&
+                    descriptor &&
+                    descriptor.options.header !== null
+                      ? { marginTop: floaingHeaderHeight }
+                      : null,
+                  ]}
+                >
+                  {headerMode === 'screen' ? (
+                    <HeaderContainer
+                      mode="screen"
+                      layout={layout}
+                      scenes={[scenes[index - 1], scenes[index]]}
+                      navigation={navigation}
+                      getPreviousRoute={getPreviousRoute}
+                      styleInterpolator={headerStyleInterpolator}
+                      style={styles.header}
+                    />
+                  ) : null}
+                  {renderScene({ route })}
+                </Card>
+              </AnimatedScreen>
             );
           })}
-        </View>
+        </ScreenContainer>
         {headerMode === 'float' ? (
           <HeaderContainer
             mode="float"
