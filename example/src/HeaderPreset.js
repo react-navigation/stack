@@ -17,7 +17,7 @@ class HomeScreen extends React.Component {
     const { push } = navigation;
 
     return (
-      <SafeAreaView style={{ paddingTop: 30 }}>
+      <SafeAreaView style={{ paddingTop: 120 }}>
         <Button onPress={() => push('Other')} title="Push another screen" />
         <Button
           onPress={() => push('ScreenWithNoHeader')}
@@ -40,7 +40,7 @@ class OtherScreen extends React.Component {
     const { push, pop } = navigation;
 
     return (
-      <SafeAreaView style={{ paddingTop: 30 }}>
+      <SafeAreaView style={{ paddingTop: 74 }}>
         <Button
           onPress={() => push('ScreenWithLongTitle')}
           title="Push another screen"
@@ -67,7 +67,7 @@ class ScreenWithLongTitle extends React.Component {
     const { pop } = navigation;
 
     return (
-      <SafeAreaView style={{ paddingTop: 30 }}>
+      <SafeAreaView style={{ paddingTop: 74 }}>
         <Button onPress={() => pop()} title="Pop" />
         <Button onPress={() => navigation.goBack(null)} title="Go back" />
         <StatusBar barStyle="default" />
@@ -87,7 +87,7 @@ class ScreenWithNoHeader extends React.Component {
     const { push, pop } = navigation;
 
     return (
-      <SafeAreaView style={{ paddingTop: 30 }}>
+      <SafeAreaView style={{ paddingTop: 74 }}>
         <Button onPress={() => push('Other')} title="Push another screen" />
         <Button onPress={() => pop()} title="Pop" />
         <Button onPress={() => navigation.goBack(null)} title="Go back" />
@@ -110,6 +110,9 @@ const StackWithHeaderPreset = createStackNavigator(
     headerMode: 'float',
     defaultNavigationOptions: {
       gesturesEnabled: true,
+      cardStyle: {
+        backgroundColor: 'white',
+      },
     },
   }
 );

@@ -7,6 +7,7 @@ export default class Header extends React.PureComponent<HeaderProps> {
   render() {
     const {
       scene,
+      index,
       previous,
       layout,
       navigation,
@@ -41,6 +42,7 @@ export default class Header extends React.PureComponent<HeaderProps> {
       <HeaderSegment
         {...options}
         layout={layout}
+        index={index}
         scene={scene}
         title={title}
         leftLabel={leftLabel}

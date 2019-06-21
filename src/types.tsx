@@ -87,6 +87,7 @@ export type HeaderOptions = {
 export type HeaderProps = {
   mode: 'float' | 'screen';
   layout: Layout;
+  index: number;
   scene: HeaderScene<Route>;
   previous?: HeaderScene<Route>;
   navigation: NavigationProp;
@@ -185,6 +186,7 @@ export type CardStyleInterpolator = (
 ) => CardInterpolatedStyle;
 
 export type HeaderInterpolationProps = {
+  index: number;
   progress: {
     current: Animated.Node<number>;
     next?: Animated.Node<number>;

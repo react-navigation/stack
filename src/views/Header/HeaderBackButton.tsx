@@ -95,7 +95,7 @@ class HeaderBackButton extends React.Component<Props, State> {
       screenLayout,
     } = this.props;
 
-    const leftLabelText = this.shouldTruncateLabel() ? truncatedLabel : label;
+    const leftLabelText = label;
 
     if (!labelVisible || leftLabelText === undefined) {
       return null;
@@ -117,11 +117,11 @@ class HeaderBackButton extends React.Component<Props, State> {
       </Animated.Text>
     );
 
-    if (backImage || Platform.OS !== 'ios') {
-      // When a custom backimage is specified, we can't mask the label
-      // Otherwise there might be weird effect due to our mask not being the same as the image
-      return labelElement;
-    }
+    // if (backImage || Platform.OS !== 'ios') {
+    // When a custom backimage is specified, we can't mask the label
+    // Otherwise there might be weird effect due to our mask not being the same as the image
+    return labelElement;
+    // }
 
     return (
       <MaskedViewIOS
@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
         marginHorizontal: 11,
       },
     }),
+    overflow: 'visible',
   },
   disabled: {
     opacity: 0.5,

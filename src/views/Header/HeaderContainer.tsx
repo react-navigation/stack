@@ -84,6 +84,7 @@ export default function HeaderContainer({
           mode,
           layout,
           scene,
+          index: i,
           previous,
           navigation: scene.descriptor.navigation,
           styleInterpolator: isHeaderStatic ? forStatic : styleInterpolator,

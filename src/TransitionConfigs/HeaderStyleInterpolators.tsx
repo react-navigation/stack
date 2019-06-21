@@ -5,6 +5,7 @@ import { HeaderInterpolationProps, HeaderInterpolatedStyle } from '../types';
 const { interpolate, add } = Animated;
 
 export function forUIKit({
+  index,
   progress: { current, next },
   layouts,
 }: HeaderInterpolationProps): HeaderInterpolatedStyle {
@@ -36,52 +37,96 @@ export function forUIKit({
         outputRange: [0, 1, 0],
       }),
     },
-    leftLabelStyle: {
-      transform: [
-        {
-          translateX: interpolate(progress, {
-            inputRange: [0, 1, 2],
-            outputRange: I18nManager.isRTL
-              ? [-rightOffset, 0, leftLabelOffset]
-              : [leftLabelOffset, 0, -rightOffset],
-          }),
-        },
-      ],
-    },
+    leftLabelStyle:
+      index === 1
+        ? {
+            fontSize: 34,
+            transform: [
+              {
+                translateY: interpolate(progress, {
+                  inputRange: [0, 1, 2],
+                  outputRange: [46, 0, 0],
+                }),
+              },
+              {
+                translateX: interpolate(progress, {
+                  inputRange: [0, 1, 2],
+                  outputRange: [0, -32, -32],
+                }),
+              },
+              {
+                scale: interpolate(progress, {
+                  inputRange: [0, 1, 2],
+                  outputRange: [1, 0.5, 0.5],
+                }),
+              },
+            ],
+          }
+        : {
+            transform: [
+              {
+                translateX: interpolate(progress, {
+                  inputRange: [0, 1, 2],
+                  outputRange: I18nManager.isRTL
+                    ? [-rightOffset, 0, leftLabelOffset]
+                    : [leftLabelOffset, 0, -rightOffset],
+                }),
+              },
+            ],
+          },
     rightButtonStyle: {
       opacity: interpolate(progress, {
         inputRange: [0.3, 1, 1.5],
         outputRange: [0, 1, 0],
       }),
     },
-    titleStyle: {
-      opacity: interpolate(progress, {
-        inputRange: [0, 0.4, 1, 1.5],
-        outputRange: [0, 0.1, 1, 0],
-      }),
-      transform: [
-        {
-          translateX: interpolate(progress, {
-            inputRange: [0.5, 1, 2],
-            outputRange: I18nManager.isRTL
-              ? [-titleLeftOffset, 0, rightOffset]
-              : [rightOffset, 0, -titleLeftOffset],
-          }),
-        },
-      ],
-    },
-    backgroundStyle: {
-      transform: [
-        {
-          translateX: interpolate(progress, {
-            inputRange: [0, 1, 2],
-            outputRange: I18nManager.isRTL
-              ? [-layouts.screen.width, 0, layouts.screen.width]
-              : [layouts.screen.width, 0, -layouts.screen.width],
-          }),
-        },
-      ],
-    },
+    titleStyle:
+      index === 0
+        ? {
+            opacity: interpolate(progress, {
+              inputRange: [0, 0.4, 1, 1.5],
+              outputRange: [0, 0.1, 1, 0],
+            }),
+            fontSize: 34,
+            flex: 1,
+            transform: [
+              {
+                translateY: interpolate(progress, {
+                  inputRange: [0, 1, 2],
+                  outputRange: [46, 46, 0],
+                }),
+              },
+              {
+                translateX: interpolate(progress, {
+                  inputRange: [0, 1, 2],
+                  outputRange: [0, 21, -66],
+                }),
+              },
+              {
+                scale: interpolate(progress, {
+                  inputRange: [0, 1, 2],
+                  outputRange: [1, 1, 0.5],
+                }),
+              },
+            ],
+          }
+        : {
+            opacity: interpolate(progress, {
+              inputRange: [0, 0.4, 1, 1.5],
+              outputRange: [0, 0.1, 1, 0],
+            }),
+            transform: [
+              {
+                translateX: interpolate(progress, {
+                  inputRange: [0.5, 1, 2],
+                  outputRange: I18nManager.isRTL
+                    ? [-titleLeftOffset, 0, rightOffset]
+                    : [rightOffset, 0, -titleLeftOffset],
+                }),
+              },
+            ],
+          },
+    backgroundStyle: { opacity: 0 },
   };
 }
 

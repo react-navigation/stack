@@ -132,11 +132,7 @@ export default class StackItem extends React.PureComponent<Props> {
         accessibilityElementsHidden={!focused}
         importantForAccessibility={focused ? 'auto' : 'no-hide-descendants'}
         pointerEvents="box-none"
-        containerStyle={
-          headerMode === 'float' && !hasCustomHeader
-            ? { marginTop: floaingHeaderHeight }
-            : null
-        }
+        containerStyle={headerMode === 'float' && !hasCustomHeader ? {} : null}
         contentStyle={cardStyle}
         style={StyleSheet.absoluteFill}
       >

@@ -22,6 +22,7 @@ export type Scene<T> = {
 
 type Props = HeaderOptions & {
   layout: Layout;
+  index: number;
   onGoBack?: () => void;
   title?: string;
   leftLabel?: string;
@@ -92,6 +93,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
     (
       styleInterpolator: HeaderStyleInterpolator,
       layout: Layout,
+      index: number,
       current: Animated.Node<number>,
       next: Animated.Node<number> | undefined,
       titleLayout: Layout | undefined,
@@ -107,6 +109,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
           title: titleLayout,
           leftLabel: leftLabelLayout,
         },
+        index,
       })
   );
 
@@ -114,6 +117,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
     const {
       scene,
       layout,
+      index,
       title: currentTitle,
       leftLabel: previousTitle,
       onGoBack,
@@ -152,6 +156,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
     } = this.getInterpolatedStyle(
       styleInterpolator,
       layout,
+      index,
       scene.progress.current,
       scene.progress.next,
       titleLayout,
@@ -193,8 +198,11 @@ export default class HeaderSegment extends React.Component<Props, State> {
             </Animated.View>
           ) : null}
           {currentTitle ? (
-            <Animated.View
+            <HeaderTitle
+              onLayout={this.handleTitleLayout}
+              allowFontScaling={titleAllowFontScaling}
               style={[
+                { color: headerTintColor },
                 Platform.select({
                   ios: null,
                   default: { left: onGoBack ? 72 : 16 },
@@ -202,16 +210,11 @@ export default class HeaderSegment extends React.Component<Props, State> {
                 styles.title,
                 titleStyle,
                 titleContainerStyle,
+                customTitleStyle,
               ]}
             >
-              <HeaderTitle
-                onLayout={this.handleTitleLayout}
-                allowFontScaling={titleAllowFontScaling}
-                style={[{ color: headerTintColor }, customTitleStyle]}
-              >
-                {currentTitle}
-              </HeaderTitle>
-            </Animated.View>
+              {currentTitle}
+            </HeaderTitle>
           ) : null}
           {right ? (
             <Animated.View
