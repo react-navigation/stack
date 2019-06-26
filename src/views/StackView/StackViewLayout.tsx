@@ -766,7 +766,7 @@ class StackViewLayout extends React.Component<Props, State> {
     if (this.props.headerMode) {
       return this.props.headerMode;
     }
-    if (Platform.OS === 'android' || this.props.mode === 'modal') {
+    if (Platform.OS !== 'ios' || this.props.mode === 'modal') {
       return 'screen';
     }
     // On web, the float header mode will enable body scrolling and stick the header
