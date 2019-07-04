@@ -113,6 +113,11 @@ export type NavigationStackOptions = HeaderOptions &
 export type NavigationConfig = {
   mode: 'card' | 'modal';
   headerMode: HeaderMode;
+  onTransitionStart?: (
+    curr: { index: number },
+    prev: { index: number }
+  ) => void;
+  onTransitionEnd?: (curr: { index: number }, prev: { index: number }) => void;
 };
 
 export type SceneDescriptor = {

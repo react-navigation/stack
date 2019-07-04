@@ -22,6 +22,7 @@ type Props = {
     curr: { index: number },
     prev: { index: number }
   ) => void;
+  onTransitionEnd?: (curr: { index: number }, prev: { index: number }) => void;
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
   onGestureEnd?: () => void;
@@ -267,6 +268,7 @@ class StackView extends React.Component<Props, State> {
       navigation,
       navigationConfig,
       onTransitionStart,
+      onTransitionEnd,
       onGestureBegin,
       onGestureCanceled,
       onGestureEnd,
@@ -290,6 +292,7 @@ class StackView extends React.Component<Props, State> {
         onOpenRoute={this.handleOpenRoute}
         onCloseRoute={this.handleCloseRoute}
         onTransitionStart={onTransitionStart}
+        onTransitionEnd={onTransitionEnd}
         onGestureBegin={onGestureBegin}
         onGestureCanceled={onGestureCanceled}
         onGestureEnd={onGestureEnd}

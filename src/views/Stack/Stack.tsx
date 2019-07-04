@@ -49,6 +49,7 @@ type Props = {
     curr: { index: number },
     prev: { index: number }
   ) => void;
+  onTransitionEnd?: (curr: { index: number }, prev: { index: number }) => void;
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
   onGestureEnd?: () => void;
@@ -213,6 +214,7 @@ export default class Stack extends React.Component<Props, State> {
       renderScene,
       headerMode,
       onTransitionStart,
+      onTransitionEnd,
       onGestureBegin,
       onGestureCanceled,
       onGestureEnd,
@@ -310,6 +312,7 @@ export default class Stack extends React.Component<Props, State> {
                   onOpenRoute={onOpenRoute}
                   onCloseRoute={onCloseRoute}
                   onTransitionStart={onTransitionStart}
+                  onTransitionEnd={onTransitionEnd}
                   onGoBack={onGoBack}
                   direction={direction}
                   transitionSpec={transitionSpec}

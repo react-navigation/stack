@@ -37,6 +37,7 @@ type Props = TransitionPreset & {
     curr: { index: number },
     prev: { index: number }
   ) => void;
+  onTransitionEnd?: (curr: { index: number }, prev: { index: number }) => void;
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
   onGestureEnd?: () => void;
@@ -51,11 +52,18 @@ type Props = TransitionPreset & {
 };
 
 export default class StackItem extends React.PureComponent<Props> {
-  private handleOpen = () =>
+  private handleOpen = () => {
+    const { index, onTransitionEnd } = this.props;
+    onTransitionEnd && onTransitionEnd({ index: index - 1 }, { index });
     this.props.onOpenRoute({ route: this.props.scene.route });
+  };
 
-  private handleClose = () =>
+  private handleClose = () => {
+    const { index, onTransitionEnd } = this.props;
+
+    onTransitionEnd && onTransitionEnd({ index }, { index: index - 1 });
     this.props.onCloseRoute({ route: this.props.scene.route });
+  };
 
   private handleTransitionStart = ({ closing }: { closing: boolean }) => {
     const { index, scene, onTransitionStart, onGoBack } = this.props;
