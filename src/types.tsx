@@ -171,6 +171,7 @@ export type CardInterpolationProps = {
   layouts: {
     screen: Layout;
   };
+  options: any;
 };
 
 export type CardInterpolatedStyle = {

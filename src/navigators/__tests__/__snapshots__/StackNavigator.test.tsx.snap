@@ -34,6 +34,21 @@ Array [
         onGestureEnd={[Function]}
         onOpen={[Function]}
         onTransitionStart={[Function]}
+        options={
+          Object {
+            "gesturesEnabled": true,
+            "headerRight": [Function],
+            "headerStyle": Array [
+              Object {
+                "backgroundColor": "red",
+              },
+              Object {
+                "opacity": 0.5,
+              },
+            ],
+            "title": "Welcome anonymous",
+          }
+        }
         pointerEvents="box-none"
         style={
           Object {
@@ -352,6 +367,20 @@ Array [
         onGestureEnd={[Function]}
         onOpen={[Function]}
         onTransitionStart={[Function]}
+        options={
+          Object {
+            "gesturesEnabled": true,
+            "headerStyle": Array [
+              Object {
+                "backgroundColor": "red",
+              },
+              Object {
+                "opacity": 0.5,
+              },
+            ],
+            "title": "Welcome anonymous",
+          }
+        }
         pointerEvents="box-none"
         style={
           Object {

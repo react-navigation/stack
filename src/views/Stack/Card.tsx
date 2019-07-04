@@ -45,6 +45,7 @@ type Props = ViewProps & {
     open: TransitionSpec;
     close: TransitionSpec;
   };
+  options: any;
   styleInterpolator: CardStyleInterpolator;
   containerStyle?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
@@ -420,6 +421,7 @@ export default class Card extends React.Component<Props> {
         layouts: {
           screen: layout,
         },
+        options: this.props.options,
       })
   );
 

@@ -121,6 +121,7 @@ export default class StackItem extends React.PureComponent<Props> {
         closing={closing}
         onOpen={this.handleOpen}
         onClose={this.handleClose}
+        options={scene.descriptor.options}
         overlayEnabled={cardOverlayEnabled}
         shadowEnabled={cardShadowEnabled}
         gesturesEnabled={gesturesEnabled}
