@@ -9,10 +9,10 @@ import {
   Layout,
   HeaderMode,
   NavigationProp,
+  TransitionPreset,
 } from '../../types';
-import { TransitionPreset } from '../../../lib/typescript/types';
 
-type Props = {
+type Props = TransitionPreset & {
   index: number;
   active: boolean;
   focused: boolean;
@@ -48,7 +48,6 @@ type Props = {
   headerTransparent?: boolean;
   floaingHeaderHeight: number;
   hasCustomHeader: boolean;
-  transitionPreset: TransitionPreset;
 };
 
 export default class StackItem extends React.PureComponent<Props> {
@@ -94,7 +93,10 @@ export default class StackItem extends React.PureComponent<Props> {
       headerTransparent,
       renderHeader,
       renderScene,
-      transitionPreset,
+      direction,
+      transitionSpec,
+      cardStyleInterpolator,
+      headerStyleInterpolator,
     } = this.props;
 
     return (
@@ -102,7 +104,7 @@ export default class StackItem extends React.PureComponent<Props> {
         index={index}
         active={active}
         transparent={cardTransparent}
-        direction={transitionPreset.direction}
+        direction={direction}
         layout={layout}
         current={current}
         next={scene.progress.next}
@@ -117,8 +119,8 @@ export default class StackItem extends React.PureComponent<Props> {
         onGestureCanceled={onGestureCanceled}
         onGestureEnd={onGestureEnd}
         gestureResponseDistance={gestureResponseDistance}
-        transitionSpec={transitionPreset.transitionSpec}
-        styleInterpolator={transitionPreset.cardStyleInterpolator}
+        transitionSpec={transitionSpec}
+        styleInterpolator={cardStyleInterpolator}
         accessibilityElementsHidden={!focused}
         importantForAccessibility={focused ? 'auto' : 'no-hide-descendants'}
         pointerEvents="box-none"
@@ -137,7 +139,7 @@ export default class StackItem extends React.PureComponent<Props> {
               scenes: [previousScene, scene],
               navigation,
               getPreviousRoute,
-              styleInterpolator: transitionPreset.headerStyleInterpolator,
+              styleInterpolator: headerStyleInterpolator,
               style: styles.header,
             })
           : null}

@@ -12,13 +12,17 @@ import { getDefaultHeaderHeight } from '../Header/HeaderSegment';
 import { Props as HeaderContainerProps } from '../Header/HeaderContainer';
 import StackItem from './StackItem';
 import {
+  DefaultTransition,
+  ModalSlideFromBottomIOS,
+} from '../../TransitionConfigs/TransitionPresets';
+import { forNoAnimation } from '../../TransitionConfigs/HeaderStyleInterpolators';
+import {
   Route,
   Layout,
   HeaderMode,
   SceneDescriptor,
   NavigationProp,
   HeaderScene,
-  TransitionPreset,
 } from '../../types';
 
 type ProgressValues = {
@@ -26,6 +30,7 @@ type ProgressValues = {
 };
 
 type Props = {
+  mode: 'card' | 'modal';
   navigation: NavigationProp;
   descriptors: { [key: string]: SceneDescriptor };
   routes: Route[];
@@ -46,7 +51,6 @@ type Props = {
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
   onGestureEnd?: () => void;
-  transitionPreset: TransitionPreset;
 };
 
 type State = {
@@ -178,6 +182,7 @@ export default class Stack extends React.Component<Props, State> {
 
   render() {
     const {
+      mode,
       descriptors,
       navigation,
       routes,
@@ -197,7 +202,21 @@ export default class Stack extends React.Component<Props, State> {
     } = this.props;
 
     const { scenes, layout, progress, floaingHeaderHeight } = this.state;
+
     const focusedRoute = navigation.state.routes[navigation.state.index];
+    const focusedOptions = descriptors[focusedRoute.key].options;
+
+    let defaultTransitionPreset =
+      mode === 'modal' && Platform.OS === 'ios'
+        ? ModalSlideFromBottomIOS
+        : DefaultTransition;
+
+    if (headerMode === 'screen') {
+      defaultTransitionPreset = {
+        ...defaultTransitionPreset,
+        headerStyleInterpolator: forNoAnimation,
+      };
+    }
 
     return (
       <React.Fragment>
@@ -229,13 +248,11 @@ export default class Stack extends React.Component<Props, State> {
               cardOverlayEnabled,
               cardStyle,
               gestureResponseDistance,
-              transitionPreset,
+              direction = defaultTransitionPreset.direction,
+              transitionSpec = defaultTransitionPreset.transitionSpec,
+              cardStyleInterpolator = defaultTransitionPreset.cardStyleInterpolator,
+              headerStyleInterpolator = defaultTransitionPreset.headerStyleInterpolator,
             } = descriptor.options;
-
-            let computedTransitionPreset = {
-              ...this.props.transitionPreset,
-              ...transitionPreset,
-            };
 
             return (
               <AnimatedScreen
@@ -274,7 +291,10 @@ export default class Stack extends React.Component<Props, State> {
                   onCloseRoute={onCloseRoute}
                   onTransitionStart={onTransitionStart}
                   onGoBack={onGoBack}
-                  transitionPreset={computedTransitionPreset}
+                  direction={direction}
+                  transitionSpec={transitionSpec}
+                  cardStyleInterpolator={cardStyleInterpolator}
+                  headerStyleInterpolator={headerStyleInterpolator}
                 />
               </AnimatedScreen>
             );
@@ -288,7 +308,10 @@ export default class Stack extends React.Component<Props, State> {
               navigation,
               getPreviousRoute,
               onLayout: this.handleFloatingHeaderLayout,
-              styleInterpolator: () => ({}),
+              styleInterpolator:
+                focusedOptions.headerStyleInterpolator !== undefined
+                  ? focusedOptions.headerStyleInterpolator
+                  : defaultTransitionPreset.headerStyleInterpolator,
               style: [styles.header, styles.floating],
             })
           : null}

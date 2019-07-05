@@ -94,7 +94,7 @@ export type HeaderProps = {
 };
 
 export type NavigationStackOptions = HeaderOptions &
-  TransitionPreset & {
+  Partial<TransitionPreset> & {
     title?: string;
     header?: null | ((props: HeaderProps) => React.ReactNode);
     cardShadowEnabled?: boolean;
@@ -108,9 +108,6 @@ export type NavigationStackOptions = HeaderOptions &
       horizontal?: number;
     };
     disableKeyboardHandling?: boolean;
-    cardStyleInterpolator?: CardStyleInterpolator;
-    headerStyleInterpolator?: HeaderStyleInterpolator;
-    transitionPreset: TransitionPreset;
   };
 
 export type NavigationConfig = {
