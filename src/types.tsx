@@ -107,6 +107,8 @@ export type NavigationStackOptions = HeaderOptions & {
     horizontal?: number;
   };
   disableKeyboardHandling?: boolean;
+  cardStyleInterpolator?: CardStyleInterpolator;
+  headerStyleInterpolator?: HeaderStyleInterpolator;
 };
 
 export type NavigationConfig = TransitionPreset & {

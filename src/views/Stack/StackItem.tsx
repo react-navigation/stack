@@ -109,6 +109,15 @@ export default class StackItem extends React.PureComponent<Props> {
       renderScene,
     } = this.props;
 
+    const {
+      descriptor: {
+        options: {
+          headerStyleInterpolator: customHeaderStyleInterpolator,
+          cardStyleInterpolator: customCardStyleInterpolator,
+        },
+      },
+    } = scene;
+
     return (
       <Card
         index={index}
@@ -130,7 +139,7 @@ export default class StackItem extends React.PureComponent<Props> {
         onGestureEnd={onGestureEnd}
         gestureResponseDistance={gestureResponseDistance}
         transitionSpec={transitionSpec}
-        styleInterpolator={cardStyleInterpolator}
+        styleInterpolator={customCardStyleInterpolator || cardStyleInterpolator}
         accessibilityElementsHidden={!focused}
         importantForAccessibility={focused ? 'auto' : 'no-hide-descendants'}
         pointerEvents="box-none"
@@ -149,7 +158,8 @@ export default class StackItem extends React.PureComponent<Props> {
               scenes: [previousScene, scene],
               navigation,
               getPreviousRoute,
-              styleInterpolator: headerStyleInterpolator,
+              styleInterpolator:
+                customHeaderStyleInterpolator || headerStyleInterpolator,
               style: styles.header,
             })
           : null}
