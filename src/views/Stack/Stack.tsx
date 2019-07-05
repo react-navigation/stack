@@ -14,14 +14,11 @@ import StackItem from './StackItem';
 import {
   Route,
   Layout,
-  TransitionSpec,
-  CardStyleInterpolator,
-  HeaderStyleInterpolator,
   HeaderMode,
-  GestureDirection,
   SceneDescriptor,
   NavigationProp,
   HeaderScene,
+  TransitionPreset,
 } from '../../types';
 
 type ProgressValues = {
@@ -42,7 +39,6 @@ type Props = {
   renderHeader: (props: HeaderContainerProps) => React.ReactNode;
   renderScene: (props: { route: Route }) => React.ReactNode;
   headerMode: HeaderMode;
-  direction: GestureDirection;
   onTransitionStart?: (
     curr: { index: number },
     prev: { index: number }
@@ -50,12 +46,7 @@ type Props = {
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
   onGestureEnd?: () => void;
-  transitionSpec: {
-    open: TransitionSpec;
-    close: TransitionSpec;
-  };
-  cardStyleInterpolator: CardStyleInterpolator;
-  headerStyleInterpolator: HeaderStyleInterpolator;
+  transitionPreset: TransitionPreset;
 };
 
 type State = {
@@ -199,14 +190,10 @@ export default class Stack extends React.Component<Props, State> {
       renderHeader,
       renderScene,
       headerMode,
-      direction,
       onTransitionStart,
       onGestureBegin,
       onGestureCanceled,
       onGestureEnd,
-      transitionSpec,
-      cardStyleInterpolator,
-      headerStyleInterpolator,
     } = this.props;
 
     const { scenes, layout, progress, floaingHeaderHeight } = this.state;
@@ -242,7 +229,13 @@ export default class Stack extends React.Component<Props, State> {
               cardOverlayEnabled,
               cardStyle,
               gestureResponseDistance,
+              transitionPreset,
             } = descriptor.options;
+
+            let computedTransitionPreset = {
+              ...this.props.transitionPreset,
+              ...transitionPreset,
+            };
 
             return (
               <AnimatedScreen
@@ -261,7 +254,6 @@ export default class Stack extends React.Component<Props, State> {
                   scene={scene}
                   previousScene={scenes[index - 1]}
                   navigation={navigation}
-                  direction={direction}
                   cardTransparent={cardTransparent}
                   cardOverlayEnabled={cardOverlayEnabled}
                   cardShadowEnabled={cardShadowEnabled}
@@ -271,9 +263,6 @@ export default class Stack extends React.Component<Props, State> {
                   onGestureCanceled={onGestureCanceled}
                   onGestureEnd={onGestureEnd}
                   gestureResponseDistance={gestureResponseDistance}
-                  transitionSpec={transitionSpec}
-                  headerStyleInterpolator={headerStyleInterpolator}
-                  cardStyleInterpolator={cardStyleInterpolator}
                   floaingHeaderHeight={floaingHeaderHeight}
                   hasCustomHeader={header === null}
                   getPreviousRoute={getPreviousRoute}
@@ -285,6 +274,7 @@ export default class Stack extends React.Component<Props, State> {
                   onCloseRoute={onCloseRoute}
                   onTransitionStart={onTransitionStart}
                   onGoBack={onGoBack}
+                  transitionPreset={computedTransitionPreset}
                 />
               </AnimatedScreen>
             );
@@ -298,7 +288,7 @@ export default class Stack extends React.Component<Props, State> {
               navigation,
               getPreviousRoute,
               onLayout: this.handleFloatingHeaderLayout,
-              styleInterpolator: headerStyleInterpolator,
+              styleInterpolator: () => ({}),
               style: [styles.header, styles.floating],
             })
           : null}

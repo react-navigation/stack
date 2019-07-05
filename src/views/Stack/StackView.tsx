@@ -314,7 +314,7 @@ class StackView extends React.Component<Props, State> {
         headerMode={headerMode}
         navigation={navigation}
         descriptors={descriptors}
-        {...transitionPreset}
+        transitionPreset={transitionPreset}
         {...config}
       />
     );

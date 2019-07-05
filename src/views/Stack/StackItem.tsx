@@ -6,14 +6,11 @@ import Card from './Card';
 import {
   Route,
   HeaderScene,
-  GestureDirection,
   Layout,
-  TransitionSpec,
-  CardStyleInterpolator,
   HeaderMode,
   NavigationProp,
-  HeaderStyleInterpolator,
 } from '../../types';
+import { TransitionPreset } from '../../../lib/typescript/types';
 
 type Props = {
   index: number;
@@ -30,7 +27,6 @@ type Props = {
   cardShadowEnabled?: boolean;
   cardStyle?: StyleProp<ViewStyle>;
   gesturesEnabled?: boolean;
-  direction: GestureDirection;
   getPreviousRoute: (props: { route: Route }) => Route | undefined;
   renderHeader: (props: HeaderContainerProps) => React.ReactNode;
   renderScene: (props: { route: Route }) => React.ReactNode;
@@ -48,16 +44,11 @@ type Props = {
     vertical?: number;
     horizontal?: number;
   };
-  transitionSpec: {
-    open: TransitionSpec;
-    close: TransitionSpec;
-  };
-  headerStyleInterpolator: HeaderStyleInterpolator;
-  cardStyleInterpolator: CardStyleInterpolator;
   headerMode: HeaderMode;
   headerTransparent?: boolean;
   floaingHeaderHeight: number;
   hasCustomHeader: boolean;
+  transitionPreset: TransitionPreset;
 };
 
 export default class StackItem extends React.PureComponent<Props> {
@@ -87,7 +78,6 @@ export default class StackItem extends React.PureComponent<Props> {
       navigation,
       scene,
       previousScene,
-      direction,
       cardTransparent,
       cardOverlayEnabled,
       cardShadowEnabled,
@@ -97,9 +87,6 @@ export default class StackItem extends React.PureComponent<Props> {
       onGestureCanceled,
       onGestureEnd,
       gestureResponseDistance,
-      transitionSpec,
-      headerStyleInterpolator,
-      cardStyleInterpolator,
       floaingHeaderHeight,
       hasCustomHeader,
       getPreviousRoute,
@@ -107,23 +94,15 @@ export default class StackItem extends React.PureComponent<Props> {
       headerTransparent,
       renderHeader,
       renderScene,
+      transitionPreset,
     } = this.props;
-
-    const {
-      descriptor: {
-        options: {
-          headerStyleInterpolator: customHeaderStyleInterpolator,
-          cardStyleInterpolator: customCardStyleInterpolator,
-        },
-      },
-    } = scene;
 
     return (
       <Card
         index={index}
         active={active}
         transparent={cardTransparent}
-        direction={direction}
+        direction={transitionPreset.direction}
         layout={layout}
         current={current}
         next={scene.progress.next}
@@ -138,8 +117,8 @@ export default class StackItem extends React.PureComponent<Props> {
         onGestureCanceled={onGestureCanceled}
         onGestureEnd={onGestureEnd}
         gestureResponseDistance={gestureResponseDistance}
-        transitionSpec={transitionSpec}
-        styleInterpolator={customCardStyleInterpolator || cardStyleInterpolator}
+        transitionSpec={transitionPreset.transitionSpec}
+        styleInterpolator={transitionPreset.cardStyleInterpolator}
         accessibilityElementsHidden={!focused}
         importantForAccessibility={focused ? 'auto' : 'no-hide-descendants'}
         pointerEvents="box-none"
@@ -158,8 +137,7 @@ export default class StackItem extends React.PureComponent<Props> {
               scenes: [previousScene, scene],
               navigation,
               getPreviousRoute,
-              styleInterpolator:
-                customHeaderStyleInterpolator || headerStyleInterpolator,
+              styleInterpolator: transitionPreset.headerStyleInterpolator,
               style: styles.header,
             })
           : null}
