@@ -60,7 +60,7 @@ type State = {
   scenes: HeaderScene<Route>[];
   progress: ProgressValues;
   layout: Layout;
-  floaingHeaderHeight: number;
+  floatingHeaderHeight: number;
 };
 
 const dimensions = Dimensions.get('window');
@@ -171,7 +171,7 @@ export default class Stack extends React.Component<Props, State> {
     // This is not a great heuristic here. We don't know synchronously
     // on mount what the header height is so we have just used the most
     // common cases here.
-    floaingHeaderHeight: getDefaultHeaderHeight(layout),
+    floatingHeaderHeight: getDefaultHeaderHeight(layout),
   };
 
   private handleLayout = (e: LayoutChangeEvent) => {
@@ -192,8 +192,8 @@ export default class Stack extends React.Component<Props, State> {
   private handleFloatingHeaderLayout = (e: LayoutChangeEvent) => {
     const { height } = e.nativeEvent.layout;
 
-    if (height !== this.state.floaingHeaderHeight) {
-      this.setState({ floaingHeaderHeight: height });
+    if (height !== this.state.floatingHeaderHeight) {
+      this.setState({ floatingHeaderHeight: height });
     }
   };
 
@@ -218,7 +218,7 @@ export default class Stack extends React.Component<Props, State> {
       onGestureEnd,
     } = this.props;
 
-    const { scenes, layout, progress, floaingHeaderHeight } = this.state;
+    const { scenes, layout, progress, floatingHeaderHeight } = this.state;
 
     const focusedRoute = navigation.state.routes[navigation.state.index];
     const focusedOptions = descriptors[focusedRoute.key].options;
@@ -300,7 +300,7 @@ export default class Stack extends React.Component<Props, State> {
                   onGestureCanceled={onGestureCanceled}
                   onGestureEnd={onGestureEnd}
                   gestureResponseDistance={gestureResponseDistance}
-                  floaingHeaderHeight={floaingHeaderHeight}
+                  floatingHeaderHeight={floatingHeaderHeight}
                   hasCustomHeader={header === null}
                   getPreviousRoute={getPreviousRoute}
                   headerMode={headerMode}
