@@ -8,10 +8,11 @@ import {
   ViewProps,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
-import * as Screens from 'react-native-screens'; // Import with * as to prevent getters being called
+import { ScreenContainer, screensEnabled } from 'react-native-screens';
 import { getDefaultHeaderHeight } from '../Header/HeaderSegment';
 import { Props as HeaderContainerProps } from '../Header/HeaderContainer';
 import StackItem from './StackItem';
+import AnimatedScreen from './AnimatedScreen';
 import {
   DefaultTransition,
   ModalTransition,
@@ -66,10 +67,6 @@ type State = {
 const dimensions = Dimensions.get('window');
 const layout = { width: dimensions.width, height: dimensions.height };
 
-let AnimatedScreen: React.ComponentType<
-  ViewProps & { active: number | Animated.Node<number> }
->;
-
 const MaybeScreenContainer = ({
   enabled,
   ...rest
@@ -77,8 +74,8 @@ const MaybeScreenContainer = ({
   enabled: boolean;
   children: React.ReactNode;
 }) => {
-  if (Platform.OS !== 'ios' && enabled && Screens.screensEnabled()) {
-    return <Screens.ScreenContainer {...rest} />;
+  if (Platform.OS !== 'ios' && enabled && screensEnabled()) {
+    return <ScreenContainer {...rest} />;
   }
 
   return <View {...rest} />;
@@ -86,26 +83,19 @@ const MaybeScreenContainer = ({
 
 const MaybeScreen = ({
   enabled,
-  active,
+  next,
   ...rest
 }: ViewProps & {
   enabled: boolean;
-  active: number | Animated.Node<number>;
+  next?: Animated.Node<number>;
   children: React.ReactNode;
 }) => {
-  if (Platform.OS !== 'ios' && enabled && Screens.screensEnabled()) {
-    AnimatedScreen =
-      AnimatedScreen || Animated.createAnimatedComponent(Screens.NativeScreen);
-
-    return <AnimatedScreen active={active} {...rest} />;
+  if (Platform.OS !== 'ios' && enabled && screensEnabled()) {
+    return <AnimatedScreen next={next} {...rest} />;
   }
 
   return <View {...rest} />;
 };
-
-const { cond, eq } = Animated;
-
-const ANIMATED_ONE = new Animated.Value(1);
 
 const getFloatingHeaderHeights = (
   routes: Route[],
@@ -324,17 +314,7 @@ export default class Stack extends React.Component<Props, State> {
             const scene = scenes[index];
             const next = self[index + 1]
               ? progress[self[index + 1].key]
-              : ANIMATED_ONE;
-
-            // Display current screen and a screen beneath. On Android screen beneath is hidden on animation finished bs of RNS's issue.
-            const isScreenActive =
-              index === self.length - 1
-                ? 1
-                : Platform.OS === 'android'
-                ? cond(eq(next, 1), 0, 1)
-                : index === self.length - 2
-                ? 1
-                : 0;
+              : undefined;
 
             const {
               header,
@@ -355,7 +335,7 @@ export default class Stack extends React.Component<Props, State> {
                 key={route.key}
                 style={StyleSheet.absoluteFill}
                 enabled={mode !== 'modal'}
-                active={isScreenActive}
+                next={next}
                 pointerEvents="box-none"
               >
                 <StackItem
