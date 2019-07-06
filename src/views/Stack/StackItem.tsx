@@ -33,11 +33,12 @@ type Props = TransitionPreset & {
   onOpenRoute: (props: { route: Route }) => void;
   onCloseRoute: (props: { route: Route }) => void;
   onGoBack: (props: { route: Route }) => void;
-  onTransitionStart?: (
-    curr: { index: number },
-    prev: { index: number }
-  ) => void;
-  onTransitionEnd?: (curr: { index: number }, prev: { index: number }) => void;
+  onTransitionStart?: (props: {
+    route: Route;
+    current: { index: number };
+    previous: { index: number };
+  }) => void;
+  onTransitionEnd?: (props: { route: Route }) => void;
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
   onGestureEnd?: () => void;
@@ -53,23 +54,28 @@ type Props = TransitionPreset & {
 
 export default class StackItem extends React.PureComponent<Props> {
   private handleOpen = () => {
-    const { index, onTransitionEnd } = this.props;
-    onTransitionEnd && onTransitionEnd({ index: index - 1 }, { index });
-    this.props.onOpenRoute({ route: this.props.scene.route });
+    const { scene, onTransitionEnd, onOpenRoute } = this.props;
+
+    onTransitionEnd && onTransitionEnd({ route: scene.route });
+    onOpenRoute({ route: scene.route });
   };
 
   private handleClose = () => {
-    const { index, onTransitionEnd } = this.props;
+    const { scene, onTransitionEnd, onCloseRoute } = this.props;
 
-    onTransitionEnd && onTransitionEnd({ index }, { index: index - 1 });
-    this.props.onCloseRoute({ route: this.props.scene.route });
+    onTransitionEnd && onTransitionEnd({ route: scene.route });
+    onCloseRoute({ route: scene.route });
   };
 
   private handleTransitionStart = ({ closing }: { closing: boolean }) => {
     const { index, scene, onTransitionStart, onGoBack } = this.props;
 
     onTransitionStart &&
-      onTransitionStart({ index: closing ? index - 1 : index }, { index });
+      onTransitionStart({
+        route: scene.route,
+        previous: { index: closing ? index - 1 : index },
+        current: { index },
+      });
 
     closing && onGoBack({ route: scene.route });
   };

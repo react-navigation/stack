@@ -108,16 +108,13 @@ export type NavigationStackOptions = HeaderOptions &
       horizontal?: number;
     };
     disableKeyboardHandling?: boolean;
+    onTransitionStart?: () => void;
+    onTransitionEnd?: () => void;
   };
 
 export type NavigationConfig = {
   mode: 'card' | 'modal';
   headerMode: HeaderMode;
-  onTransitionStart?: (
-    curr: { index: number },
-    prev: { index: number }
-  ) => void;
-  onTransitionEnd?: (curr: { index: number }, prev: { index: number }) => void;
 };
 
 export type SceneDescriptor = {

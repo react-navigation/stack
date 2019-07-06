@@ -46,10 +46,9 @@ type Props = {
   renderScene: (props: { route: Route }) => React.ReactNode;
   headerMode: HeaderMode;
   onTransitionStart?: (
-    curr: { index: number },
-    prev: { index: number }
+    current: { index: number },
+    previous: { index: number }
   ) => void;
-  onTransitionEnd?: (curr: { index: number }, prev: { index: number }) => void;
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
   onGestureEnd?: () => void;
@@ -198,6 +197,27 @@ export default class Stack extends React.Component<Props, State> {
     }
   };
 
+  private handleTransitionStart = ({
+    route,
+    current,
+    previous,
+  }: {
+    route: Route;
+    current: { index: number };
+    previous: { index: number };
+  }) => {
+    const { onTransitionStart, descriptors } = this.props;
+    const options = descriptors[route.key].options;
+
+    onTransitionStart && onTransitionStart(current, previous);
+    options.onTransitionStart && options.onTransitionStart();
+  };
+
+  private handleTransitionEnd = ({ route }: { route: Route }) => {
+    const options = this.props.descriptors[route.key].options;
+    options.onTransitionEnd && options.onTransitionEnd();
+  };
+
   render() {
     const {
       mode,
@@ -213,8 +233,6 @@ export default class Stack extends React.Component<Props, State> {
       renderHeader,
       renderScene,
       headerMode,
-      onTransitionStart,
-      onTransitionEnd,
       onGestureBegin,
       onGestureCanceled,
       onGestureEnd,
@@ -311,8 +329,8 @@ export default class Stack extends React.Component<Props, State> {
                   renderScene={renderScene}
                   onOpenRoute={onOpenRoute}
                   onCloseRoute={onCloseRoute}
-                  onTransitionStart={onTransitionStart}
-                  onTransitionEnd={onTransitionEnd}
+                  onTransitionStart={this.handleTransitionStart}
+                  onTransitionEnd={this.handleTransitionEnd}
                   onGoBack={onGoBack}
                   direction={direction}
                   transitionSpec={transitionSpec}
