@@ -59,6 +59,7 @@ export type HeaderScene<T> = {
     next?: Animated.Node<number>;
     previous?: Animated.Node<number>;
   };
+  previous: Route;
 };
 
 export type HeaderOptions = {
@@ -128,7 +129,7 @@ export type SceneDescriptorMap = { [key: string]: SceneDescriptor | undefined };
 
 export type HeaderBackButtonProps = {
   disabled?: boolean;
-  onPress: () => void;
+  onPress?: () => void;
   pressColorAndroid?: string;
   backImage?: (props: { tintColor: string }) => React.ReactNode;
   tintColor?: string;
@@ -140,6 +141,7 @@ export type HeaderBackButtonProps = {
   onLabelLayout?: (e: LayoutChangeEvent) => void;
   screenLayout?: Layout;
   titleLayout?: Layout;
+  hasPrevScene: boolean;
 };
 
 export type HeaderTitleProps = {

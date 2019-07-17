@@ -34,6 +34,7 @@ type Props = HeaderOptions & {
   leftLabel?: string;
   scene: HeaderScene<Route>;
   styleInterpolator: HeaderStyleInterpolator;
+  forceHeaderLeft?: boolean;
 };
 
 type State = {
@@ -144,6 +145,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
       headerLeft: left = (props: HeaderBackButtonProps) => (
         <HeaderBackButton {...props} />
       ),
+      forceHeaderLeft,
       // @ts-ignore
       headerStatusBarHeight = getStatusBarHeight(layout.width > layout.height),
       headerTransparent,
@@ -295,7 +297,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
             style={{ height: headerStatusBarHeight }}
           />
           <View pointerEvents="box-none" style={styles.content}>
-            {onGoBack ? (
+            {onGoBack || forceHeaderLeft ? (
               <Animated.View
                 pointerEvents="box-none"
                 style={[styles.left, leftButtonStyle, leftContainerStyle]}
@@ -313,6 +315,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
                   screenLayout: layout,
                   titleLayout,
                   tintColor: headerTintColor,
+                  hasPrevScene: !!scene.previous,
                 })}
               </Animated.View>
             ) : null}
