@@ -246,14 +246,9 @@ export default class Card extends React.Component<Props> {
     ]);
   };
 
-  private velocitySignum = cond(
-    this.velocity,
-    divide(abs(this.velocity), this.velocity),
-    0
-  );
   private extrapolatedPosition = add(
     this.gesture,
-    multiply(this.velocity, this.velocitySignum, SWIPE_VELOCITY_IMPACT)
+    multiply(this.velocity, SWIPE_VELOCITY_IMPACT)
   );
 
   private exec = block([
