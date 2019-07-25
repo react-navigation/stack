@@ -169,7 +169,7 @@ class HeaderBackButton extends React.Component<Props, State> {
         pressColor={pressColorAndroid}
         style={[styles.container, disabled && styles.disabled]}
         hitSlop={Platform.select({
-          ios: undefined,
+          ios: { top: 10, bottom: 0, right: 10, left: 10 },
           default: { top: 8, right: 8, bottom: 8, left: 8 },
         })}
         borderless
