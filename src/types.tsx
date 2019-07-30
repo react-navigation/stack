@@ -115,10 +115,12 @@ export type NavigationStackOptions = HeaderOptions &
     onTransitionEnd?: (props: TransitionCallbackProps) => void;
   };
 
+export type KeyboardHandling = 'disabled' | 'sticky' | 'default';
+
 export type NavigationStackConfig = {
   mode?: 'card' | 'modal';
   headerMode?: HeaderMode;
-  disableKeyboardHandling?: boolean;
+  keyboardHandling?: KeyboardHandling;
 };
 
 export type SceneDescriptor = {

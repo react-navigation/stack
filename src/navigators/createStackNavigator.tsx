@@ -27,13 +27,15 @@ function createStackNavigator(
 ) {
   const router = StackRouter(routeConfigMap, stackConfig);
 
-  if (stackConfig.disableKeyboardHandling || Platform.OS === 'web') {
+  if (stackConfig.keyboardHandling === 'disabled' || Platform.OS === 'web') {
     return createNavigator(StackView, router, stackConfig);
   }
 
   return createNavigator(
     navigatorProps => (
-      <KeyboardManager>
+      <KeyboardManager
+        stickyKeyboard={stackConfig.keyboardHandling === 'sticky'}
+      >
         {props => <StackView {...props} {...navigatorProps} />}
       </KeyboardManager>
     ),

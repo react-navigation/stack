@@ -2,6 +2,7 @@ import * as React from 'react';
 import { TextInput, Keyboard } from 'react-native';
 
 type Props = {
+  stickyKeyboard: boolean;
   children: (props: {
     onPageChangeStart: () => void;
     onPageChangeConfirm: () => void;
@@ -15,10 +16,14 @@ export default class KeyboardManager extends React.Component<Props> {
   private previouslyFocusedTextInput: number | null = null;
 
   private handlePageChangeStart = () => {
-    const input = TextInput.State.currentlyFocusedField();
+    const input: number | null =
+      TextInput.State.currentlyFocusedField() ||
+      (this.props.stickyKeyboard ? this.previouslyFocusedTextInput : null);
 
     // When a page change begins, blur the currently focused input
-    TextInput.State.blurTextInput(input);
+    if (input !== null) {
+      TextInput.State.blurTextInput(input);
+    }
 
     // Store the id of this input so we can refocus it if change was cancelled
     this.previouslyFocusedTextInput = input;
@@ -39,7 +44,9 @@ export default class KeyboardManager extends React.Component<Props> {
       TextInput.State.focusTextInput(input);
     }
 
-    this.previouslyFocusedTextInput = null;
+    if (!this.props.stickyKeyboard) {
+      this.previouslyFocusedTextInput = null;
+    }
   };
 
   render() {
