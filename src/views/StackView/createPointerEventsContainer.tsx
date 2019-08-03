@@ -72,6 +72,7 @@ export default function createPointerEventsContainer<
 
       if (scene.isStale || navigation.state.index !== scene.index) {
         // The scene isn't focused.
+        console.warn('computePointerEvents ' + (scene.index > navigation.state.index ? 'box-only' : 'none'));
         return scene.index > navigation.state.index ? 'box-only' : 'none';
       }
 
@@ -81,9 +82,11 @@ export default function createPointerEventsContainer<
         // The positon is still away from scene's index.
         // Scene's children should not receive touches until the position
         // is close enough to scene's index.
+        console.warn('computePointerEvents box-only');
         return 'box-only';
       }
 
+      console.warn('computePointerEvents auto');
       return 'auto';
     }
 

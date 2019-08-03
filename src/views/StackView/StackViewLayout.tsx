@@ -201,6 +201,7 @@ class StackViewLayout extends React.Component<Props, State> {
     const { options } = scene.descriptor;
     const { header } = options;
 
+    console.warn('renderHeader');
     if (__DEV__ && typeof header === 'string') {
       throw new Error(
         `Invalid header value: "${header}". The header option must be a valid React component or null, not a string.`
@@ -368,6 +369,7 @@ class StackViewLayout extends React.Component<Props, State> {
       );
     }
 
+    console.warn('render Layout');
     return (
       <PanGestureHandler
         {...this.gestureActivationCriteria()}
@@ -882,6 +884,7 @@ class StackViewLayout extends React.Component<Props, State> {
     const { screenProps } = this.props;
     const headerMode = this.getHeaderMode();
     if (headerMode === 'screen') {
+      console.warn('renderInnerScene 1');
       return (
         <View style={styles.container}>
           <View style={styles.scenes}>
@@ -895,6 +898,7 @@ class StackViewLayout extends React.Component<Props, State> {
         </View>
       );
     }
+    console.warn('renderInnerScene 2');
     return (
       <SceneView
         screenProps={screenProps}
@@ -967,6 +971,7 @@ class StackViewLayout extends React.Component<Props, State> {
       };
     }
 
+    console.warn('renderCard');
     return (
       <Card
         {...transitionProps}

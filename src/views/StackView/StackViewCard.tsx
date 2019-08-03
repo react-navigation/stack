@@ -42,6 +42,7 @@ function getAccessibilityProps(isActive: boolean) {
  */
 class Card extends React.Component<Props> {
   render() {
+    console.warn('Card render');
     const {
       children,
       pointerEvents,

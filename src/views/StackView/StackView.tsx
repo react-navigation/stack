@@ -98,6 +98,7 @@ class StackView extends React.Component<Props> {
     transitionProps: TransitionProps,
     lastTransitionProps?: TransitionProps
   ) => {
+    console.warn('renderStackviewLayout');
     const { screenProps, navigationConfig } = this.props;
     return (
       <StackViewLayout
