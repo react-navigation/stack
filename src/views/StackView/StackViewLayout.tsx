@@ -201,7 +201,6 @@ class StackViewLayout extends React.Component<Props, State> {
     const { options } = scene.descriptor;
     const { header } = options;
 
-    console.warn('renderHeader');
     if (__DEV__ && typeof header === 'string') {
       throw new Error(
         `Invalid header value: "${header}". The header option must be a valid React component or null, not a string.`

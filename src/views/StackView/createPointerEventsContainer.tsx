@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Animated, View } from 'react-native';
+import { Animated, View, Platform } from 'react-native';
 import { NavigationProp, Scene } from '../../types';
 
 const MIN_POSITION_OFFSET = 0.01;
@@ -69,7 +69,6 @@ export default function createPointerEventsContainer<
 
     private computePointerEvents() {
       const { navigation, realPosition, scene } = this.props;
-      console.log(this.props);
 
       if (scene.isStale || navigation.state.index !== scene.index) {
         // The scene isn't focused.
@@ -85,8 +84,16 @@ export default function createPointerEventsContainer<
         return 'box-only';
       }
 
-      console.warn('computePointerEvents auto');
-      return 'auto';
+      const gesturesEnabled = this.props.scene.descriptor.options.gesturesEnabled;
+      if ((typeof gesturesEnabled === 'boolean' ? gesturesEnabled : Platform.OS === 'ios')) {
+        console.warn('computePointerEvents auto');
+        console.log(this.props);
+        return 'auto';
+      } else {
+        console.warn('computePointerEvents box-none');
+        console.log(this.props);
+        return 'box-none';
+      }
     }
 
     render() {
