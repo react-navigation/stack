@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Animated, View } from 'react-native';
 import { NavigationProp, Scene } from '../../types';
-import console = require('console');
 
 const MIN_POSITION_OFFSET = 0.01;
 
