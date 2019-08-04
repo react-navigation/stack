@@ -51,8 +51,6 @@ class Card extends React.Component<Props> {
       scene: { index, isActive },
     } = this.props;
 
-    console.warn('Card render ' + pointerEvents);
-    
     const active: Animated.Value | number | boolean = Platform.select({
       web: isActive,
       // @ts-ignore

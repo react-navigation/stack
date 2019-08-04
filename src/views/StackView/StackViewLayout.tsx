@@ -973,9 +973,6 @@ class StackViewLayout extends React.Component<Props, State> {
       };
     }
 
-    console.warn('renderCard');
-    console.warn(this.props);
-    console.warn(transitionProps);
     return (
       <Card
         {...transitionProps}

@@ -86,12 +86,8 @@ export default function createPointerEventsContainer<
 
       const gesturesEnabled = this.props.scene.descriptor.options.gesturesEnabled;
       if ((typeof gesturesEnabled === 'boolean' ? gesturesEnabled : Platform.OS === 'ios')) {
-        console.warn('computePointerEvents auto');
-        console.log(this.props);
         return 'auto';
       } else {
-        console.warn('computePointerEvents box-none');
-        console.log(this.props);
         return 'box-none';
       }
     }
