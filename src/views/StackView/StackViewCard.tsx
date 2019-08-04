@@ -94,7 +94,7 @@ class Card extends React.Component<Props> {
         ) : null}
         <Animated.View
           {...getAccessibilityProps(isActive)}
-          pointerEvents="none"
+          pointerEvents="box-none"
           style={[
             transparent ? styles.transparent : styles.card,
             backgroundColor && backgroundColor !== 'transparent'
