@@ -42,7 +42,6 @@ function getAccessibilityProps(isActive: boolean) {
  */
 class Card extends React.Component<Props> {
   render() {
-    console.warn('Card render');
     const {
       children,
       pointerEvents,
@@ -52,6 +51,8 @@ class Card extends React.Component<Props> {
       scene: { index, isActive },
     } = this.props;
 
+    console.warn('Card render ' + pointerEvents);
+    
     const active: Animated.Value | number | boolean = Platform.select({
       web: isActive,
       // @ts-ignore
@@ -93,6 +94,7 @@ class Card extends React.Component<Props> {
         ) : null}
         <Animated.View
           {...getAccessibilityProps(isActive)}
+          pointerEvents="none"
           style={[
             transparent ? styles.transparent : styles.card,
             backgroundColor && backgroundColor !== 'transparent'

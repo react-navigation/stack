@@ -369,17 +369,20 @@ class StackViewLayout extends React.Component<Props, State> {
       );
     }
 
-    console.warn('render Layout');
+    let enabled = index > 0 && this.isGestureEnabled();
+    let pointerEvents = enabled ? 'auto' : 'box-none';
+
     return (
       <PanGestureHandler
         {...this.gestureActivationCriteria()}
         ref={this.panGestureRef}
         onGestureEvent={this.gestureEvent}
         onHandlerStateChange={this.handlePanGestureStateChange}
-        enabled={index > 0 && this.isGestureEnabled()}
+        enabled={enabled}
       >
         <Animated.View
           style={[styles.container, this.transitionConfig!.containerStyle]}
+          pointerEvents={pointerEvents}
         >
           <StackGestureContext.Provider value={this.panGestureRef}>
             <ScreenContainer style={styles.scenes}>
@@ -884,10 +887,11 @@ class StackViewLayout extends React.Component<Props, State> {
     const { screenProps } = this.props;
     const headerMode = this.getHeaderMode();
     if (headerMode === 'screen') {
-      console.warn('renderInnerScene 1');
       return (
-        <View style={styles.container}>
-          <View style={styles.scenes}>
+        <View style={styles.container}
+              pointerEvents='box-none'>
+          <View style={styles.scenes}
+                pointerEvents='box-none'>
             <SceneView
               screenProps={screenProps}
               navigation={navigation}
@@ -898,7 +902,6 @@ class StackViewLayout extends React.Component<Props, State> {
         </View>
       );
     }
-    console.warn('renderInnerScene 2');
     return (
       <SceneView
         screenProps={screenProps}
@@ -972,6 +975,8 @@ class StackViewLayout extends React.Component<Props, State> {
     }
 
     console.warn('renderCard');
+    console.warn(this.props);
+    console.warn(transitionProps);
     return (
       <Card
         {...transitionProps}

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Animated, View } from 'react-native';
 import { NavigationProp, Scene } from '../../types';
+import console = require('console');
 
 const MIN_POSITION_OFFSET = 0.01;
 
@@ -69,10 +70,10 @@ export default function createPointerEventsContainer<
 
     private computePointerEvents() {
       const { navigation, realPosition, scene } = this.props;
+      console.log(this.props);
 
       if (scene.isStale || navigation.state.index !== scene.index) {
         // The scene isn't focused.
-        console.warn('computePointerEvents ' + (scene.index > navigation.state.index ? 'box-only' : 'none'));
         return scene.index > navigation.state.index ? 'box-only' : 'none';
       }
 
@@ -82,7 +83,6 @@ export default function createPointerEventsContainer<
         // The positon is still away from scene's index.
         // Scene's children should not receive touches until the position
         // is close enough to scene's index.
-        console.warn('computePointerEvents box-only');
         return 'box-only';
       }
 
