@@ -887,10 +887,8 @@ class StackViewLayout extends React.Component<Props, State> {
     const headerMode = this.getHeaderMode();
     if (headerMode === 'screen') {
       return (
-        <View style={styles.container}
-              pointerEvents='box-none'>
-          <View style={styles.scenes}
-                pointerEvents='box-none'>
+        <View style={styles.container} pointerEvents="box-none">
+          <View style={styles.scenes} pointerEvents="box-none">
             <SceneView
               screenProps={screenProps}
               navigation={navigation}

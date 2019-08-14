@@ -84,8 +84,13 @@ export default function createPointerEventsContainer<
         return 'box-only';
       }
 
-      const gesturesEnabled = this.props.scene.descriptor.options.gesturesEnabled;
-      if ((typeof gesturesEnabled === 'boolean' ? gesturesEnabled : Platform.OS === 'ios')) {
+      const gesturesEnabled = this.props.scene.descriptor.options
+        .gesturesEnabled;
+      if (
+        typeof gesturesEnabled === 'boolean'
+          ? gesturesEnabled
+          : Platform.OS === 'ios'
+      ) {
         return 'auto';
       } else {
         return 'box-none';
