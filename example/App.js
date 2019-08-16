@@ -19,8 +19,8 @@ import ImageStack from './src/ImageStack';
 import TransparentStack from './src/TransparentStack';
 import ModalStack from './src/ModalStack';
 import ModalPresentation from './src/ModalPresentation';
-import LifecycleInteraction from './src/LifecycleInteraction';
-import GestureInteraction from './src/GestureInteraction';
+//import LifecycleInteraction from './src/LifecycleInteraction';
+//import GestureInteraction from './src/GestureInteraction';
 import SwitchWithStacks from './src/SwitchWithStacks';
 import StackWithDrawer from './src/StackWithDrawer';
 import StackWithInput from './src/StackWithInput';
@@ -51,21 +51,21 @@ const data = [
     routeName: 'ModalPresentation',
   },
   { component: FullScreen, title: 'Full Screen', routeName: 'FullScreen' },
-  {
-    component: LifecycleInteraction,
-    title: 'Lifecycle',
-    routeName: 'LifecycleStack',
-  },
+  // {
+  //   component: LifecycleInteraction,
+  //   title: 'Lifecycle',
+  //   routeName: 'LifecycleStack',
+  // },
   {
     component: TransparentStack,
     title: 'Transparent',
     routeName: 'TransparentStack',
   },
-  {
-    component: GestureInteraction,
-    title: 'Gesture Interaction',
-    routeName: 'GestureInteraction',
-  },
+  // {
+  //   component: GestureInteraction,
+  //   title: 'Gesture Interaction',
+  //   routeName: 'GestureInteraction',
+  // },
   {
     component: SwitchWithStacks,
     title: 'Switch with Stacks',

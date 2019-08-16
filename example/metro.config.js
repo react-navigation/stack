@@ -24,6 +24,14 @@ module.exports = {
       new RegExp(
         `^${escape(path.resolve(__dirname, '..', 'node_modules'))}\\/.*$`
       ),
+      new RegExp(
+        `^${escape(
+          path.resolve(
+            __dirname,
+            'node_modules/expo/node_modules/@babel/runtime'
+          )
+        )}\\/.*$`
+      ),
     ]),
 
     providesModuleNodeModules: [

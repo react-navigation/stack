@@ -3,12 +3,15 @@
     "name": "React Navigation Stack Example",
     "description": "Demonstrates the various capabilities of react-navigation-stack",
     "slug": "react-navigation-stack-demo",
-    "sdkVersion": "33.0.0",
+    "sdkVersion": "34.0.0",
     "version": "1.0.0",
     "primaryColor": "#2196f3",
     "packagerOpts": {
       "config": "./metro.config.js",
-      "projectRoots": ""
-    }
-  }
+      "projectRoots": ".."
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
+  },
+  "displayName": "React Navigation Stack Example",
+  "name": "stackexample"
 }
