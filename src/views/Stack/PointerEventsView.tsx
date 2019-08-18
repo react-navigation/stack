@@ -27,6 +27,14 @@ export default class PointerEventsView extends React.Component<Props> {
     this.props.active ? TRUE : FALSE
   );
 
+  componentDidUpdate(prevProps: Props) {
+    if (this.props.active !== prevProps.active) {
+      this.pointerEventsEnabled.setValue(this.props.active ? TRUE : FALSE);
+      const pointerEvents = this.props.active ? 'box-none' : 'none';
+      this.root && this.root.setNativeProps({ pointerEvents });
+    }
+  }
+
   private exec = block([
     cond(
       greaterThan(this.props.progress, MIN_PROGRESS),
