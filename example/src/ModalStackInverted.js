@@ -5,7 +5,7 @@ import {
   CardStyleInterpolators,
 } from 'react-navigation-stack';
 
-class Input extends React.Component {
+class Modal extends React.Component {
   static navigationOptions = {
     title: 'Modal from top',
   };
@@ -37,8 +37,8 @@ class Home extends React.Component {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Button
-          onPress={() => this.props.navigation.push('Input')}
-          title="Push screen with input"
+          onPress={() => this.props.navigation.push('Modal')}
+          title="Push modal from top"
         />
       </View>
     );
@@ -52,7 +52,7 @@ const gestureResponseDistance = {
 const App = createStackNavigator(
   {
     Home: { screen: Home },
-    Input: { screen: Input },
+    Modal: { screen: Modal },
   },
   {
     headerMode: 'screen',
