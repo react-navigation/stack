@@ -18,7 +18,6 @@ import RevealStack from './src/RevealStack';
 import ImageStack from './src/ImageStack';
 import TransparentStack from './src/TransparentStack';
 import ModalStack from './src/ModalStack';
-import ModalStackInverted from './src/ModalStackInverted';
 import ModalPresentation from './src/ModalPresentation';
 import LifecycleInteraction from './src/LifecycleInteraction';
 import GestureInteraction from './src/GestureInteraction';
@@ -46,11 +45,6 @@ const data = [
   { component: RevealStack, title: 'Reveal Preset', routeName: 'Reveal' },
   { component: ImageStack, title: 'Image', routeName: 'ImageStack' },
   { component: ModalStack, title: 'Modal', routeName: 'ModalStack' },
-  {
-    component: ModalStackInverted,
-    title: 'Inverted Modal',
-    routeName: 'ModalStackInverted',
-  },
   {
     component: ModalPresentation,
     title: 'Modal (iOS style)',

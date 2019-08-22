@@ -1,10 +1,57 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
-import { createStackNavigator } from 'react-navigation-stack';
+import { Button, View, Text, Dimensions, Switch } from 'react-native';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from 'react-navigation-stack';
+
+const gestureResponseDistance = {
+  vertical: Dimensions.get('window').height,
+};
+class Modal extends React.Component {
+  static navigationOptions = ({ navigation }) => {
+    return {
+      title: 'Modal from top',
+      cardStyleInterpolator:
+        navigation.getParam('gestureDirection', 'vertical') ===
+        'vertical-inverted'
+          ? CardStyleInterpolators.forVerticalInvertedIOS
+          : CardStyleInterpolators.forVerticalIOS,
+      gestureDirection: navigation.getParam('gestureDirection', 'vertical'),
+      cardTransparent: true,
+      gestureResponseDistance,
+    };
+  };
+
+  render() {
+    return (
+      <View
+        style={{
+          backgroundColor: 'white',
+          paddingVertical: 20,
+          paddingHorizontal: 20,
+          height: Dimensions.get('screen').height,
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 10 },
+          shadowOpacity: 0.2,
+          shadowRadius: 4,
+        }}
+      />
+    );
+  }
+}
 
 class ListScreen extends React.Component {
   static navigationOptions = {
     title: 'My Modal',
+  };
+
+  state = { isInverted: false };
+
+  onSwitch = () => {
+    this.setState(prevState => {
+      return { isInverted: !prevState.isInverted };
+    });
   };
 
   render() {
@@ -19,6 +66,18 @@ class ListScreen extends React.Component {
         <Button
           title="Go back to all examples"
           onPress={() => this.props.navigation.navigate('Home')}
+        />
+        <Text>Invert modal gesture direction:</Text>
+        <Switch onValueChange={this.onSwitch} value={this.state.isInverted} />
+        <Button
+          title="Show Modal"
+          onPress={() =>
+            this.props.navigation.push('Modal', {
+              gestureDirection: this.state.isInverted
+                ? 'vertical-inverted'
+                : 'vertical',
+            })
+          }
         />
       </View>
     );
@@ -60,6 +119,7 @@ export default createStackNavigator(
   {
     List: ListScreen,
     Details: DetailsScreen,
+    Modal: Modal,
   },
   {
     initialRouteName: 'List',
