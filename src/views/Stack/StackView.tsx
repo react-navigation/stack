@@ -257,17 +257,21 @@ class StackView extends React.Component<Props, State> {
   };
 
   private handleCloseRoute = ({ route }: { route: Route }) => {
-    this.handleTransitionComplete({ route });
-
     // This event will trigger when the animation for closing the route ends
     // In this case, we need to clean up any state tracking the route and pop it immediately
 
     // @ts-ignore
-    this.setState(state => ({
-      routes: state.routes.filter(r => r.key !== route.key),
-      opening: state.opening.filter(key => key !== route.key),
-      closing: state.closing.filter(key => key !== route.key),
-    }));
+    this.setState(
+      state => ({
+        routes: state.routes.filter(r => r.key !== route.key),
+        opening: state.opening.filter(key => key !== route.key),
+        closing: state.closing.filter(key => key !== route.key),
+      }),
+      () => {
+        const lastRoute = this.state.routes[this.state.routes.length - 1];
+        this.handleTransitionComplete({ route: lastRoute });
+      }
+    );
   };
 
   render() {
