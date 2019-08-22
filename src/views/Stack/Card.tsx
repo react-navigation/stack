@@ -120,6 +120,9 @@ export default class Card extends React.Component<Props> {
           ? DIRECTION_VERTICAL
           : DIRECTION_HORIZONTAL
       );
+      this.isVerticalGestureDirectionInverted.setValue(
+        gestureDirection === 'vertical-inverted' ? TRUE : FALSE
+      );
     }
 
     if (closing !== prevProps.closing) {
@@ -130,6 +133,9 @@ export default class Card extends React.Component<Props> {
   private isVisible = new Value<Binary>(TRUE);
   private isVisibleValue: Binary = TRUE;
   private nextIsVisible = new Value<Binary | -1>(UNSET);
+  private isVerticalGestureDirectionInverted = new Value<Binary>(
+    this.props.gestureDirection === 'vertical-inverted' ? TRUE : FALSE
+  );
 
   private isClosing = new Value<Binary>(FALSE);
   private noAnimationStartedSoFar = true;
@@ -387,18 +393,12 @@ export default class Card extends React.Component<Props> {
         translationY: (y: Animated.Adaptable<number>) =>
           set(
             this.gesture,
-            multiply(
-              y,
-              this.props.gestureDirection === 'vertical-inverted' ? -1 : 1
-            )
+            multiply(y, cond(this.isVerticalGestureDirectionInverted, -1, 1))
           ),
         velocityY: (y: Animated.Adaptable<number>) =>
           set(
             this.velocity,
-            multiply(
-              y,
-              this.props.gestureDirection === 'vertical-inverted' ? -1 : 1
-            )
+            multiply(y, cond(this.isVerticalGestureDirectionInverted, -1, 1))
           ),
         state: this.gestureState,
       },
