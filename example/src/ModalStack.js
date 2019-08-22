@@ -4,10 +4,33 @@ import {
   createStackNavigator,
   CardStyleInterpolators,
 } from 'react-navigation-stack';
+import Animated from 'react-native-reanimated';
+
+const { interpolate } = Animated;
 
 const gestureResponseDistance = {
   vertical: Dimensions.get('window').height,
 };
+
+function forVerticalInvertedIOS({
+  progress: { current },
+  layouts: { screen },
+}) {
+  const translateY = interpolate(current, {
+    inputRange: [0, 1],
+    outputRange: [-screen.height, 0],
+  });
+
+  return {
+    cardStyle: {
+      transform: [
+        // Translation for the animation of the current card
+        { translateY },
+      ],
+    },
+  };
+}
+
 class Modal extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
@@ -15,7 +38,7 @@ class Modal extends React.Component {
       cardStyleInterpolator:
         navigation.getParam('gestureDirection', 'vertical') ===
         'vertical-inverted'
-          ? CardStyleInterpolators.forVerticalInvertedIOS
+          ? forVerticalInvertedIOS
           : CardStyleInterpolators.forVerticalIOS,
       gestureDirection: navigation.getParam('gestureDirection', 'vertical'),
       cardTransparent: true,

@@ -195,22 +195,3 @@ export function forRevealFromBottomAndroid({
     overlayStyle: { opacity: overlayOpacity },
   };
 }
-
-export function forVerticalInvertedIOS({
-  progress: { current },
-  layouts: { screen },
-}: CardInterpolationProps): CardInterpolatedStyle {
-  const translateY = interpolate(current, {
-    inputRange: [0, 1],
-    outputRange: [-screen.height, 0],
-  });
-
-  return {
-    cardStyle: {
-      transform: [
-        // Translation for the animation of the current card
-        { translateY },
-      ],
-    },
-  };
-}
