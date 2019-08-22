@@ -380,9 +380,9 @@ export default class Card extends React.Component<Props> {
   private handleGestureEventHorizontal = Animated.event([
     {
       nativeEvent: {
-        translationX: (x: Animated.Adaptable<number>) =>
+        translationX: (x: Animated.Node<number>) =>
           set(this.gesture, multiply(x, I18nManager.isRTL ? -1 : 1)),
-        velocityX: (x: Animated.Adaptable<number>) =>
+        velocityX: (x: Animated.Node<number>) =>
           set(this.velocity, multiply(x, I18nManager.isRTL ? -1 : 1)),
         state: this.gestureState,
       },
@@ -392,9 +392,9 @@ export default class Card extends React.Component<Props> {
   private handleGestureEventVertical = Animated.event([
     {
       nativeEvent: {
-        translationY: (y: Animated.Adaptable<number>) =>
+        translationY: (y: Animated.Node<number>) =>
           set(this.gesture, multiply(y, this.verticalGestureDirection)),
-        velocityY: (y: Animated.Adaptable<number>) =>
+        velocityY: (y: Animated.Node<number>) =>
           set(this.velocity, multiply(y, this.verticalGestureDirection)),
         state: this.gestureState,
       },

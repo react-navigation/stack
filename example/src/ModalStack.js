@@ -34,7 +34,7 @@ function forVerticalInvertedIOS({
 class Modal extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: 'Modal from top',
+      title: 'Modal',
       cardStyleInterpolator:
         navigation.getParam('gestureDirection', 'vertical') ===
         'vertical-inverted'
@@ -71,11 +71,8 @@ class ListScreen extends React.Component {
 
   state = { isInverted: false };
 
-  onSwitch = () => {
-    this.setState(prevState => {
-      return { isInverted: !prevState.isInverted };
-    });
-  };
+  onSwitch = () =>
+    this.setState(prevState => ({ isInverted: !prevState.isInverted }));
 
   render() {
     return (
@@ -91,7 +88,11 @@ class ListScreen extends React.Component {
           onPress={() => this.props.navigation.navigate('Home')}
         />
         <Text>Invert modal gesture direction:</Text>
-        <Switch onValueChange={this.onSwitch} value={this.state.isInverted} />
+        <Switch
+          style={{ margin: 10 }}
+          onValueChange={this.onSwitch}
+          value={this.state.isInverted}
+        />
         <Button
           title="Show Modal"
           onPress={() =>
