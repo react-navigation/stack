@@ -192,6 +192,8 @@ export type TransitionConfig = {
   };
   screenInterpolator: SceneInterpolator;
   containerStyle?: StyleProp<ViewStyle>;
+  containerStyleLight?: StyleProp<ViewStyle>;
+  containerStyleDark?: StyleProp<ViewStyle>;
 };
 
 export type Screen = React.ComponentType<any> & {

@@ -28,8 +28,11 @@ if (supportsImprovedSpringAnimation()) {
 const SlideFromRightIOS = {
   transitionSpec: IOSTransitionSpec,
   screenInterpolator: StyleInterpolator.forHorizontal,
-  containerStyle: {
+  containerStyleLight: {
     backgroundColor: '#eee',
+  },
+  containerStyleDark: {
+    backgroundColor: '#000',
   },
 };
 
@@ -37,8 +40,11 @@ const SlideFromRightIOS = {
 const ModalSlideFromBottomIOS = {
   transitionSpec: IOSTransitionSpec,
   screenInterpolator: StyleInterpolator.forVertical,
-  containerStyle: {
+  containerStyleLight: {
     backgroundColor: '#eee',
+  },
+  containerStyleDark: {
+    backgroundColor: '#000',
   },
 };
 
@@ -70,8 +76,11 @@ const NoAnimation = {
     timing: Animated.timing,
   },
   screenInterpolator: StyleInterpolator.forNoAnimation,
-  containerStyle: {
+  containerStyleLight: {
     backgroundColor: '#eee',
+  },
+  containerStyleDark: {
+    backgroundColor: '#000',
   },
 };
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Button, StatusBar } from 'react-native';
-import { SafeAreaView } from '@react-navigation/native';
+import { Button } from 'react-native';
+import { SafeAreaView, Themed } from '@react-navigation/native';
 import { createStackNavigator } from 'react-navigation-stack';
 
 class HomeScreen extends React.Component {
@@ -20,7 +20,7 @@ class HomeScreen extends React.Component {
           title="Push screen with no header"
         />
         <Button onPress={() => navigation.goBack(null)} title="Go Home" />
-        <StatusBar barStyle="default" />
+        <Themed.StatusBar />
       </SafeAreaView>
     );
   }
@@ -47,7 +47,7 @@ class OtherScreen extends React.Component {
         />
         <Button onPress={() => pop()} title="Pop" />
         <Button onPress={() => navigation.goBack(null)} title="Go back" />
-        <StatusBar barStyle="default" />
+        <Themed.StatusBar barStyle="default" />
       </SafeAreaView>
     );
   }
@@ -66,7 +66,7 @@ class ScreenWithLongTitle extends React.Component {
       <SafeAreaView style={{ paddingTop: 30 }}>
         <Button onPress={() => pop()} title="Pop" />
         <Button onPress={() => navigation.goBack(null)} title="Go back" />
-        <StatusBar barStyle="default" />
+        <Themed.StatusBar />
       </SafeAreaView>
     );
   }
@@ -87,7 +87,7 @@ class ScreenWithNoHeader extends React.Component {
         <Button onPress={() => push('Other')} title="Push another screen" />
         <Button onPress={() => pop()} title="Pop" />
         <Button onPress={() => navigation.goBack(null)} title="Go back" />
-        <StatusBar barStyle="default" />
+        <Themed.StatusBar />
       </SafeAreaView>
     );
   }

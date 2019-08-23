@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import { StatusBar, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Themed } from '@react-navigation/native';
 
 function createHeaderBackgroundExample(options = {}) {
   return createStackNavigator(
@@ -8,12 +9,13 @@ function createHeaderBackgroundExample(options = {}) {
       Login: {
         screen: ({ navigation }) => (
           <View style={styles.container}>
-            <Text
+            <Themed.Text
               style={styles.tips}
               onPress={() => navigation.navigate('Games')}
             >
               Login Screen
-            </Text>
+            </Themed.Text>
+            <StatusBar barStyle="light-content" />
           </View>
         ),
         navigationOptions: {
@@ -27,12 +29,13 @@ function createHeaderBackgroundExample(options = {}) {
       Games: {
         screen: ({ navigation }) => (
           <View style={styles.container}>
-            <Text
+            <Themed.Text
               style={styles.tips}
               onPress={() => navigation.navigate('Main')}
             >
               Games Screen
-            </Text>
+            </Themed.Text>
+            <StatusBar barStyle="light-content" />
           </View>
         ),
         navigationOptions: {
@@ -46,9 +49,13 @@ function createHeaderBackgroundExample(options = {}) {
       Main: {
         screen: ({ navigation }) => (
           <View style={styles.container}>
-            <Text style={styles.tips} onPress={() => navigation.navigate('My')}>
+            <Themed.Text
+              style={styles.tips}
+              onPress={() => navigation.navigate('My')}
+            >
               Main Screen
-            </Text>
+            </Themed.Text>
+            <StatusBar barStyle="light-content" />
           </View>
         ),
         navigationOptions: {
@@ -58,12 +65,13 @@ function createHeaderBackgroundExample(options = {}) {
       My: {
         screen: ({ navigation }) => (
           <View style={styles.container}>
-            <Text
+            <Themed.Text
               style={styles.tips}
               onPress={() => navigation.navigate('News')}
             >
               My Screen
-            </Text>
+            </Themed.Text>
+            <StatusBar barStyle="light-content" />
           </View>
         ),
         navigationOptions: {
@@ -73,9 +81,10 @@ function createHeaderBackgroundExample(options = {}) {
       News: {
         screen: () => (
           <View style={styles.container}>
-            <Text style={styles.tips} onPress={() => {}}>
+            <Themed.Text style={styles.tips} onPress={() => {}}>
               News Screen
-            </Text>
+            </Themed.Text>
+            <StatusBar barStyle="light-content" />
           </View>
         ),
         navigationOptions: {
@@ -100,7 +109,6 @@ export const HeaderBackgroundFade = createHeaderBackgroundExample({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5FCFF',
     justifyContent: 'center',
     alignItems: 'center',
   },

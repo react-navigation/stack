@@ -7,6 +7,8 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Screen } from 'react-native-screens';
+import { ThemeContext, ThemeColors } from '@react-navigation/core';
+
 import createPointerEventsContainer, {
   InputProps,
   InjectedProps,
@@ -41,6 +43,9 @@ function getAccessibilityProps(isActive: boolean) {
  * Component that renders the scene as card for the <StackView />.
  */
 class Card extends React.Component<Props> {
+  static contextType = ThemeContext;
+  context!: React.ContextType<typeof ThemeContext>;
+
   render() {
     const {
       children,
@@ -75,6 +80,14 @@ class Card extends React.Component<Props> {
 
     let flattenedStyle = StyleSheet.flatten(style) || {};
     let { backgroundColor, ...screenStyle } = flattenedStyle;
+    let isDark = this.context === 'dark';
+    let baseCardStyle;
+
+    if (isDark) {
+      baseCardStyle = transparent ? styles.transparentDark : styles.cardDark;
+    } else {
+      baseCardStyle = transparent ? styles.transparentLight : styles.cardLight;
+    }
 
     return (
       <Screen
@@ -93,7 +106,7 @@ class Card extends React.Component<Props> {
         <Animated.View
           {...getAccessibilityProps(isActive)}
           style={[
-            transparent ? styles.transparent : styles.card,
+            baseCardStyle,
             backgroundColor && backgroundColor !== 'transparent'
               ? { backgroundColor }
               : null,
@@ -104,7 +117,10 @@ class Card extends React.Component<Props> {
         {overlayOpacity ? (
           <Animated.View
             pointerEvents="none"
-            style={[styles.overlay, { opacity: overlayOpacity }]}
+            style={[
+              isDark ? styles.overlayDark : styles.overlayLight,
+              { opacity: overlayOpacity },
+            ]}
           />
         ) : null}
       </Screen>
@@ -113,14 +129,23 @@ class Card extends React.Component<Props> {
 }
 
 const styles = StyleSheet.create({
-  card: {
+  cardLight: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: ThemeColors.light.body,
   },
-  overlay: {
+  cardDark: {
+    flex: 1,
+    backgroundColor: ThemeColors.dark.body,
+  },
+  overlayLight: {
     ...StyleSheet.absoluteFillObject,
     backgroundColor: '#000',
   },
+  overlayDark: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#fff',
+  },
+  // TODO: what should shadow be styled like?
   shadow: {
     top: 0,
     left: 0,
@@ -132,7 +157,11 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     shadowColor: '#000',
   },
-  transparent: {
+  transparentLight: {
+    flex: 1,
+    backgroundColor: 'transparent',
+  },
+  transparentDark: {
     flex: 1,
     backgroundColor: 'transparent',
   },

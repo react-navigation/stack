@@ -101,7 +101,7 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
             style={
               Object {
                 "backgroundColor": "red",
-                "borderBottomColor": "#A7A7AA",
+                "borderBottomColor": "#a7a7aa",
                 "borderBottomWidth": 0.5,
                 "height": 64,
                 "opacity": 0.5,
@@ -155,7 +155,7 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
                     onLayout={[Function]}
                     style={
                       Object {
-                        "color": "rgba(0, 0, 0, .9)",
+                        "color": "rgba(0, 0, 0, 0.9)",
                         "fontSize": 17,
                         "fontWeight": "600",
                         "marginHorizontal": 16,
@@ -294,7 +294,7 @@ exports[`StackNavigator renders successfully 1`] = `
             style={
               Object {
                 "backgroundColor": "red",
-                "borderBottomColor": "#A7A7AA",
+                "borderBottomColor": "#a7a7aa",
                 "borderBottomWidth": 0.5,
                 "height": 64,
                 "opacity": 0.5,
@@ -348,7 +348,7 @@ exports[`StackNavigator renders successfully 1`] = `
                     onLayout={[Function]}
                     style={
                       Object {
-                        "color": "rgba(0, 0, 0, .9)",
+                        "color": "rgba(0, 0, 0, 0.9)",
                         "fontSize": 17,
                         "fontWeight": "600",
                         "marginHorizontal": 16,

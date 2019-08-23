@@ -16,7 +16,9 @@ import {
   StackActions,
   NavigationActions,
   NavigationProvider,
+  ThemeContext,
 } from '@react-navigation/core';
+
 import { withOrientation } from '@react-navigation/native';
 import { ScreenContainer } from 'react-native-screens';
 import {
@@ -135,6 +137,9 @@ const getDefaultHeaderHeight = (isLandscape: boolean) => {
 };
 
 class StackViewLayout extends React.Component<Props, State> {
+  static contextType = ThemeContext;
+  context!: React.ContextType<typeof ThemeContext>;
+
   private panGestureRef: React.RefObject<PanGestureHandler>;
   private gestureX: Animated.Value;
   private gestureY: Animated.Value;
@@ -377,7 +382,13 @@ class StackViewLayout extends React.Component<Props, State> {
         enabled={index > 0 && this.isGestureEnabled()}
       >
         <Animated.View
-          style={[styles.container, this.transitionConfig!.containerStyle]}
+          style={[
+            styles.container,
+            this.transitionConfig!.containerStyle,
+            this.context === 'light'
+              ? this.transitionConfig!.containerStyleLight
+              : this.transitionConfig!.containerStyleDark,
+          ]}
         >
           <StackGestureContext.Provider value={this.panGestureRef}>
             <ScreenContainer style={styles.scenes}>
