@@ -357,107 +357,108 @@ export default class Card extends React.Component<Props> {
           call([], () => (this.isRunningAnimation = false)),
           stopClock(this.clock),
         ]),
-        this.props.gestureEnabled ? set(this.gesture, 0) : NOOP,
+        set(this.gesture, 0),
         // Update the index to trigger the transition
         set(this.isVisible, this.nextIsVisible),
         set(this.nextIsVisible, UNSET),
       ])
     ),
-    this.props.gestureEnabled
-      ? onChange(
-          this.isSwiping,
-          call(
-            [this.isSwiping, this.isSwipeCancelled],
-            ([isSwiping, isSwipeCancelled]: readonly Binary[]) => {
-              const {
-                onGestureBegin,
-                onGestureEnd,
-                onGestureCanceled,
-              } = this.props;
-
-              if (isSwiping === TRUE) {
-                onGestureBegin && onGestureBegin();
-              } else {
-                if (isSwipeCancelled === TRUE) {
-                  onGestureCanceled && onGestureCanceled();
-                } else {
-                  onGestureEnd && onGestureEnd();
-                }
-              }
-            }
-          )
-        )
-      : 0,
-    this.props.gestureEnabled
-      ? cond(
-          eq(this.gestureState, GestureState.ACTIVE),
-          [
-            cond(this.isSwiping, NOOP, [
-              // We weren't dragging before, set it to true
-              set(this.isSwipeCancelled, FALSE),
-              set(this.isSwiping, TRUE),
-              set(this.isSwipeGesture, TRUE),
-              // Also update the drag offset to the last position
-              set(this.offset, this.props.current),
-            ]),
-            // Update position with next offset + gesture distance
-            set(
-              this.props.current,
-              min(
-                max(
-                  sub(
-                    this.offset,
-                    cond(this.distance, divide(this.gesture, this.distance), 1)
-                  ),
-                  0
-                ),
-                1
-              )
-            ),
-            // Stop animations while we're dragging
-            // and invoke proper listener
-            cond(
-              clockRunning(this.clock),
-              call([this.toValue], ([target]) => {
-                this.isRunningAnimation = false;
-                if (target) {
-                  this.props.onOpen(false);
-                } else {
-                  this.props.onClose(false);
-                }
-              })
-            ),
-            stopClock(this.clock),
-          ],
-          [
-            set(
-              this.isSwipeCancelled,
-              eq(this.gestureState, GestureState.CANCELLED)
-            ),
-            set(this.isSwiping, FALSE),
-            this.runTransition(
-              cond(
-                greaterThan(
-                  abs(this.extrapolatedPosition),
-                  divide(this.distance, 2)
-                ),
-                cond(
-                  lessThan(
-                    cond(eq(this.velocity, 0), this.gesture, this.velocity),
-                    0
-                  ),
-                  TRUE,
-                  FALSE
-                ),
-                this.isVisible
-              )
-            ),
-          ]
-        )
-      : this.runTransition(this.isVisible),
     onChange(
       this.isVisible,
       call([this.isVisible], ([isVisible]) => (this.isVisibleValue = isVisible))
+    ),
+  ]);
+
+  private execNoGesture = this.runTransition(this.isVisible);
+
+  private execWithGesture = block([
+    onChange(
+      this.isSwiping,
+      call(
+        [this.isSwiping, this.isSwipeCancelled],
+        ([isSwiping, isSwipeCancelled]: readonly Binary[]) => {
+          const {
+            onGestureBegin,
+            onGestureEnd,
+            onGestureCanceled,
+          } = this.props;
+
+          if (isSwiping === TRUE) {
+            onGestureBegin && onGestureBegin();
+          } else {
+            if (isSwipeCancelled === TRUE) {
+              onGestureCanceled && onGestureCanceled();
+            } else {
+              onGestureEnd && onGestureEnd();
+            }
+          }
+        }
+      )
+    ),
+    cond(
+      eq(this.gestureState, GestureState.ACTIVE),
+      [
+        cond(this.isSwiping, NOOP, [
+          // We weren't dragging before, set it to true
+          set(this.isSwipeCancelled, FALSE),
+          set(this.isSwiping, TRUE),
+          set(this.isSwipeGesture, TRUE),
+          // Also update the drag offset to the last position
+          set(this.offset, this.props.current),
+        ]),
+        // Update position with next offset + gesture distance
+        set(
+          this.props.current,
+          min(
+            max(
+              sub(
+                this.offset,
+                cond(this.distance, divide(this.gesture, this.distance), 1)
+              ),
+              0
+            ),
+            1
+          )
+        ),
+        // Stop animations while we're dragging
+        // and invoke proper listener
+        cond(
+          clockRunning(this.clock),
+          call([this.toValue], ([target]) => {
+            this.isRunningAnimation = false;
+            if (target) {
+              this.props.onOpen(false);
+            } else {
+              this.props.onClose(false);
+            }
+          })
+        ),
+        stopClock(this.clock),
+      ],
+      [
+        set(
+          this.isSwipeCancelled,
+          eq(this.gestureState, GestureState.CANCELLED)
+        ),
+        set(this.isSwiping, FALSE),
+        this.runTransition(
+          cond(
+            greaterThan(
+              abs(this.extrapolatedPosition),
+              divide(this.distance, 2)
+            ),
+            cond(
+              lessThan(
+                cond(eq(this.velocity, 0), this.gesture, this.velocity),
+                0
+              ),
+              TRUE,
+              FALSE
+            ),
+            this.isVisible
+          )
+        ),
+      ]
     ),
   ]);
 
@@ -610,6 +611,11 @@ export default class Card extends React.Component<Props> {
       <StackGestureContext.Provider value={this.gestureRef}>
         <View pointerEvents="box-none" {...rest}>
           <Animated.Code exec={this.exec} />
+          {this.props.gestureEnabled ? (
+            <Animated.Code exec={this.execNoGesture} />
+          ) : (
+            <Animated.Code exec={this.execWithGesture} />
+          )}
           {overlayEnabled && overlayStyle ? (
             <Animated.View
               pointerEvents="none"
