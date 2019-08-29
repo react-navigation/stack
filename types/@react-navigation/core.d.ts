@@ -15,6 +15,22 @@ declare module '@react-navigation/core' {
     value: object;
   }>;
 
+  export type SupportedThemes = 'light' | 'dark';
+  export const ThemeContext: React.Context<SupportedThemes>;
+  export const ThemeConsumer: ThemeContext.Consumer;
+
+  export interface Theme {
+    header: string;
+    headerBorder: string;
+    body: string;
+    bodyBorder: string;
+    bodyContent: string;
+    bodyContentBorder: string;
+    label: string;
+  }
+
+  export const ThemeColors: { [k in SupportedThemes]: Theme };
+
   export const SceneView: React.ComponentType<{
     screenProps: unknown;
     navigation: object;

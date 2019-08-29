@@ -1,17 +1,28 @@
 import * as React from 'react';
 import { Platform, StyleSheet, Animated } from 'react-native';
+import { ThemeContext, ThemeColors } from '@react-navigation/core';
 
-const HeaderTitle = ({
-  style,
-  ...rest
-}: React.ComponentProps<typeof Animated.Text>) => (
-  <Animated.Text
-    numberOfLines={1}
-    {...rest}
-    style={[styles.title, style]}
-    accessibilityTraits="header"
-  />
-);
+class HeaderTitle extends React.Component<
+  React.ComponentProps<typeof Animated.Text>
+> {
+  static contextType = ThemeContext;
+  context!: React.ContextType<typeof ThemeContext>;
+
+  render() {
+    let { style, ...rest } = this.props;
+
+    let theme = ThemeColors[this.context];
+
+    return (
+      <Animated.Text
+        numberOfLines={1}
+        {...rest}
+        style={[styles.title, { color: theme.label }, style]}
+        accessibilityTraits="header"
+      />
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   title: {

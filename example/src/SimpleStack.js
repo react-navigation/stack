@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Dimensions, Button, View, Text } from 'react-native';
+import { Dimensions, Button, View } from 'react-native';
 import { withNavigation } from '@react-navigation/core';
+import { Themed } from '@react-navigation/native';
 import { createStackNavigator } from 'react-navigation-stack';
 
 const Buttons = withNavigation(props => (
-  <React.Fragment>
+  <>
     <Button
       title="Go to Details"
       onPress={() => props.navigation.navigate('Details')}
@@ -36,7 +37,8 @@ const Buttons = withNavigation(props => (
       title="Go back to all examples"
       onPress={() => props.navigation.navigate('Home')}
     />
-  </React.Fragment>
+    <Themed.StatusBar />
+  </>
 ));
 
 class ListScreen extends React.Component {
@@ -59,11 +61,10 @@ class ListScreen extends React.Component {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#fff',
         }}
       >
-        <Text>List Screen</Text>
-        <Text>A list may go here</Text>
+        <Themed.Text>List Screen</Themed.Text>
+        <Themed.Text>A list may go here</Themed.Text>
         <Buttons />
       </View>
     );
@@ -93,10 +94,9 @@ class DetailsScreen extends React.Component {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#fff',
         }}
       >
-        <Text>Details Screen</Text>
+        <Themed.Text>Details Screen</Themed.Text>
         <Button title="Go back in 2s" onPress={this._goBackInTwoSeconds} />
         <Buttons />
       </View>
@@ -130,10 +130,9 @@ class HeaderlessScreen extends React.Component {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#fff',
         }}
       >
-        <Text>Headerless Screen</Text>
+        <Themed.Text>Headerless Screen</Themed.Text>
         <Buttons />
       </View>
     );

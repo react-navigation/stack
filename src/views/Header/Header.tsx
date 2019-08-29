@@ -13,6 +13,7 @@ import {
   StyleProp,
 } from 'react-native';
 
+import { ThemeContext, ThemeColors } from '@react-navigation/core';
 import { withOrientation, SafeAreaView } from '@react-navigation/native';
 
 import HeaderTitle from './HeaderTitle';
@@ -31,6 +32,7 @@ type Props = HeaderProps & {
   leftButtonInterpolator: (props: SceneInterpolatorProps) => any;
   titleFromLeftInterpolator: (props: SceneInterpolatorProps) => any;
   layoutInterpolator: (props: SceneInterpolatorProps) => any;
+  theme: string;
 };
 
 type SubviewProps = {
@@ -121,6 +123,9 @@ const getAppBarHeight = (isLandscape: boolean) => {
 };
 
 class Header extends React.PureComponent<Props, State> {
+  static contextType = ThemeContext;
+  context!: React.ContextType<typeof ThemeContext>;
+
   static get HEIGHT() {
     return APPBAR_HEIGHT + STATUSBAR_HEIGHT;
   }
@@ -676,11 +681,17 @@ class Header extends React.PureComponent<Props, State> {
       warnIfHeaderStyleDefined(left, 'left');
     }
 
+    let isDark = this.context === 'dark';
+
     // TODO: warn if any unsafe styles are provided
     const containerStyles = [
       options.headerTransparent
-        ? styles.transparentContainer
-        : styles.container,
+        ? isDark
+          ? styles.transparentContainerDark
+          : styles.transparentContainerLight
+        : isDark
+        ? styles.containerDark
+        : styles.containerLight,
       { height: appBarHeight },
       safeHeaderStyle,
     ];
@@ -692,15 +703,20 @@ class Header extends React.PureComponent<Props, State> {
       horizontal: 'always',
     };
 
+    let backgroundColor = safeHeaderStyle.backgroundColor;
+
+    if (!backgroundColor) {
+      backgroundColor = isDark
+        ? ThemeColors.dark.header
+        : ThemeColors.light.header;
+    }
+
     return (
       <Animated.View
         style={[
           this.props.layoutInterpolator(this.props),
           Platform.OS === 'ios' && !options.headerTransparent
-            ? {
-                backgroundColor:
-                  safeHeaderStyle.backgroundColor || DEFAULT_BACKGROUND_COLOR,
-              }
+            ? { backgroundColor }
             : null,
         ]}
       >
@@ -725,13 +741,13 @@ function warnIfHeaderStyleDefined(value: any, styleProp: string) {
   }
 }
 
-const platformContainerStyles = Platform.select({
+const platformContainerStylesLight = Platform.select({
   android: {
     elevation: 4,
   },
   ios: {
     borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#A7A7AA',
+    borderBottomColor: ThemeColors.light.headerBorder,
   },
   default: {
     // https://github.com/necolas/react-native-web/issues/44
@@ -740,19 +756,47 @@ const platformContainerStyles = Platform.select({
   },
 });
 
-const DEFAULT_BACKGROUND_COLOR = '#FFF';
+const platformContainerStylesDark = Platform.select({
+  android: {
+    elevation: 4,
+  },
+  ios: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: ThemeColors.dark.headerBorder,
+  },
+  default: {
+    // https://github.com/necolas/react-native-web/issues/44
+    // Material Design
+    // TODO: what to use here?
+    boxShadow: `0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12)`,
+  },
+});
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: DEFAULT_BACKGROUND_COLOR,
-    ...platformContainerStyles,
+  containerLight: {
+    ...platformContainerStylesLight,
+    backgroundColor: ThemeColors.light.header,
   },
-  transparentContainer: {
+  containerDark: {
+    ...platformContainerStylesDark,
+    backgroundColor: ThemeColors.dark.header,
+  },
+  transparentContainerLight: {
+    ...platformContainerStylesLight,
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    ...platformContainerStyles,
+    borderBottomWidth: 0,
+    borderBottomColor: 'transparent',
+    elevation: 0,
+  },
+  transparentContainerDark: {
+    ...platformContainerStylesDark,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
     borderBottomWidth: 0,
     borderBottomColor: 'transparent',
     elevation: 0,

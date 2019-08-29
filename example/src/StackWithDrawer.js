@@ -1,12 +1,24 @@
 import * as React from 'react';
-import { Button, Text, View } from 'react-native';
+import { Button, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
+import { useTheme, ThemeColors } from '@react-navigation/core';
+import { Themed } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
+
+// eslint-disable-next-line import/default
+import TouchableBounce from 'react-native/Libraries/Components/Touchable/TouchableBounce';
+
+const tabBarIcon = name => ({ tintColor, horizontal }) => (
+  <MaterialIcons name={name} color={tintColor} size={horizontal ? 17 : 24} />
+);
 
 function Menu({ navigation }) {
+  let theme = useTheme();
+
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: ThemeColors[theme].bodyContent }}>
       <Button title="Open on top" onPress={() => navigation.navigate('Top')} />
     </View>
   );
@@ -20,18 +32,44 @@ class Fake extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text style={{ fontSize: 20 }}>
+        <Themed.Text style={{ fontSize: 20 }}>
           {this.props.navigation.getParam('title')}
-        </Text>
+        </Themed.Text>
       </View>
     );
   }
 }
 
-const Tab = createBottomTabNavigator({
-  Home: { screen: Fake, params: { title: 'Home' } },
-  Other: { screen: Fake, params: { title: 'Other' } },
-});
+const Tab = createBottomTabNavigator(
+  {
+    Article: {
+      screen: Fake,
+      navigationOptions: {
+        tabBarIcon: tabBarIcon('chrome-reader-mode'),
+      },
+      params: { title: 'Article' },
+    },
+    Chat: {
+      screen: Fake,
+      navigationOptions: {
+        tabBarIcon: tabBarIcon('chat-bubble'),
+      },
+      params: { title: 'Chat' },
+    },
+    Contacts: {
+      screen: Fake,
+      navigationOptions: {
+        tabBarIcon: tabBarIcon('contacts'),
+      },
+      params: { title: 'Contacts' },
+    },
+  },
+  {
+    defaultNavigationOptions: {
+      tabBarButtonComponent: TouchableBounce,
+    },
+  }
+);
 
 const Drawer = createDrawerNavigator(
   {

@@ -1,6 +1,7 @@
 import * as React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Themed } from '@react-navigation/native';
 
 class ListScreen extends React.Component {
   static navigationOptions = {
@@ -10,8 +11,8 @@ class ListScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>List Screen</Text>
-        <Text>A list may go here</Text>
+        <Themed.Text>List Screen</Themed.Text>
+        <Themed.Text>A list may go here</Themed.Text>
         <Button
           title="Go to Details"
           onPress={() => this.props.navigation.navigate('Details')}
@@ -34,7 +35,7 @@ class DetailsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
+        <Themed.Text>Details Screen</Themed.Text>
         <Button
           title="Go to Details... again"
           onPress={() => this.props.navigation.push('Details')}

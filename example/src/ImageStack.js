@@ -41,7 +41,7 @@ class ListScreen extends React.Component {
         )}
         numColumns={3}
         keyExtractor={(item, index) => index}
-        style={{ flex: 1, backgroundColor: '#fff' }}
+        style={{ flex: 1 }}
       />
     );
   }
@@ -59,7 +59,6 @@ class DetailsScreen extends React.Component {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#fff',
         }}
       >
         <Image

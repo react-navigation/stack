@@ -1,16 +1,24 @@
 import * as React from 'react';
 import { Asset } from 'expo-asset';
-import { FlatList, I18nManager } from 'react-native';
+import {
+  FlatList,
+  I18nManager,
+  StatusBar,
+  View,
+  TouchableOpacity,
+} from 'react-native';
 import {
   createAppContainer,
   SafeAreaView,
   ScrollView,
 } from '@react-navigation/native';
+import { ThemeContext, ThemeColors } from '@react-navigation/core';
 import {
   Assets as StackAssets,
   createStackNavigator,
 } from 'react-navigation-stack';
 import { List, Divider } from 'react-native-paper';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import FullScreen from './src/FullScreen';
 import SimpleStack from './src/SimpleStack';
@@ -87,6 +95,8 @@ const data = [
 Asset.loadAsync(StackAssets);
 
 class Home extends React.Component {
+  static contextType = ThemeContext;
+
   static navigationOptions = {
     title: 'Examples',
   };
@@ -95,6 +105,8 @@ class Home extends React.Component {
     <List.Item
       title={item.title}
       onPress={() => this.props.navigation.navigate(item.routeName)}
+      style={{ backgroundColor: ThemeColors[this.context].bodyContent }}
+      titleStyle={{ color: ThemeColors[this.context].label }}
     />
   );
 
@@ -102,14 +114,25 @@ class Home extends React.Component {
 
   render() {
     return (
-      <FlatList
-        ItemSeparatorComponent={Divider}
-        renderItem={this._renderItem}
-        keyExtractor={this._keyExtractor}
-        renderScrollComponent={props => <SafeAreaScrollView {...props} />}
-        data={data}
-        style={{ backgroundColor: '#fff' }}
-      />
+      <>
+        <FlatList
+          ItemSeparatorComponent={() => (
+            <Divider
+              style={{
+                backgroundColor: ThemeColors[this.context].bodyBorder,
+              }}
+            />
+          )}
+          renderItem={this._renderItem}
+          keyExtractor={this._keyExtractor}
+          renderScrollComponent={props => <SafeAreaScrollView {...props} />}
+          data={data}
+          style={{ backgroundColor: ThemeColors[this.context].body }}
+        />
+        <StatusBar
+          barStyle={this.context === 'dark' ? 'light-content' : 'default'}
+        />
+      </>
     );
   }
 }
@@ -146,7 +169,52 @@ const Root = createStackNavigator(
 );
 
 useScreens();
-export default createAppContainer(Root);
+let AppContainer = createAppContainer(Root);
+
+export default () => {
+  let [theme, setTheme] = React.useState('light');
+
+  return (
+    <View style={{ flex: 1 }}>
+      <AppContainer theme={theme} />
+      <View style={{ position: 'absolute', bottom: 60, right: 20 }}>
+        <TouchableOpacity
+          onPress={() => {
+            setTheme(theme === 'light' ? 'dark' : 'light');
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: ThemeColors[theme].bodyContent,
+              borderRadius: 25,
+              width: 50,
+              height: 50,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderColor: ThemeColors[theme].bodyBorder,
+              borderWidth: 1,
+              shadowColor: ThemeColors[theme].label,
+              shadowOffset: {
+                width: 0,
+                height: 2,
+              },
+              shadowOpacity: 0.4,
+              shadowRadius: 2,
+
+              elevation: 5,
+            }}
+          >
+            <MaterialCommunityIcons
+              name="theme-light-dark"
+              size={30}
+              color={ThemeColors[theme].label}
+            />
+          </View>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
 
 // Uncomment this to test immediate transitions
 // import ImmediateTransition from './src/ImmediateTransition';

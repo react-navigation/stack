@@ -1,6 +1,8 @@
 import * as React from 'react';
-import { Animated, Button, Easing, View, Text } from 'react-native';
+import { Animated, Button, Easing, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
+import { Themed } from '@react-navigation/native';
+import { ThemeContext, ThemeColors } from '@react-navigation/core';
 
 class ListScreen extends React.Component {
   render() {
@@ -10,11 +12,10 @@ class ListScreen extends React.Component {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'white',
         }}
       >
-        <Text>List Screen</Text>
-        <Text>A list may go here</Text>
+        <Themed.Text>List Screen</Themed.Text>
+        <Themed.Text>A list may go here</Themed.Text>
         <Button
           title="Open Dialog"
           onPress={() => this.props.navigation.navigate('ModalDialog')}
@@ -29,6 +30,8 @@ class ListScreen extends React.Component {
 }
 
 class ModalDialogScreen extends React.Component {
+  static contextType = ThemeContext;
+
   render() {
     return (
       <View
@@ -36,12 +39,15 @@ class ModalDialogScreen extends React.Component {
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.3)',
+          backgroundColor:
+            this.context === 'dark'
+              ? 'rgba(255, 255, 255, 0.3)'
+              : 'rgba(0, 0, 0, 0.3)',
         }}
       >
         <View
           style={{
-            backgroundColor: 'white',
+            backgroundColor: ThemeColors[this.context].body,
             padding: 16,
             width: '90%',
             maxWidth: 500,
@@ -54,7 +60,7 @@ class ModalDialogScreen extends React.Component {
             shadowRadius: 10,
           }}
         >
-          <Text style={{ flex: 1, fontSize: 16 }}>Dialog</Text>
+          <Themed.Text style={{ flex: 1, fontSize: 16 }}>Dialog</Themed.Text>
           <Button
             title="Close"
             onPress={() => this.props.navigation.goBack()}
