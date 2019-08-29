@@ -165,6 +165,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
       headerRightContainerStyle: rightContainerStyle,
       headerTitleContainerStyle: titleContainerStyle,
       headerStyle: customHeaderStyle,
+      headerHeight,
       styleInterpolator,
     } = this.props;
 
@@ -298,7 +299,11 @@ export default class HeaderSegment extends React.Component<Props, State> {
       <React.Fragment>
         <Animated.View
           pointerEvents="none"
-          style={[StyleSheet.absoluteFill, backgroundStyle]}
+          style={[
+            StyleSheet.absoluteFill,
+            backgroundStyle,
+            { height: headerHeight },
+          ]}
         >
           {headerBackground ? (
             headerBackground()

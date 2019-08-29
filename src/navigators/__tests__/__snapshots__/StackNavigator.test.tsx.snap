@@ -198,6 +198,9 @@ Array [
             Object {
               "opacity": undefined,
             },
+            Object {
+              "height": undefined,
+            },
           ]
         }
       >
@@ -515,6 +518,9 @@ Array [
             },
             Object {
               "opacity": undefined,
+            },
+            Object {
+              "height": undefined,
             },
           ]
         }

@@ -82,6 +82,7 @@ export type HeaderOptions = {
   headerPressColorAndroid?: string;
   headerBackground?: () => React.ReactNode;
   headerStyle?: StyleProp<ViewStyle>;
+  headerHeight?: number;
   headerStatusBarHeight?: number;
   headerTransparent?: boolean;
 };
