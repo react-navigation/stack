@@ -46,11 +46,11 @@ import {
 } from '../../types';
 
 type Props = {
-  mode: 'modal' | 'card';
-  headerMode: 'screen' | 'float';
-  headerLayoutPreset: 'left' | 'center';
-  headerTransitionPreset: 'fade-in-place' | 'uikit';
-  headerBackgroundTransitionPreset: 'fade' | 'translate' | 'toggle';
+  mode?: 'modal' | 'card';
+  headerMode?: 'screen' | 'float' | 'none';
+  headerLayoutPreset?: 'left' | 'center';
+  headerTransitionPreset?: 'fade-in-place' | 'uikit';
+  headerBackgroundTransitionPreset?: 'fade' | 'translate' | 'toggle';
   headerBackTitleVisible?: boolean;
   isLandscape: boolean;
   shadowEnabled?: boolean;
@@ -59,7 +59,7 @@ type Props = {
   cardStyle?: StyleProp<ViewStyle>;
   transitionProps: TransitionProps;
   lastTransitionProps?: TransitionProps;
-  transitionConfig: (
+  transitionConfig?: (
     transitionProps: TransitionProps,
     prevTransitionProps?: TransitionProps,
     isModal?: boolean

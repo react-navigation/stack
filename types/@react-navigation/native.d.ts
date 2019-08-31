@@ -13,7 +13,7 @@ declare module '@react-navigation/native' {
   export function createKeyboardAwareNavigator<Props>(
     Comp: React.ComponentType<Props>,
     stackConfig: object
-  ): React.ComponentType<Props>;
+  ): React.ComponentType<Props> & { router: any };
 
   export type SafeAreaViewForceInsetValue = 'always' | 'never';
 

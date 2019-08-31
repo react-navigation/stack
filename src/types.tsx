@@ -45,7 +45,7 @@ export type NavigationProp<RouteName = string, Params = object> = {
   dangerouslyGetParent(): NavigationProp | undefined;
 };
 
-export type HeaderMode = 'float' | 'screen';
+export type HeaderMode = 'float' | 'screen' | 'none';
 
 export type HeaderLayoutPreset = 'left' | 'center';
 
@@ -63,37 +63,37 @@ export type HeaderProps = {
   layoutPreset: HeaderLayoutPreset;
   transitionPreset?: HeaderTransitionPreset;
   backTitleVisible?: boolean;
-  leftInterpolator: (props: SceneInterpolatorProps) => any;
-  titleInterpolator: (props: SceneInterpolatorProps) => any;
-  rightInterpolator: (props: SceneInterpolatorProps) => any;
-  backgroundInterpolator: (props: SceneInterpolatorProps) => any;
+  leftInterpolator?: (props: SceneInterpolatorProps) => any;
+  titleInterpolator?: (props: SceneInterpolatorProps) => any;
+  rightInterpolator?: (props: SceneInterpolatorProps) => any;
+  backgroundInterpolator?: (props: SceneInterpolatorProps) => any;
   isLandscape: boolean;
 };
 
 export type HeaderTransitionConfig = {
-  headerLeftInterpolator: SceneInterpolator;
-  headerLeftLabelInterpolator: SceneInterpolator;
-  headerLeftButtonInterpolator: SceneInterpolator;
-  headerTitleFromLeftInterpolator: SceneInterpolator;
-  headerTitleInterpolator: SceneInterpolator;
-  headerRightInterpolator: SceneInterpolator;
-  headerBackgroundInterpolator: SceneInterpolator;
-  headerLayoutInterpolator: SceneInterpolator;
+  headerLeftInterpolator?: SceneInterpolator;
+  headerLeftLabelInterpolator?: SceneInterpolator;
+  headerLeftButtonInterpolator?: SceneInterpolator;
+  headerTitleFromLeftInterpolator?: SceneInterpolator;
+  headerTitleInterpolator?: SceneInterpolator;
+  headerRightInterpolator?: SceneInterpolator;
+  headerBackgroundInterpolator?: SceneInterpolator;
+  headerLayoutInterpolator?: SceneInterpolator;
 };
 
 export type NavigationStackOptions = {
   title?: string;
-  header?: (props: HeaderProps) => React.ReactNode;
+  header?: ((props: HeaderProps) => React.ReactNode) | null;
   headerTitle?: string;
   headerTitleStyle?: StyleProp<TextStyle>;
   headerTitleContainerStyle?: StyleProp<ViewStyle>;
   headerTintColor?: string;
   headerTitleAllowFontScaling?: boolean;
   headerBackAllowFontScaling?: boolean;
-  headerBackTitle?: string;
+  headerBackTitle?: string | null;
   headerBackTitleStyle?: StyleProp<TextStyle>;
   headerTruncatedBackTitle?: string;
-  headerLeft?: React.FunctionComponent<HeaderBackbuttonProps>;
+  headerLeft?: React.FunctionComponent<HeaderBackbuttonProps> | null;
   headerLeftContainerStyle?: StyleProp<ViewStyle>;
   headerRight?: (() => React.ReactNode) | React.ReactNode;
   headerRightContainerStyle?: StyleProp<ViewStyle>;
@@ -115,18 +115,19 @@ export type NavigationStackOptions = {
   disableKeyboardHandling?: boolean;
 };
 
-export type NavigationConfig = {
-  mode: 'card' | 'modal';
-  headerMode: HeaderMode;
-  headerLayoutPreset: HeaderLayoutPreset;
-  headerTransitionPreset: HeaderTransitionPreset;
-  headerBackgroundTransitionPreset: HeaderBackgroundTransitionPreset;
+export type NavigationStackConfig = {
+  mode?: 'card' | 'modal';
+  headerMode?: HeaderMode;
+  headerLayoutPreset?: HeaderLayoutPreset;
+  headerTransitionPreset?: HeaderTransitionPreset;
+  headerBackgroundTransitionPreset?: HeaderBackgroundTransitionPreset;
   headerBackTitleVisible?: boolean;
+  disableKeyboardHandling?: boolean;
   cardShadowEnabled?: boolean;
   cardOverlayEnabled?: boolean;
   onTransitionStart?: () => void;
   onTransitionEnd?: () => void;
-  transitionConfig: (
+  transitionConfig?: (
     transitionProps: TransitionProps,
     prevTransitionProps?: TransitionProps,
     isModal?: boolean
@@ -196,8 +197,14 @@ export type TransitionConfig = {
   containerStyleDark?: StyleProp<ViewStyle>;
 };
 
+export type NavigationStackScreenOptions =
+  | NavigationStackOptions & { [key: string]: any }
+  | ((options: {
+      navigation: NavigationProp;
+      screenProps: unknown;
+      theme: 'light' | 'dark';
+    }) => NavigationStackOptions & { [key: string]: any });
+
 export type Screen = React.ComponentType<any> & {
-  navigationOptions?: NavigationStackOptions & {
-    [key: string]: any;
-  };
+  navigationOptions?: NavigationStackScreenOptions;
 };

@@ -7,7 +7,7 @@ import TransitionConfigs from './StackViewTransitionConfigs';
 import {
   NavigationProp,
   SceneDescriptor,
-  NavigationConfig,
+  NavigationStackConfig,
   TransitionProps,
   Scene,
 } from '../../types';
@@ -15,7 +15,7 @@ import {
 type Props = {
   navigation: NavigationProp;
   descriptors: { [key: string]: SceneDescriptor };
-  navigationConfig: NavigationConfig;
+  navigationConfig: NavigationStackConfig;
   onTransitionStart?: () => void;
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
@@ -29,7 +29,7 @@ const USE_NATIVE_DRIVER = true;
 // because the entire object will be clobbered by navigationConfig that is
 // passed in.
 const DefaultNavigationConfig = {
-  mode: 'card',
+  mode: 'card' as const,
   cardShadowEnabled: true,
   cardOverlayEnabled: false,
 };

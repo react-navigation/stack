@@ -41,7 +41,7 @@ declare module '@react-navigation/core' {
     StackView: React.ComponentType<any>,
     router: any,
     stackConfig: object
-  ): React.ComponentType;
+  ): React.ComponentType<any> & { router: any };
 
   export function withNavigation<Props extends { navigation: object }>(
     Comp: React.ComponentType<Props>

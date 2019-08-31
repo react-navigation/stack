@@ -124,11 +124,8 @@ const getAppBarHeight = (isLandscape: boolean) => {
 
 class Header extends React.PureComponent<Props, State> {
   static contextType = ThemeContext;
-  context!: React.ContextType<typeof ThemeContext>;
 
-  static get HEIGHT() {
-    return APPBAR_HEIGHT + STATUSBAR_HEIGHT;
-  }
+  context!: React.ContextType<typeof ThemeContext>;
 
   static defaultProps = {
     layoutInterpolator: HeaderStyleInterpolator.forLayout,
@@ -265,6 +262,7 @@ class Header extends React.PureComponent<Props, State> {
         props.scene.descriptor.navigation.goBack(props.scene.descriptor.key);
       });
     };
+
     return (
       <RenderedLeftComponent
         onPress={goBack}
@@ -508,7 +506,7 @@ class Header extends React.PureComponent<Props, State> {
     props: SubviewProps,
     name: SubviewName,
     renderer: (props: SubviewProps) => React.ReactNode,
-    styleInterpolator: (props: SceneInterpolatorProps) => any
+    styleInterpolator?: (props: SceneInterpolatorProps) => any
   ) => {
     const { scene } = props;
     const { index, isStale, key } = scene;
@@ -537,10 +535,11 @@ class Header extends React.PureComponent<Props, State> {
           styles.item,
           styles[name],
           props.style,
-          styleInterpolator({
-            ...this.props,
-            ...props,
-          }),
+          styleInterpolator &&
+            styleInterpolator({
+              ...this.props,
+              ...props,
+            }),
         ]}
       >
         {subView}
@@ -861,4 +860,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withOrientation(Header);
+export default Object.assign(withOrientation(Header), {
+  get HEIGHT() {
+    return APPBAR_HEIGHT + STATUSBAR_HEIGHT;
+  },
+});
