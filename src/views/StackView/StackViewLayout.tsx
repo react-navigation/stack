@@ -373,8 +373,8 @@ class StackViewLayout extends React.Component<Props, State> {
       );
     }
 
-    let enabled = index > 0 && this.isGestureEnabled();
-    let pointerEvents = enabled ? 'auto' : 'box-none';
+    const enabled = index > 0 && this.isGestureEnabled();
+    const pointerEvents = enabled ? 'auto' : 'box-none';
 
     return (
       <PanGestureHandler
