@@ -638,6 +638,11 @@ export default class Card extends React.Component<Props> {
         : this.handleGestureEventHorizontal
       : undefined;
 
+    const overrideFlex =
+      cardStyle && cardStyle.hasOwnProperty('flex')
+        ? { flex: cardStyle.flex }
+        : {};
+
     return (
       <StackGestureContext.Provider value={this.gestureRef}>
         <View pointerEvents="box-none" {...rest}>
@@ -681,6 +686,7 @@ export default class Card extends React.Component<Props> {
                   progress={this.props.current}
                   style={[
                     styles.content,
+                    overrideFlex,
                     transparent ? styles.transparent : styles.opaque,
                     contentStyle,
                   ]}

@@ -29,6 +29,7 @@ import {
   HeaderBackgroundDefault,
   HeaderBackgroundFade,
 } from './src/HeaderBackgrounds';
+import DragLimitedToModal from './src/DragLimitedToModal';
 
 // Comment the following two lines to stop using react-native-screens
 import { useScreens } from 'react-native-screens';
@@ -90,6 +91,11 @@ const data = [
     component: HeaderBackgroundFade,
     title: 'Header background (fade transition)',
     routeName: 'HeaderBackgroundFade',
+  },
+  {
+    component: DragLimitedToModal,
+    title: 'Drag limited to modal',
+    routeName: 'DragLimitedToModal',
   },
 ];
 
