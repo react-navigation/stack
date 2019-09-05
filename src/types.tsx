@@ -17,7 +17,7 @@ export type NavigationEventName =
   | 'willBlur'
   | 'didBlur';
 
-export type NavigationState = {
+export type NavigationState<Params = { [key: string]: unknown }> = {
   key: string;
   index: number;
   routes: Route[];
@@ -25,7 +25,7 @@ export type NavigationState = {
     pushing: string[];
     popping: string[];
   };
-  params?: { [key: string]: unknown };
+  params?: Params;
 };
 
 export type NavigationProp<RouteName = string, Params = object> = {
@@ -37,7 +37,7 @@ export type NavigationProp<RouteName = string, Params = object> = {
     callback: () => void
   ) => { remove: () => void };
   isFocused(): boolean;
-  state: NavigationState;
+  state: NavigationState<Params>;
   setParams(params: Params): void;
   getParam(): Params;
   dispatch(action: { type: string }): void;
