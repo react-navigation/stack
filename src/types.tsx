@@ -2,9 +2,9 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
-  LayoutChangeEvent,
-} from 'react-native';
-import Animated from 'react-native-reanimated';
+  LayoutChangeEvent
+} from "react-native";
+import Animated from "react-native-reanimated";
 
 export type Route = {
   key: string;
@@ -12,10 +12,10 @@ export type Route = {
 };
 
 export type NavigationEventName =
-  | 'willFocus'
-  | 'didFocus'
-  | 'willBlur'
-  | 'didBlur';
+  | "willFocus"
+  | "didFocus"
+  | "willBlur"
+  | "didBlur";
 
 export type NavigationState<Params = { [key: string]: unknown }> = {
   key: string;
@@ -28,7 +28,10 @@ export type NavigationState<Params = { [key: string]: unknown }> = {
   params?: Params;
 };
 
-export type NavigationProp<RouteName = string, Params = { [key: string]: unknown }> = {
+export type NavigationProp<
+  RouteName = string,
+  Params = { [key: string]: unknown }
+> = {
   navigate(routeName: RouteName): void;
   goBack(): void;
   goBack(key: string | null): void;
@@ -47,9 +50,9 @@ export type NavigationProp<RouteName = string, Params = { [key: string]: unknown
 
 export type Layout = { width: number; height: number };
 
-export type GestureDirection = 'horizontal' | 'vertical' | 'vertical-inverted';
+export type GestureDirection = "horizontal" | "vertical" | "vertical-inverted";
 
-export type HeaderMode = 'float' | 'screen' | 'none';
+export type HeaderMode = "float" | "screen" | "none";
 
 export type HeaderScene<T> = {
   route: T;
@@ -78,7 +81,7 @@ export type HeaderOptions = {
   headerLeftContainerStyle?: StyleProp<ViewStyle>;
   headerRight?: (props: { tintColor?: string }) => React.ReactNode;
   headerRightContainerStyle?: StyleProp<ViewStyle>;
-  headerBackImage?: HeaderBackButtonProps['backImage'];
+  headerBackImage?: HeaderBackButtonProps["backImage"];
   headerPressColorAndroid?: string;
   headerBackground?: () => React.ReactNode;
   headerStyle?: StyleProp<ViewStyle>;
@@ -87,7 +90,7 @@ export type HeaderOptions = {
 };
 
 export type HeaderProps = {
-  mode: 'float' | 'screen';
+  mode: "float" | "screen";
   layout: Layout;
   scene: HeaderScene<Route>;
   previous?: HeaderScene<Route>;
@@ -118,7 +121,7 @@ export type NavigationStackOptions = HeaderOptions &
   };
 
 export type NavigationStackConfig = {
-  mode?: 'card' | 'modal';
+  mode?: "card" | "modal";
   headerMode?: HeaderMode;
   disableKeyboardHandling?: boolean;
 };
@@ -141,7 +144,7 @@ export type HeaderBackButtonProps = {
   label?: string;
   truncatedLabel?: string;
   labelVisible?: boolean;
-  labelStyle?: React.ComponentProps<typeof Animated.Text>['style'];
+  labelStyle?: React.ComponentProps<typeof Animated.Text>["style"];
   allowFontScaling?: boolean;
   onLabelLayout?: (e: LayoutChangeEvent) => void;
   screenLayout?: Layout;
@@ -177,8 +180,8 @@ export type TimingConfig = {
 };
 
 export type TransitionSpec =
-  | { animation: 'spring'; config: SpringConfig }
-  | { animation: 'timing'; config: TimingConfig };
+  | { animation: "spring"; config: SpringConfig }
+  | { animation: "timing"; config: TimingConfig };
 
 export type CardInterpolationProps = {
   current: {
