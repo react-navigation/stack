@@ -2,7 +2,7 @@ import {
   StyleProp,
   TextStyle,
   ViewStyle,
-  LayoutChangeEvent
+  LayoutChangeEvent,
 } from 'react-native';
 import Animated from 'react-native-reanimated';
 
@@ -37,7 +37,7 @@ export type NavigationProp<
   goBack(key: string | null): void;
   addListener: (
     event: NavigationEventName,
-    callback: () => void
+    callback: () => void,
   ) => { remove: () => void };
   isFocused(): boolean;
   state: NavigationState<Params>;
@@ -205,7 +205,7 @@ export type CardInterpolatedStyle = {
 };
 
 export type CardStyleInterpolator = (
-  props: CardInterpolationProps
+  props: CardInterpolationProps,
 ) => CardInterpolatedStyle;
 
 export type HeaderInterpolationProps = {
@@ -231,7 +231,7 @@ export type HeaderInterpolatedStyle = {
 };
 
 export type HeaderStyleInterpolator = (
-  props: HeaderInterpolationProps
+  props: HeaderInterpolationProps,
 ) => HeaderInterpolatedStyle;
 
 export type TransitionPreset = {
