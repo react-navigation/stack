@@ -28,7 +28,7 @@ export type NavigationState<Params = { [key: string]: unknown }> = {
   params?: Params;
 };
 
-export type NavigationProp<RouteName = string, Params = object> = {
+export type NavigationProp<RouteName = string, Params = { [key: string]: unknown }> = {
   navigate(routeName: RouteName): void;
   goBack(): void;
   goBack(key: string | null): void;
