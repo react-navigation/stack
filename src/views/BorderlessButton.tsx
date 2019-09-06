@@ -4,6 +4,8 @@ import { BaseButton } from 'react-native-gesture-handler';
 
 const AnimatedBaseButton = Animated.createAnimatedComponent(BaseButton);
 
+const USE_NATIVE_DRIVER = Platform.OS === 'android' || Platform.OS === 'ios';
+
 type Props = React.ComponentProps<typeof BaseButton> & {
   activeOpacity: number;
 };
@@ -26,7 +28,7 @@ export default class BorderlessButton extends React.Component<Props> {
         restDisplacementThreshold: 0.01,
         restSpeedThreshold: 0.01,
         toValue: active ? this.props.activeOpacity : 1,
-        useNativeDriver: true,
+        useNativeDriver: USE_NATIVE_DRIVER,
       }).start();
     }
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Platform } from 'react-native';
 import { StackActions } from '@react-navigation/core';
 import StackViewLayout from './StackViewLayout';
 import Transitioner from '../Transitioner';
@@ -23,7 +24,7 @@ type Props = {
   screenProps?: unknown;
 };
 
-const USE_NATIVE_DRIVER = true;
+const USE_NATIVE_DRIVER = Platform.OS === 'android' || Platform.OS === 'ios';
 
 // NOTE(brentvatne): this was previously in defaultProps, but that is deceiving
 // because the entire object will be clobbered by navigationConfig that is

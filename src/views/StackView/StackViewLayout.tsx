@@ -117,7 +117,7 @@ const POSITION_THRESHOLD = 1 / 2;
 const GESTURE_RESPONSE_DISTANCE_HORIZONTAL = 50;
 const GESTURE_RESPONSE_DISTANCE_VERTICAL = 135;
 
-const USE_NATIVE_DRIVER = true;
+const USE_NATIVE_DRIVER = Platform.OS === 'android' || Platform.OS === 'ios';
 
 const getDefaultHeaderHeight = (isLandscape: boolean) => {
   if (Platform.OS === 'ios') {
@@ -973,7 +973,10 @@ class StackViewLayout extends React.Component<Props, State> {
 
     if (hasHeader && headerMode === 'float' && !options.headerTransparent) {
       floatingContainerStyle = {
-        ...Platform.select({ web: {}, default: StyleSheet.absoluteFillObject }),
+        ...Platform.select({
+          web: {} as ViewStyle,
+          default: StyleSheet.absoluteFillObject,
+        }),
         paddingTop: this.state.floatingHeaderHeight,
       };
     }
