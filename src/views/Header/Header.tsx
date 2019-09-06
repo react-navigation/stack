@@ -744,14 +744,14 @@ const platformContainerStylesLight = Platform.select({
   android: {
     elevation: 4,
   },
-  ios: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: ThemeColors.light.headerBorder,
-  },
-  default: {
+  web: {
     // https://github.com/necolas/react-native-web/issues/44
     // Material Design
     boxShadow: `0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12)`,
+  },
+  default: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: ThemeColors.light.headerBorder,
   },
 });
 
@@ -759,15 +759,15 @@ const platformContainerStylesDark = Platform.select({
   android: {
     elevation: 4,
   },
-  ios: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: ThemeColors.dark.headerBorder,
-  },
-  default: {
+  web: {
     // https://github.com/necolas/react-native-web/issues/44
     // Material Design
     // TODO: what to use here?
     boxShadow: `0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12)`,
+  },
+  default: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: ThemeColors.dark.headerBorder,
   },
 });
 
