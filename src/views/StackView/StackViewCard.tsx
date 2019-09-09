@@ -7,7 +7,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import { Screen } from 'react-native-screens';
-import { ThemeContext, ThemeColors } from '@react-navigation/core';
+import { ThemeContext, ThemeColors } from 'react-navigation';
 
 import createPointerEventsContainer, {
   InputProps,

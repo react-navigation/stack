@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { Dimensions, Button, View } from 'react-native';
-import { withNavigation } from '@react-navigation/core';
-import { Themed } from '@react-navigation/native';
+import { withNavigation, Themed } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 const Buttons = withNavigation(props => (

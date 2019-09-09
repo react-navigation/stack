@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Platform, StyleSheet, Animated } from 'react-native';
-import { ThemeContext, ThemeColors } from '@react-navigation/core';
+import { ThemeContext, ThemeColors } from 'react-navigation';
 
 class HeaderTitle extends React.Component<
   React.ComponentProps<typeof Animated.Text>
