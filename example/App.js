@@ -11,8 +11,9 @@ import {
   createAppContainer,
   SafeAreaView,
   ScrollView,
-} from '@react-navigation/native';
-import { ThemeContext, ThemeColors } from '@react-navigation/core';
+  ThemeContext,
+  ThemeColors,
+} from 'react-navigation';
 import {
   Assets as StackAssets,
   createStackNavigator,
@@ -37,6 +38,7 @@ import {
 } from './src/HeaderBackgrounds';
 
 // Comment the following two lines to stop using react-native-screens
+// eslint-disable-next-line import/no-unresolved
 import { useScreens } from 'react-native-screens';
 
 // Uncomment the following line to force RTL. Requires closing and re-opening

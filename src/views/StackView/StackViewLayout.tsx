@@ -17,9 +17,8 @@ import {
   NavigationActions,
   NavigationProvider,
   ThemeContext,
-} from '@react-navigation/core';
-
-import { withOrientation } from '@react-navigation/native';
+  withOrientation,
+} from 'react-navigation';
 import { ScreenContainer } from 'react-native-screens';
 import {
   PanGestureHandler,

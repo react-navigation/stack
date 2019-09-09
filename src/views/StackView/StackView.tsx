@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Platform } from 'react-native';
-import { StackActions } from '@react-navigation/core';
+import { StackActions } from 'react-navigation';
 import StackViewLayout from './StackViewLayout';
 import Transitioner from '../Transitioner';
 import TransitionConfigs from './StackViewTransitionConfigs';

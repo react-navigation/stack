@@ -645,9 +645,9 @@
     lodash "^4.17.13"
 
 "@babel/types@^7.0.0", "@babel/types@^7.2.0", "@babel/types@^7.3.0", "@babel/types@^7.4.0", "@babel/types@^7.4.4", "@babel/types@^7.5.5", "@babel/types@^7.6.0":
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.6.0.tgz#1b5eaad0736e963bd2c6cf7911a53c84a7b35c08"
-  integrity sha512-+wLIp3XW60cvkZP/pvKMM85qoJbx7Hn3tNUpkGBLsGaSEYRz8Ut389/UsSa+wSBwSchtsLJm5IsqlA5sXawqew==
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.6.1.tgz#53abf3308add3ac2a2884d539151c57c4b3ac648"
+  integrity sha512-X7gdiuaCmA0uRjCmRtYJNAVCc/q+5xSgsfKJHqMN4iNLILX39677fJE1O40arPMh0TTtS9ItH67yre6c7k6t0g==
   dependencies:
     esutils "^2.0.2"
     lodash "^4.17.13"
@@ -2951,9 +2951,9 @@ errorhandler@^1.5.0:
     escape-html "~1.0.3"
 
 es-abstract@^1.11.0, es-abstract@^1.12.0, es-abstract@^1.5.1, es-abstract@^1.7.0:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.14.1.tgz#6e8d84b445ec9c610781e74a6d52cc31aac5b4ca"
-  integrity sha512-cp/Tb1oA/rh2X7vqeSOvM+TSo3UkJLX70eNihgVEvnzwAgikjkTFr/QVgRCaxjm0knCNQzNoxxxcw2zO2LJdZA==
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/es-abstract/-/es-abstract-1.14.2.tgz#7ce108fad83068c8783c3cdf62e504e084d8c497"
+  integrity sha512-DgoQmbpFNOofkjJtKwr87Ma5EW4Dc8fWhD0R+ndq7Oc456ivUfGOOP6oAZTTKl5/CcNMP+EN+e3/iUzgE0veZg==
   dependencies:
     es-to-primitive "^1.2.0"
     function-bind "^1.1.1"
@@ -7350,6 +7350,14 @@ react-native@~0.59.8:
     ws "^1.1.5"
     xmldoc "^0.4.0"
     yargs "^9.0.0"
+
+react-navigation@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/react-navigation/-/react-navigation-4.0.1.tgz#96c17ac90afcf0a5bc957358152326211a79d183"
+  integrity sha512-6XzuqvhOnY6FA6tCErD6+vfZdnP+O/7hCQper9qDulxxW2ZVkCF4xWdzoVcv3DDR6P5CK6l1tcbJ1ku256AdFQ==
+  dependencies:
+    "@react-navigation/core" "^3.5.0"
+    "@react-navigation/native" "^3.6.2"
 
 react-proxy@^1.1.7:
   version "1.1.8"

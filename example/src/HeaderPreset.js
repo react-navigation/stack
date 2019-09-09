@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Button } from 'react-native';
-import { SafeAreaView, Themed } from '@react-navigation/native';
+import { SafeAreaView, Themed } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
 class HomeScreen extends React.Component {

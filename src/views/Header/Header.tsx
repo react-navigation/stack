@@ -13,8 +13,12 @@ import {
   StyleProp,
 } from 'react-native';
 
-import { ThemeContext, ThemeColors } from '@react-navigation/core';
-import { withOrientation, SafeAreaView } from '@react-navigation/native';
+import {
+  ThemeContext,
+  ThemeColors,
+  withOrientation,
+  SafeAreaView,
+} from 'react-navigation';
 
 import HeaderTitle from './HeaderTitle';
 import HeaderBackButton from './HeaderBackButton';

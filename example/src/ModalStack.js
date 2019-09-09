@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Button, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Themed } from '@react-navigation/native';
+import { Themed } from 'react-navigation';
 
 class ListScreen extends React.Component {
   static navigationOptions = {
