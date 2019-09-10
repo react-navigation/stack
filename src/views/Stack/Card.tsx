@@ -639,14 +639,11 @@ export default class Card extends React.Component<Props> {
       : undefined;
 
     let overrideFlex = null;
-    if (Array.isArray(cardStyle)) {
-      cardStyle.forEach((style: any) => {
-        if (style.hasOwnProperty('flex')) {
-          overrideFlex = { flex: style.flex };
-        }
-      });
-    } else if (cardStyle && cardStyle.hasOwnProperty('flex')) {
-      overrideFlex = { flex: cardStyle.flex };
+    if (cardStyle) {
+      const style: any = StyleSheet.flatten(cardStyle);
+      if (style.hasOwnProperty('flex')) {
+        overrideFlex = { flex: style.flex };
+      }
     }
 
     return (
