@@ -13,12 +13,8 @@ import {
   StyleProp,
 } from 'react-native';
 
-import {
-  ThemeContext,
-  ThemeColors,
-  withOrientation,
-  SafeAreaView,
-} from 'react-navigation';
+import { ThemeContext, ThemeColors, withOrientation } from 'react-navigation';
+import { useSafeArea, EdgeInsets } from 'react-native-safe-area-context';
 
 import HeaderTitle from './HeaderTitle';
 import HeaderBackButton from './HeaderBackButton';
@@ -32,6 +28,7 @@ import {
 } from '../../types';
 
 type Props = HeaderProps & {
+  edgeInsets: EdgeInsets;
   leftLabelInterpolator: (props: SceneInterpolatorProps) => any;
   leftButtonInterpolator: (props: SceneInterpolatorProps) => any;
   titleFromLeftInterpolator: (props: SceneInterpolatorProps) => any;
@@ -55,10 +52,6 @@ const APPBAR_HEIGHT = Platform.select({
   ios: 44,
   android: 56,
   default: 64,
-});
-const STATUSBAR_HEIGHT = Platform.select({
-  ios: 20,
-  default: 0,
 });
 
 // These can be adjusted by using headerTitleContainerStyle on navigationOptions
@@ -609,7 +602,7 @@ class Header extends React.PureComponent<Props, State> {
   render() {
     let appBar;
     let background;
-    const { mode, scene, isLandscape } = this.props;
+    const { mode, scene, isLandscape, edgeInsets } = this.props;
 
     if (mode === 'float') {
       const scenesByIndex: { [key: string]: Scene } = {};
@@ -686,6 +679,25 @@ class Header extends React.PureComponent<Props, State> {
 
     let isDark = this.context === 'dark';
 
+    // Ensure we inset on left/right side equally
+    let leftInset = Math.max(edgeInsets.left, edgeInsets.right);
+    let rightInset = leftInset;
+    let topInset = edgeInsets.top;
+
+    const { headerForceInset = {} } = options;
+    if (headerForceInset.top === 'never') {
+      topInset = 0;
+    }
+
+    if (headerForceInset.horizontal === 'never') {
+      leftInset = 0;
+      rightInset = 0;
+    } else if (headerForceInset.left === 'never') {
+      leftInset = 0;
+    } else if (headerForceInset.right === 'never') {
+      leftInset = 0;
+    }
+
     // TODO: warn if any unsafe styles are provided
     const containerStyles = [
       options.headerTransparent
@@ -695,16 +707,14 @@ class Header extends React.PureComponent<Props, State> {
         : isDark
         ? styles.containerDark
         : styles.containerLight,
-      { height: appBarHeight },
+      {
+        height: appBarHeight,
+        paddingRight: rightInset,
+        paddingLeft: leftInset,
+        paddingTop: topInset,
+      },
       safeHeaderStyle,
     ];
-
-    const { headerForceInset } = options;
-    const forceInset = headerForceInset || {
-      top: 'always',
-      bottom: 'never',
-      horizontal: 'always',
-    };
 
     let backgroundColor = safeHeaderStyle.backgroundColor;
 
@@ -723,10 +733,10 @@ class Header extends React.PureComponent<Props, State> {
             : null,
         ]}
       >
-        <SafeAreaView forceInset={forceInset} style={containerStyles}>
+        <View style={containerStyles}>
           {background}
           <View style={styles.flexOne}>{appBar}</View>
-        </SafeAreaView>
+        </View>
       </Animated.View>
     );
   }
@@ -864,8 +874,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Object.assign(withOrientation(Header), {
+// We are already using contextType for theme, so we need a HOC for safe area
+// insets. Inlined here because we don't use it anywhere else.
+function withEdgeInsets(WrappedComponent: any) {
+  function ComponentWithEdgeInsets(props: any) {
+    let insets = useSafeArea();
+
+    if (!insets) {
+      insets = { top: 0, left: 0, bottom: 0, right: 0 };
+    }
+
+    return <WrappedComponent edgeInsets={insets} {...props} />;
+  }
+
+  return ComponentWithEdgeInsets;
+}
+
+export default Object.assign(withEdgeInsets(withOrientation(Header)), {
   get HEIGHT() {
-    return APPBAR_HEIGHT + STATUSBAR_HEIGHT;
+    return APPBAR_HEIGHT;
   },
 });

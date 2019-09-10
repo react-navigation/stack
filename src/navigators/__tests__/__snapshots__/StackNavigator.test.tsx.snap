@@ -96,20 +96,24 @@ exports[`StackNavigator applies correct values when headerRight is present 1`] =
           }
         >
           <View
-            onLayout={[Function]}
-            pointerEvents="box-none"
             style={
-              Object {
-                "backgroundColor": "red",
-                "borderBottomColor": "#a7a7aa",
-                "borderBottomWidth": 0.5,
-                "height": 64,
-                "opacity": 0.5,
-                "paddingBottom": 0,
-                "paddingLeft": 0,
-                "paddingRight": 0,
-                "paddingTop": 20,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderBottomColor": "#a7a7aa",
+                  "borderBottomWidth": 0.5,
+                },
+                Object {
+                  "height": 44,
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                  "paddingTop": 0,
+                },
+                Object {
+                  "backgroundColor": "red",
+                  "opacity": 0.5,
+                },
+              ]
             }
           >
             <View
@@ -289,20 +293,24 @@ exports[`StackNavigator renders successfully 1`] = `
           }
         >
           <View
-            onLayout={[Function]}
-            pointerEvents="box-none"
             style={
-              Object {
-                "backgroundColor": "red",
-                "borderBottomColor": "#a7a7aa",
-                "borderBottomWidth": 0.5,
-                "height": 64,
-                "opacity": 0.5,
-                "paddingBottom": 0,
-                "paddingLeft": 0,
-                "paddingRight": 0,
-                "paddingTop": 20,
-              }
+              Array [
+                Object {
+                  "backgroundColor": "#fff",
+                  "borderBottomColor": "#a7a7aa",
+                  "borderBottomWidth": 0.5,
+                },
+                Object {
+                  "height": 44,
+                  "paddingLeft": 0,
+                  "paddingRight": 0,
+                  "paddingTop": 0,
+                },
+                Object {
+                  "backgroundColor": "red",
+                  "opacity": 0.5,
+                },
+              ]
             }
           >
             <View

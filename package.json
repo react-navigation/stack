@@ -59,10 +59,11 @@
     "prettier": "^1.17.0",
     "react": "16.8.3",
     "react-dom": "16.8.6",
-    "react-navigation": "^4.0.1",
     "react-native": "~0.59.8",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-safe-area-context": "^0.3.5",
     "react-native-screens": "^1.0.0-alpha.22",
+    "react-navigation": "^4.0.1",
     "react-test-renderer": "~16.8.0",
     "release-it": "^12.3.6",
     "scheduler": "^0.14.0",
@@ -70,10 +71,11 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-navigation": "^4.0.1",
     "react-native": "*",
     "react-native-gesture-handler": "^1.0.0",
-    "react-native-screens": "^1.0.0 || ^1.0.0-alpha"
+    "react-native-screens": "^1.0.0 || ^1.0.0-alpha",
+    "react-navigation": "^4.0.1",
+    "react-native-safe-area-context": "*"
   },
   "jest": {
     "preset": "react-native",
