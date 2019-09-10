@@ -640,7 +640,7 @@ export default class Card extends React.Component<Props> {
 
     let overrideFlex = null;
     if (cardStyle) {
-      const style: any = StyleSheet.flatten(cardStyle);
+      const style = StyleSheet.flatten(cardStyle) as ViewStyle;
       if (style.hasOwnProperty('flex')) {
         overrideFlex = { flex: style.flex };
       }
