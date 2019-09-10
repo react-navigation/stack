@@ -638,10 +638,16 @@ export default class Card extends React.Component<Props> {
         : this.handleGestureEventHorizontal
       : undefined;
 
-    const overrideFlex =
-      cardStyle && cardStyle.hasOwnProperty('flex')
-        ? { flex: cardStyle.flex }
-        : undefined;
+    let overrideFlex = null;
+    if (Array.isArray(cardStyle)) {
+      cardStyle.forEach((style: any) => {
+        if (style.hasOwnProperty('flex')) {
+          overrideFlex = { flex: style.flex };
+        }
+      });
+    } else if (cardStyle && cardStyle.hasOwnProperty('flex')) {
+      overrideFlex = { flex: cardStyle.flex };
+    }
 
     return (
       <StackGestureContext.Provider value={this.gestureRef}>
