@@ -1,7 +1,18 @@
+import { NavigationDescriptor, NavigationParams } from 'react-navigation';
 import ScenesReducer from '../ScenesReducer';
-import { Scene, NavigationState, SceneDescriptor } from '../../types';
+import {
+  Scene,
+  NavigationStackState,
+  SceneDescriptorMap,
+  NavigationStackOptions,
+  NavigationStackProp,
+} from '../../types';
 
-const MOCK_DESCRIPTOR: SceneDescriptor = {} as any;
+const MOCK_DESCRIPTOR: NavigationDescriptor<
+  NavigationParams,
+  NavigationStackOptions,
+  NavigationStackProp
+> = {} as any;
 
 /**
  * Simulate scenes transtion with changes of navigation states.
@@ -14,18 +25,22 @@ function testTransition(states: string[][]) {
         acc[key] = MOCK_DESCRIPTOR;
         return acc;
       },
-      {} as { [key: string]: SceneDescriptor }
+      {} as SceneDescriptorMap
     );
-  const routes = states.map((keys, i) => ({
-    key: String(i),
-    index: keys.length - 1,
-    routes: keys.map(key => ({ key, routeName: '' })),
-    isTransitioning: false,
-  }));
+  const routes = states.map(
+    (keys, i) =>
+      ({
+        key: String(i),
+        index: keys.length - 1,
+        routes: keys.map(key => ({ key, routeName: '' })),
+        isTransitioning: false,
+      } as NavigationStackState)
+  );
 
   let scenes: Scene[] = [];
-  let prevState: NavigationState | null = null;
-  routes.forEach((nextState: NavigationState) => {
+  let prevState: NavigationStackState | null = null;
+
+  routes.forEach((nextState: NavigationStackState) => {
     scenes = ScenesReducer(scenes, nextState, prevState, descriptors);
     prevState = nextState;
   });
@@ -110,14 +125,14 @@ describe('ScenesReducer', () => {
       index: 0,
       routes: [{ key: '1', routeName: '' }],
       isTransitioning: false,
-    };
+    } as NavigationStackState;
 
     const state2 = {
       key: '0',
       index: 1,
       routes: [{ key: '1', routeName: '' }, { key: '2', routeName: '' }],
       isTransitioning: false,
-    };
+    } as NavigationStackState;
 
     const scenes1 = ScenesReducer([], state1, null, {});
     const scenes2 = ScenesReducer(scenes1, state2, state1, {});
@@ -131,14 +146,14 @@ describe('ScenesReducer', () => {
       index: 1,
       routes: [{ key: '1', routeName: '' }, { key: '2', routeName: '' }],
       isTransitioning: false,
-    };
+    } as NavigationStackState;
 
     const state2 = {
       key: '0',
       index: 1,
       routes: [{ key: '1', routeName: '' }, { key: '2', routeName: '' }],
       isTransitioning: false,
-    };
+    } as NavigationStackState;
 
     const scenes1 = ScenesReducer([], state1, null, {});
     const scenes2 = ScenesReducer(scenes1, state2, state1, {});
@@ -151,14 +166,14 @@ describe('ScenesReducer', () => {
       index: 1,
       routes: [{ key: '1', routeName: '' }, { key: '2', routeName: '' }],
       isTransitioning: false,
-    };
+    } as NavigationStackState;
 
     const state2 = {
       key: '0',
       index: 1,
       routes: [{ key: '2', routeName: '' }, { key: '1', routeName: '' }],
       isTransitioning: false,
-    };
+    } as NavigationStackState;
 
     const descriptors = { 1: {}, 2: {} } as any;
 
@@ -190,7 +205,9 @@ describe('ScenesReducer', () => {
 
     const descriptors = { 1: MOCK_DESCRIPTOR, 2: MOCK_DESCRIPTOR };
 
+    // @ts-ignore
     const scenes1 = ScenesReducer([], state1, null, descriptors);
+    // @ts-ignore
     const scenes2 = ScenesReducer(scenes1, state2, state1, descriptors);
     expect(scenes1).not.toBe(scenes2);
   });
@@ -220,7 +237,10 @@ describe('ScenesReducer', () => {
     };
 
     const descriptors = { 1: MOCK_DESCRIPTOR, 2: MOCK_DESCRIPTOR };
+
+    // @ts-ignore
     const scenes1 = ScenesReducer([], state1, null, descriptors);
+    // @ts-ignore
     const scenes2 = ScenesReducer(scenes1, state2, state1, descriptors);
     expect(scenes1).not.toBe(scenes2);
   });

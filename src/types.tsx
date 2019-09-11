@@ -1,48 +1,55 @@
 import { Animated, StyleProp, TextStyle, ViewStyle } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
-
-export type Route = {
-  key: string;
-  routeName: string;
-};
+import {
+  SafeAreaView,
+  NavigationRoute,
+  NavigationDescriptor,
+  NavigationAction,
+  NavigationState,
+  NavigationParams,
+  NavigationScreenProp,
+  NavigationNavigateAction,
+  NavigationEventCallback,
+  NavigationEventSubscription,
+} from 'react-navigation';
 
 export type Scene = {
   key: string;
   index: number;
   isStale: boolean;
   isActive: boolean;
-  route: Route;
-  descriptor: SceneDescriptor;
+  route: NavigationRoute;
+  descriptor: NavigationDescriptor<NavigationParams, NavigationStackOptions>;
 };
 
-export type NavigationEventName =
+export type NavigationStackEventName =
   | 'willFocus'
   | 'didFocus'
   | 'willBlur'
   | 'didBlur';
 
-export type NavigationState = {
-  key: string;
-  index: number;
-  routes: Route[];
-  isTransitioning?: boolean;
-  params?: { [key: string]: unknown };
-};
+export type NavigationStackState = NavigationState;
 
-export type NavigationProp<RouteName = string, Params = object> = {
-  navigate(routeName: RouteName): void;
-  goBack(): void;
-  goBack(key: string | null): void;
+export type NavigationStackProp<
+  State = NavigationRoute,
+  Params = NavigationParams
+> = NavigationScreenProp<State, Params> & {
+  push: (
+    routeName: string,
+    params?: NavigationParams,
+    action?: NavigationNavigateAction
+  ) => boolean;
+  replace: (
+    routeName: string,
+    params?: NavigationParams,
+    action?: NavigationNavigateAction
+  ) => boolean;
+  reset: (actions: NavigationAction[], index: number) => boolean;
+  pop: (n?: number, params?: { immediate?: boolean }) => boolean;
+  popToTop: (params?: { immediate?: boolean }) => boolean;
   addListener: (
-    event: NavigationEventName,
-    callback: () => void
-  ) => { remove: () => void };
-  isFocused(): boolean;
-  state: NavigationState;
-  setParams(params: Params): void;
-  getParam(): Params;
-  dispatch(action: { type: string }): boolean;
-  dangerouslyGetParent(): NavigationProp | undefined;
+    event: NavigationStackEventName,
+    callback: NavigationEventCallback
+  ) => NavigationEventSubscription;
 };
 
 export type HeaderMode = 'float' | 'screen' | 'none';
@@ -56,7 +63,7 @@ export type HeaderBackgroundTransitionPreset = 'translate' | 'fade';
 export type HeaderProps = {
   mode: HeaderMode;
   position: Animated.Value;
-  navigation: NavigationProp;
+  navigation: NavigationStackProp;
   layout: TransitionerLayout;
   scene: Scene;
   scenes: Scene[];
@@ -134,11 +141,12 @@ export type NavigationStackConfig = {
   ) => HeaderTransitionConfig;
 };
 
-export type SceneDescriptor = {
-  key: string;
-  options: NavigationStackOptions;
-  navigation: NavigationProp;
-  getComponent(): React.ComponentType;
+export type SceneDescriptorMap = {
+  [key: string]: NavigationDescriptor<
+    NavigationParams,
+    NavigationStackOptions,
+    NavigationStackProp
+  >;
 };
 
 export type HeaderBackbuttonProps = {
@@ -163,7 +171,7 @@ export type SceneInterpolatorProps = {
   scene: Scene;
   scenes: Scene[];
   position: Animated.AnimatedInterpolation;
-  navigation: NavigationProp;
+  navigation: NavigationStackProp;
   shadowEnabled?: boolean;
   cardOverlayEnabled?: boolean;
 };
@@ -180,7 +188,7 @@ export type TransitionerLayout = {
 
 export type TransitionProps = {
   layout: TransitionerLayout;
-  navigation: NavigationProp;
+  navigation: NavigationStackProp;
   position: Animated.Value;
   scenes: Scene[];
   scene: Scene;
@@ -195,16 +203,4 @@ export type TransitionConfig = {
   containerStyle?: StyleProp<ViewStyle>;
   containerStyleLight?: StyleProp<ViewStyle>;
   containerStyleDark?: StyleProp<ViewStyle>;
-};
-
-export type NavigationStackScreenOptions =
-  | NavigationStackOptions & { [key: string]: any }
-  | ((options: {
-      navigation: NavigationProp;
-      screenProps: unknown;
-      theme: 'light' | 'dark';
-    }) => NavigationStackOptions & { [key: string]: any });
-
-export type Screen = React.ComponentType<any> & {
-  navigationOptions?: NavigationStackScreenOptions;
 };

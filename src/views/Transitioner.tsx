@@ -9,9 +9,9 @@ import {
 
 import NavigationScenesReducer from './ScenesReducer';
 import {
-  NavigationProp,
+  NavigationStackProp,
   Scene,
-  SceneDescriptor,
+  SceneDescriptorMap,
   TransitionerLayout,
   TransitionProps,
 } from '../types';
@@ -35,8 +35,8 @@ type Props = {
     current: TransitionProps,
     previous?: TransitionProps
   ) => void | Promise<any>;
-  navigation: NavigationProp;
-  descriptors: { [key: string]: SceneDescriptor };
+  navigation: NavigationStackProp;
+  descriptors: SceneDescriptorMap;
   screenProps?: unknown;
 };
 

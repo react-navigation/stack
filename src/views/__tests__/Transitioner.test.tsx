@@ -49,9 +49,11 @@ describe('Transitioner', () => {
       },
     };
     const component = renderer.create(
+      // @ts-ignore
       <Transitioner descriptors={{}} {...transitionerProps} />
     );
     component.update(
+      // @ts-ignore
       <Transitioner descriptors={{}} {...nextTransitionerProps} />
     );
     expect(onTransitionStartCallback).not.toBeCalled();

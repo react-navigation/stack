@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Animated, View } from 'react-native';
-import { NavigationProp, Scene } from '../../types';
+import { NavigationStackProp, Scene } from '../../types';
 
 const MIN_POSITION_OFFSET = 0.01;
 
@@ -8,7 +8,7 @@ export type PointerEvents = 'box-only' | 'none' | 'auto';
 
 export type InputProps = {
   scene: Scene;
-  navigation: NavigationProp;
+  navigation: NavigationStackProp;
   realPosition: Animated.Value;
 };
 
