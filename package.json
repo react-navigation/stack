@@ -18,7 +18,7 @@
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "bootstrap": "yarn && yarn example"
+    "bootstrap": "yarn example && yarn"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -59,7 +59,7 @@
     "prettier": "^1.17.0",
     "react": "16.8.3",
     "react-dom": "16.8.6",
-    "react-navigation": "^4.0.1",
+    "react-navigation": "^4.0.3",
     "react-native": "~0.59.8",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-screens": "^1.0.0-alpha.22",
@@ -70,7 +70,7 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-navigation": "^4.0.1",
+    "react-navigation": "^4.0.3",
     "react-native": "*",
     "react-native-gesture-handler": "^1.0.0",
     "react-native-screens": "^1.0.0 || ^1.0.0-alpha"

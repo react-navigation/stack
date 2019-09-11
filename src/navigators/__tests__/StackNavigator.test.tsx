@@ -10,7 +10,7 @@ import createAppContainer, {
   _TESTING_ONLY_reset_container_count,
   // @ts-ignore
 } from '@react-navigation/native/src/createAppContainer';
-import { NavigationProp } from '../../types';
+import { NavigationStackProp } from '../../types';
 
 const NavigationTestUtils = {
   resetInternalState: _TESTING_ONLY_reset_container_count,
@@ -26,7 +26,7 @@ class HomeScreen extends Component {
   static navigationOptions = ({
     navigation,
   }: {
-    navigation: NavigationProp;
+    navigation: NavigationStackProp;
   }) => ({
     title: `Welcome ${
       navigation.state.params ? navigation.state.params.user : 'anonymous'

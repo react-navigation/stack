@@ -6,16 +6,16 @@ import StackViewLayout from './StackViewLayout';
 import Transitioner from '../Transitioner';
 import TransitionConfigs from './StackViewTransitionConfigs';
 import {
-  NavigationProp,
-  SceneDescriptor,
+  NavigationStackProp,
+  SceneDescriptorMap,
   NavigationStackConfig,
   TransitionProps,
   Scene,
 } from '../../types';
 
 type Props = {
-  navigation: NavigationProp;
-  descriptors: { [key: string]: SceneDescriptor };
+  navigation: NavigationStackProp;
+  descriptors: SceneDescriptorMap;
   navigationConfig: NavigationStackConfig;
   onTransitionStart?: () => void;
   onGestureBegin?: () => void;
@@ -116,8 +116,8 @@ class StackView extends React.Component<Props> {
   };
 
   private handleTransitionEnd = (
-    transition: { scene: Scene; navigation: NavigationProp },
-    lastTransition?: { scene: Scene; navigation: NavigationProp }
+    transition: { scene: Scene; navigation: NavigationStackProp },
+    lastTransition?: { scene: Scene; navigation: NavigationStackProp }
   ) => {
     const {
       navigationConfig,
