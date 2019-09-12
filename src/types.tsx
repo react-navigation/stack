@@ -10,7 +10,8 @@ import {
   NavigationNavigateAction,
   NavigationEventCallback,
   NavigationEventSubscription,
-  NavigationScreenComponent,
+  NavigationScreenConfig,
+  SupportedThemes,
 } from 'react-navigation';
 
 export type Scene = {
@@ -142,13 +143,24 @@ export type NavigationStackConfig = {
   ) => HeaderTransitionConfig;
 };
 
+export type NavigationStackScreenProps<
+  Params = NavigationParams,
+  ScreenProps = unknown
+> = {
+  theme: SupportedThemes;
+  navigation: NavigationStackProp<NavigationRoute, Params>;
+  screenProps: ScreenProps;
+};
+
 export type NavigationStackScreenComponent<
-  Route,
-  Params
-> = NavigationScreenComponent<
-  NavigationStackOptions,
-  NavigationStackProp<Route, Params>
->;
+  Params = NavigationParams,
+  ScreenProps = unknown
+> = React.ComponentType<NavigationStackScreenProps<Params, ScreenProps>> & {
+  navigationOptions?: NavigationScreenConfig<
+    NavigationStackOptions,
+    NavigationStackProp<NavigationRoute, Params>
+  >;
+};
 
 export type SceneDescriptorMap = {
   [key: string]: NavigationDescriptor<
