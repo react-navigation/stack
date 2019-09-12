@@ -111,7 +111,7 @@ export type NavigationStackOptions = {
     title?: string | null;
   }>;
   headerPressColorAndroid?: string;
-  headerBackground?: string;
+  headerBackground?: React.ReactNode;
   headerTransparent?: boolean;
   headerStyle?: StyleProp<ViewStyle>;
   headerForceInset?: React.ComponentProps<typeof SafeAreaView>['forceInset'];
