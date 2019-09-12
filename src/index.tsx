@@ -39,3 +39,14 @@ export {
 export { default as Transitioner } from './views/Transitioner';
 export { default as ScenesReducer } from './views/ScenesReducer';
 export { default as StackGestureContext } from './utils/StackGestureContext';
+
+/**
+ * Types
+ */
+export {
+  NavigationStackState,
+  NavigationStackProp,
+  NavigationStackOptions,
+  NavigationStackConfig,
+  NavigationStackScreenComponent,
+} from './types';

@@ -10,6 +10,7 @@ import {
   NavigationNavigateAction,
   NavigationEventCallback,
   NavigationEventSubscription,
+  NavigationScreenComponent,
 } from 'react-navigation';
 
 export type Scene = {
@@ -140,6 +141,14 @@ export type NavigationStackConfig = {
     isModal?: boolean
   ) => HeaderTransitionConfig;
 };
+
+export type NavigationStackScreenComponent<
+  Route,
+  Params
+> = NavigationScreenComponent<
+  NavigationStackOptions,
+  NavigationStackProp<Route, Params>
+>;
 
 export type SceneDescriptorMap = {
   [key: string]: NavigationDescriptor<
