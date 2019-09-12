@@ -5,6 +5,7 @@ import {
   CreateNavigatorConfig,
   NavigationStackRouterConfig,
   NavigationRouteConfigMap,
+  NavigationRoute,
 } from 'react-navigation';
 import { Platform } from 'react-native';
 import StackView from '../views/StackView/StackView';
@@ -17,13 +18,13 @@ import {
 function createStackNavigator(
   routeConfigMap: NavigationRouteConfigMap<
     NavigationStackOptions,
-    NavigationStackProp
+    NavigationStackProp<NavigationRoute, any>
   >,
   stackConfig: CreateNavigatorConfig<
     NavigationStackConfig,
     NavigationStackRouterConfig,
     NavigationStackOptions,
-    NavigationStackProp
+    NavigationStackProp<NavigationRoute, any>
   > = {}
 ) {
   const router = StackRouter(routeConfigMap, stackConfig);
