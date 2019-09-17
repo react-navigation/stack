@@ -13,14 +13,14 @@ import TouchableItem from '../TouchableItem';
 
 import defaultBackImage from '../assets/back-icon.png';
 import BackButtonWeb from './BackButtonWeb';
-import { HeaderBackbuttonProps } from '../../types';
+import { HeaderBackButtonProps } from '../../types';
 
 type State = {
   initialTextWidth?: number;
 };
 
 class HeaderBackButton extends React.PureComponent<
-  HeaderBackbuttonProps,
+  HeaderBackButtonProps,
   State
 > {
   static defaultProps = {

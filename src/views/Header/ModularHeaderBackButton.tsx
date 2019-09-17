@@ -11,9 +11,9 @@ import {
 import TouchableItem from '../TouchableItem';
 
 import defaultBackImage from '../assets/back-icon.png';
-import { HeaderBackbuttonProps } from '../../types';
+import { HeaderBackButtonProps } from '../../types';
 
-type Props = HeaderBackbuttonProps & {
+type Props = HeaderBackButtonProps & {
   LabelContainerComponent: React.ComponentType;
   ButtonContainerComponent: React.ComponentType;
 };

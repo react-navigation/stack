@@ -102,7 +102,7 @@ export type NavigationStackOptions = {
   headerBackTitle?: string | null;
   headerBackTitleStyle?: StyleProp<TextStyle>;
   headerTruncatedBackTitle?: string;
-  headerLeft?: React.FunctionComponent<HeaderBackbuttonProps> | null;
+  headerLeft?: React.FunctionComponent<HeaderBackButtonProps> | null;
   headerLeftContainerStyle?: StyleProp<ViewStyle>;
   headerRight?: (() => React.ReactNode) | React.ReactNode;
   headerRightContainerStyle?: StyleProp<ViewStyle>;
@@ -170,7 +170,7 @@ export type SceneDescriptorMap = {
   >;
 };
 
-export type HeaderBackbuttonProps = {
+export type HeaderBackButtonProps = {
   disabled?: boolean;
   onPress: () => void;
   pressColorAndroid?: string;
