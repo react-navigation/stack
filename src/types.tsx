@@ -158,7 +158,8 @@ export type NavigationStackScreenComponent<
 > = React.ComponentType<NavigationStackScreenProps<Params, ScreenProps>> & {
   navigationOptions?: NavigationScreenConfig<
     NavigationStackOptions,
-    NavigationStackProp<NavigationRoute, Params>
+    NavigationStackProp<NavigationRoute, Params>,
+    ScreenProps
   >;
 };
 
