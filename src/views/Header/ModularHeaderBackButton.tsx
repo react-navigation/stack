@@ -45,9 +45,7 @@ class ModularHeaderBackButton extends React.PureComponent<Props, State> {
     if (React.isValidElement(backImage)) {
       return backImage;
     } else if (backImage) {
-      const BackImage = backImage;
-
-      return <BackImage tintColor={tintColor} />;
+      return backImage({ tintColor });
     } else {
       return (
         <Image

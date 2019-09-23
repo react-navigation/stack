@@ -1,4 +1,10 @@
-import { Animated, StyleProp, TextStyle, ViewStyle } from 'react-native';
+import {
+  Animated,
+  TextProps,
+  StyleProp,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {
   SafeAreaView,
   NavigationRoute,
@@ -93,7 +99,9 @@ export type HeaderTransitionConfig = {
 export type NavigationStackOptions = {
   title?: string;
   header?: ((props: HeaderProps) => React.ReactNode) | null;
-  headerTitle?: string;
+  headerTitle?:
+    | ((props: TextProps & { children?: string }) => React.ReactNode)
+    | React.ReactNode;
   headerTitleStyle?: StyleProp<TextStyle>;
   headerTitleContainerStyle?: StyleProp<ViewStyle>;
   headerTintColor?: string;
@@ -102,14 +110,16 @@ export type NavigationStackOptions = {
   headerBackTitle?: string | null;
   headerBackTitleStyle?: StyleProp<TextStyle>;
   headerTruncatedBackTitle?: string;
-  headerLeft?: React.FunctionComponent<HeaderBackButtonProps> | null;
+  headerLeft?:
+    | ((props: HeaderBackButtonProps) => React.ReactNode)
+    | React.ReactNode;
   headerLeftContainerStyle?: StyleProp<ViewStyle>;
   headerRight?: (() => React.ReactNode) | React.ReactNode;
   headerRightContainerStyle?: StyleProp<ViewStyle>;
-  headerBackImage?: React.FunctionComponent<{
-    tintColor: string;
+  headerBackImage?: (props: {
+    tintColor?: string;
     title?: string | null;
-  }>;
+  }) => React.ReactNode;
   headerPressColorAndroid?: string;
   headerBackground?: React.ReactNode;
   headerTransparent?: boolean;
@@ -175,7 +185,7 @@ export type HeaderBackButtonProps = {
   disabled?: boolean;
   onPress: () => void;
   pressColorAndroid?: string;
-  tintColor: string;
+  tintColor?: string;
   backImage?: NavigationStackOptions['headerBackImage'];
   title?: string | null;
   truncatedTitle?: string | null;

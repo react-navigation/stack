@@ -54,9 +54,10 @@ class HeaderBackButton extends React.PureComponent<
     if (React.isValidElement(backImage)) {
       return backImage;
     } else if (backImage) {
-      const BackImage = backImage;
-
-      return <BackImage tintColor={tintColor} title={title} />;
+      return backImage({
+        tintColor,
+        title,
+      });
     } else {
       return (
         <Image

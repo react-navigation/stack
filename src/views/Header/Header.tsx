@@ -11,6 +11,7 @@ import {
   ViewStyle,
   LayoutChangeEvent,
   StyleProp,
+  TextProps,
 } from 'react-native';
 
 import {
@@ -29,6 +30,7 @@ import {
   HeaderLayoutPreset,
   SceneInterpolatorProps,
   HeaderProps,
+  HeaderBackButtonProps,
 } from '../../types';
 
 type Props = HeaderProps & {
@@ -216,27 +218,27 @@ class Header extends React.PureComponent<Props, State> {
           }
         : undefined;
 
-    const HeaderTitleComponent =
+    const render =
       headerTitle && typeof headerTitle !== 'string'
-        ? headerTitle
-        : HeaderTitle;
-    return (
-      <HeaderTitleComponent
-        onLayout={onLayout}
-        allowFontScaling={!!allowFontScaling}
-        style={[
-          color ? { color } : null,
-          layoutPreset === 'center'
-            ? // eslint-disable-next-line react-native/no-inline-styles
-              { textAlign: 'center' }
-            : // eslint-disable-next-line react-native/no-inline-styles
-              { textAlign: 'left' },
-          titleStyle,
-        ]}
-      >
-        {titleString}
-      </HeaderTitleComponent>
-    );
+        ? (headerTitle as (
+            props: TextProps & { children?: string }
+          ) => React.ReactNode)
+        : (props: TextProps & { children?: string }) => (
+            <HeaderTitle {...props} />
+          );
+
+    return render({
+      onLayout,
+      allowFontScaling: Boolean(allowFontScaling),
+      style: [
+        color ? { color } : null,
+        layoutPreset === 'center'
+          ? { textAlign: 'center' }
+          : { textAlign: 'left' },
+        titleStyle,
+      ],
+      children: titleString,
+    });
   };
 
   private renderLeftComponent = (props: SubviewProps) => {
@@ -259,7 +261,9 @@ class Header extends React.PureComponent<Props, State> {
     const width = this.state.widths[props.scene.key]
       ? (this.props.layout.initWidth - this.state.widths[props.scene.key]) / 2
       : undefined;
-    const RenderedLeftComponent = options.headerLeft || HeaderBackButton;
+    const RenderedLeftComponent =
+      (options.headerLeft as React.FunctionComponent<HeaderBackButtonProps>) ||
+      HeaderBackButton;
     const goBack = () => {
       // Go back on next tick because button ripple effect needs to happen on Android
       requestAnimationFrame(() => {
@@ -331,6 +335,11 @@ class Header extends React.PureComponent<Props, State> {
 
   private renderRightComponent = (props: SubviewProps) => {
     const { headerRight } = props.scene.descriptor.options;
+
+    if (typeof headerRight === 'function') {
+      return headerRight();
+    }
+
     return headerRight || null;
   };
 
