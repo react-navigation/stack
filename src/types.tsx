@@ -150,7 +150,7 @@ export type NavigationStackConfig = {
     transitionProps: TransitionProps,
     prevTransitionProps?: TransitionProps,
     isModal?: boolean
-  ) => HeaderTransitionConfig;
+  ) => HeaderTransitionConfig & TransitionConfig;
 };
 
 export type NavigationStackScreenProps<
