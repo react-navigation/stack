@@ -709,9 +709,9 @@ class Header extends React.PureComponent<Props, State> {
         : styles.containerLight,
       {
         height: appBarHeight,
-        paddingRight: rightInset,
-        paddingLeft: leftInset,
-        paddingTop: topInset,
+        marginRight: rightInset,
+        marginLeft: leftInset,
+        marginTop: topInset,
       },
       safeHeaderStyle,
     ];
