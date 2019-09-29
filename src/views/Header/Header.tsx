@@ -282,9 +282,7 @@ class Header extends React.PureComponent<Props, State> {
         backTitleVisible={this.props.backTitleVisible}
         allowFontScaling={options.headerBackAllowFontScaling}
         titleStyle={options.headerBackTitleStyle}
-        layoutPreset={this.props.layoutPreset}
         width={width}
-        scene={props.scene}
       />
     );
   };
@@ -326,9 +324,7 @@ class Header extends React.PureComponent<Props, State> {
         title={backButtonTitle}
         truncatedTitle={truncatedBackButtonTitle}
         titleStyle={options.headerBackTitleStyle}
-        layoutPreset={this.props.layoutPreset}
         width={width}
-        scene={props.scene}
       />
     );
   };

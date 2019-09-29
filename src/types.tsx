@@ -192,9 +192,7 @@ export type HeaderBackButtonProps = {
   backTitleVisible?: boolean;
   allowFontScaling?: boolean;
   titleStyle?: StyleProp<TextStyle>;
-  layoutPreset: HeaderLayoutPreset;
   width?: number;
-  scene: Scene;
 };
 
 export type SceneInterpolatorProps = {
