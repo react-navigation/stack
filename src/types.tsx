@@ -66,7 +66,7 @@ export type HeaderLayoutPreset = 'left' | 'center';
 
 export type HeaderTransitionPreset = 'fade-in-place' | 'uikit';
 
-export type HeaderBackgroundTransitionPreset = 'translate' | 'fade';
+export type HeaderBackgroundTransitionPreset = 'translate' | 'fade' | 'toggle';
 
 export type HeaderProps = {
   mode: HeaderMode;
@@ -142,15 +142,17 @@ export type NavigationStackConfig = {
   headerBackgroundTransitionPreset?: HeaderBackgroundTransitionPreset;
   headerBackTitleVisible?: boolean;
   disableKeyboardHandling?: boolean;
+  transparentCard?: boolean;
   cardShadowEnabled?: boolean;
   cardOverlayEnabled?: boolean;
+  cardStyle?: StyleProp<ViewStyle>;
   onTransitionStart?: () => void;
   onTransitionEnd?: () => void;
   transitionConfig?: (
     transitionProps: TransitionProps,
     prevTransitionProps?: TransitionProps,
     isModal?: boolean
-  ) => HeaderTransitionConfig;
+  ) => TransitionConfig;
 };
 
 export type NavigationStackScreenProps<

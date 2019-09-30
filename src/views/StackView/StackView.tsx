@@ -103,7 +103,7 @@ class StackView extends React.Component<Props> {
     return (
       <StackViewLayout
         {...navigationConfig}
-        shadowEnabled={this.getShadowEnabled()}
+        cardShadowEnabled={this.getShadowEnabled()}
         cardOverlayEnabled={this.getCardOverlayEnabled()}
         onGestureBegin={this.props.onGestureBegin}
         onGestureCanceled={this.props.onGestureCanceled}

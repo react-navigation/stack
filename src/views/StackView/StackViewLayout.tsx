@@ -7,7 +7,6 @@ import {
   I18nManager,
   Easing,
   Dimensions,
-  StyleProp,
   ViewStyle,
   LayoutChangeEvent,
 } from 'react-native';
@@ -42,27 +41,18 @@ import {
   TransitionConfig,
   HeaderTransitionConfig,
   HeaderProps,
+  NavigationStackConfig,
 } from '../../types';
 
-type Props = {
-  mode?: 'modal' | 'card';
-  headerMode?: 'screen' | 'float' | 'none';
-  headerLayoutPreset?: 'left' | 'center';
-  headerTransitionPreset?: 'fade-in-place' | 'uikit';
-  headerBackgroundTransitionPreset?: 'fade' | 'translate' | 'toggle';
-  headerBackTitleVisible?: boolean;
+type Props = NavigationStackConfig & {
   isLandscape: boolean;
-  shadowEnabled?: boolean;
-  cardOverlayEnabled?: boolean;
-  transparentCard?: boolean;
-  cardStyle?: StyleProp<ViewStyle>;
   transitionProps: TransitionProps;
   lastTransitionProps?: TransitionProps;
   transitionConfig?: (
     transitionProps: TransitionProps,
     prevTransitionProps?: TransitionProps,
     isModal?: boolean
-  ) => HeaderTransitionConfig;
+  ) => TransitionConfig;
   onGestureBegin?: () => void;
   onGestureEnd?: () => void;
   onGestureCanceled?: () => void;
@@ -137,6 +127,7 @@ const getDefaultHeaderHeight = (isLandscape: boolean) => {
 
 class StackViewLayout extends React.Component<Props, State> {
   static contextType = ThemeContext;
+
   context!: React.ContextType<typeof ThemeContext>;
 
   private panGestureRef: React.RefObject<PanGestureHandler>;
@@ -945,7 +936,7 @@ class StackViewLayout extends React.Component<Props, State> {
   private renderCard = (scene: Scene) => {
     const {
       transitionProps,
-      shadowEnabled,
+      cardShadowEnabled,
       cardOverlayEnabled,
       transparentCard,
       cardStyle,
@@ -956,7 +947,7 @@ class StackViewLayout extends React.Component<Props, State> {
       screenInterpolator &&
       screenInterpolator({
         ...transitionProps,
-        shadowEnabled,
+        shadowEnabled: cardShadowEnabled,
         cardOverlayEnabled,
         position: this.position,
         scene,
