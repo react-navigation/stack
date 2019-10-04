@@ -53,6 +53,7 @@ type Props = ViewProps & {
     close: TransitionSpec;
   };
   styleInterpolator: CardStyleInterpolator;
+  swipeVelocityImpact: number;
   containerStyle?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
 };
@@ -232,10 +233,16 @@ export default class Card extends React.Component<Props> {
     overlayEnabled: Platform.OS !== 'ios',
     shadowEnabled: true,
     gestureEnabled: true,
+    swipeVelocityImpact: SWIPE_VELOCITY_IMPACT,
   };
 
   componentDidUpdate(prevProps: Props) {
-    const { layout, gestureDirection, closing } = this.props;
+    const {
+      layout,
+      gestureDirection,
+      closing,
+      swipeVelocityImpact,
+    } = this.props;
     const { width, height } = layout;
 
     if (width !== prevProps.layout.width) {
@@ -244,6 +251,10 @@ export default class Card extends React.Component<Props> {
 
     if (height !== prevProps.layout.height) {
       this.layout.height.setValue(height);
+    }
+
+    if (swipeVelocityImpact !== prevProps.swipeVelocityImpact) {
+      this.swipeVelocityImpact.setValue(swipeVelocityImpact);
     }
 
     if (gestureDirection !== prevProps.gestureDirection) {
@@ -285,6 +296,7 @@ export default class Card extends React.Component<Props> {
   }
 
   private isVisible = new Value<Binary>(TRUE);
+  private swipeVelocityImpact = new Value<number>(SWIPE_VELOCITY_IMPACT);
   private isVisibleValue: Binary = TRUE;
   private nextIsVisible = new Value<Binary | -1>(UNSET);
   private verticalGestureDirection = new Value(
@@ -483,7 +495,7 @@ export default class Card extends React.Component<Props> {
 
   private extrapolatedPosition = add(
     this.gesture,
-    multiply(this.velocity, SWIPE_VELOCITY_IMPACT)
+    multiply(this.velocity, this.swipeVelocityImpact)
   );
 
   private exec = [
