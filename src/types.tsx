@@ -120,6 +120,7 @@ export type NavigationStackOptions = HeaderOptions &
     };
     onTransitionStart?: (props: TransitionCallbackProps) => void;
     onTransitionEnd?: (props: TransitionCallbackProps) => void;
+    swipeVelocityImpact?: number;
   };
 
 export type NavigationStackConfig = {
