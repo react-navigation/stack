@@ -42,6 +42,7 @@ Array [
             "top": 0,
           }
         }
+        swipeVelocityImpact={0.3}
         transitionSpec={
           Object {
             "close": Object {
@@ -378,6 +379,7 @@ Array [
             "top": 0,
           }
         }
+        swipeVelocityImpact={0.3}
         transitionSpec={
           Object {
             "close": Object {
