@@ -26,6 +26,7 @@ Array [
       <View
         accessibilityElementsHidden={false}
         closing={false}
+        gestureVelocityImpact={0.3}
         importantForAccessibility="auto"
         onClose={[Function]}
         onGestureBegin={[Function]}
@@ -42,7 +43,6 @@ Array [
             "top": 0,
           }
         }
-        gestureVelocityImpact={0.3}
         transitionSpec={
           Object {
             "close": Object {
@@ -363,6 +363,7 @@ Array [
       <View
         accessibilityElementsHidden={false}
         closing={false}
+        gestureVelocityImpact={0.3}
         importantForAccessibility="auto"
         onClose={[Function]}
         onGestureBegin={[Function]}
@@ -379,7 +380,6 @@ Array [
             "top": 0,
           }
         }
-        gestureVelocityImpact={0.3}
         transitionSpec={
           Object {
             "close": Object {
