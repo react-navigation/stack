@@ -647,7 +647,6 @@ export default class Card extends React.Component<Props> {
           eq(this.gestureState, GestureState.CANCELLED)
         ),
         set(this.isSwiping, FALSE_NODE),
-        call([this.extrapolatedPosition, this.distance], console.warn),
         this.runTransition(
           cond(
             greaterThan(
