@@ -54,7 +54,7 @@ type Props = TransitionPreset & {
   headerTransparent?: boolean;
   floatingHeaderHeight: number;
   hasCustomHeader: boolean;
-  swipeVelocityImpact?: number;
+  gestureVelocityImpact?: number;
 };
 
 export default class StackItem extends React.PureComponent<Props> {
@@ -121,7 +121,7 @@ export default class StackItem extends React.PureComponent<Props> {
       transitionSpec,
       cardStyleInterpolator,
       headerStyleInterpolator,
-      swipeVelocityImpact,
+      gestureVelocityImpact,
     } = this.props;
 
     return (
@@ -155,7 +155,7 @@ export default class StackItem extends React.PureComponent<Props> {
         }
         contentStyle={cardStyle}
         style={StyleSheet.absoluteFill}
-        swipeVelocityImpact={swipeVelocityImpact}
+        gestureVelocityImpact={gestureVelocityImpact}
       >
         <View style={styles.container}>
           <View style={styles.scene}>

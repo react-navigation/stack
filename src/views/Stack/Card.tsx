@@ -53,7 +53,7 @@ type Props = ViewProps & {
     close: TransitionSpec;
   };
   styleInterpolator: CardStyleInterpolator;
-  swipeVelocityImpact: number;
+  gestureVelocityImpact: number;
   containerStyle?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
 };
@@ -90,7 +90,7 @@ const BOTTOM = 1;
 const DIRECTION_VERTICAL = -1;
 const DIRECTION_HORIZONTAL = 1;
 
-const SWIPE_VELOCITY_IMPACT = 0.3;
+const GESTURE_VELOCITY_IMPACT = 0.3;
 
 /**
  * The distance of touch start from the edge of the screen where the gesture will be recognized
@@ -233,7 +233,7 @@ export default class Card extends React.Component<Props> {
     overlayEnabled: Platform.OS !== 'ios',
     shadowEnabled: true,
     gestureEnabled: true,
-    swipeVelocityImpact: SWIPE_VELOCITY_IMPACT,
+    gestureVelocityImpact: GESTURE_VELOCITY_IMPACT,
   };
 
   componentDidUpdate(prevProps: Props) {
@@ -241,7 +241,7 @@ export default class Card extends React.Component<Props> {
       layout,
       gestureDirection,
       closing,
-      swipeVelocityImpact,
+      gestureVelocityImpact,
     } = this.props;
     const { width, height } = layout;
 
@@ -253,8 +253,8 @@ export default class Card extends React.Component<Props> {
       this.layout.height.setValue(height);
     }
 
-    if (swipeVelocityImpact !== prevProps.swipeVelocityImpact) {
-      this.swipeVelocityImpact.setValue(swipeVelocityImpact);
+    if (gestureVelocityImpact !== prevProps.gestureVelocityImpact) {
+      this.gestureVelocityImpact.setValue(gestureVelocityImpact);
     }
 
     if (gestureDirection !== prevProps.gestureDirection) {
@@ -296,8 +296,8 @@ export default class Card extends React.Component<Props> {
   }
 
   private isVisible = new Value<Binary>(TRUE);
-  private swipeVelocityImpact = new Value<number>(
-    this.props.swipeVelocityImpact
+  private gestureVelocityImpact = new Value<number>(
+    this.props.gestureVelocityImpact
   );
   private isVisibleValue: Binary = TRUE;
   private nextIsVisible = new Value<Binary | -1>(UNSET);
@@ -497,7 +497,7 @@ export default class Card extends React.Component<Props> {
 
   private extrapolatedPosition = add(
     this.gesture,
-    multiply(this.velocity, this.swipeVelocityImpact)
+    multiply(this.velocity, this.gestureVelocityImpact)
   );
 
   private exec = [
