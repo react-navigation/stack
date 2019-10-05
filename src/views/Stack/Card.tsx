@@ -296,7 +296,9 @@ export default class Card extends React.Component<Props> {
   }
 
   private isVisible = new Value<Binary>(TRUE);
-  private swipeVelocityImpact = new Value<number>(SWIPE_VELOCITY_IMPACT);
+  private swipeVelocityImpact = new Value<number>(
+    this.props.swipeVelocityImpact
+  );
   private isVisibleValue: Binary = TRUE;
   private nextIsVisible = new Value<Binary | -1>(UNSET);
   private verticalGestureDirection = new Value(
@@ -499,14 +501,15 @@ export default class Card extends React.Component<Props> {
   );
 
   private exec = [
-    cond(
-      eq(this.direction, DIRECTION_HORIZONTAL),
-      set(
-        this.gesture,
+    set(
+      this.gesture,
+      cond(
+        eq(this.direction, DIRECTION_HORIZONTAL),
         multiply(
           this.gestureUntraversed,
           I18nManager.isRTL ? MINUS_ONE_NODE : TRUE_NODE
-        )
+        ),
+        this.gestureUntraversed
       )
     ),
     set(
@@ -640,6 +643,7 @@ export default class Card extends React.Component<Props> {
           eq(this.gestureState, GestureState.CANCELLED)
         ),
         set(this.isSwiping, FALSE_NODE),
+        call([this.extrapolatedPosition, this.distance], console.warn),
         this.runTransition(
           cond(
             greaterThan(
