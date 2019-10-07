@@ -329,6 +329,10 @@ export default class HeaderSegment extends React.Component<Props, State> {
             <Animated.View
               pointerEvents="box-none"
               style={[
+                Platform.select({
+                  ios: null,
+                  default: { paddingLeft: leftButton ? 20 : 16 },
+                }),
                 styles.title,
                 titleStyle,
                 titleContainerStyle,
@@ -380,9 +384,8 @@ const styles = StyleSheet.create({
   },
   title: Platform.select({
     ios: {},
-    default: { 
+    default: {
       flex: 1,
-      paddingLeft: 16,
       justifyContent: 'center',
     },
   }),
