@@ -432,11 +432,11 @@ Array [
                             pointerEvents="box-none"
                             style={
                               Object {
-                                "alignItems": "center",
+                                "alignItems": "stretch",
                                 "flex": 1,
                                 "flexDirection": "row",
                                 "justifyContent": "center",
-                                "paddingHorizontal": 4,
+                                "paddingHorizontal": 0,
                               }
                             }
                           >
@@ -573,11 +573,11 @@ Array [
           pointerEvents="box-none"
           style={
             Object {
-              "alignItems": "center",
+              "alignItems": "stretch",
               "flex": 1,
               "flexDirection": "row",
               "justifyContent": "center",
-              "paddingHorizontal": 4,
+              "paddingHorizontal": 0,
             }
           }
         >
