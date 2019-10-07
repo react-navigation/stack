@@ -331,7 +331,7 @@ export default class HeaderSegment extends React.Component<Props, State> {
               style={[
                 Platform.select({
                   ios: null,
-                  default: { left: leftButton ? 72 : 16 },
+                  default: { paddingLeft: leftButton ? 0 : 16 },
                 }),
                 styles.title,
                 titleStyle,
@@ -371,27 +371,22 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 4,
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
   left: {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    bottom: 0,
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
   right: {
-    position: 'absolute',
-    right: 0,
-    top: 0,
-    bottom: 0,
     justifyContent: 'center',
     alignItems: 'flex-end',
   },
   title: Platform.select({
     ios: {},
-    default: { position: 'absolute' },
+    default: { 
+      flex: 1,
+      justifyContent: 'center',
+    },
   }),
 });
