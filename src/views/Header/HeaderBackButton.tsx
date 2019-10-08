@@ -15,14 +15,13 @@ import defaultBackImage from '../assets/back-icon.png';
 import BackButtonWeb from './BackButtonWeb';
 import { HeaderBackButtonProps } from '../../types';
 
+type Props = Omit<HeaderBackButtonProps, 'layoutPreset' | 'scene'>;
+
 type State = {
   initialTextWidth?: number;
 };
 
-class HeaderBackButton extends React.PureComponent<
-  HeaderBackButtonProps,
-  State
-> {
+class HeaderBackButton extends React.PureComponent<Props, State> {
   static defaultProps = {
     pressColorAndroid: 'rgba(0, 0, 0, .32)',
     tintColor: Platform.select({
