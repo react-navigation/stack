@@ -4,25 +4,23 @@
 [![Version][version-badge]][package]
 [![MIT License][license-badge]][license]
 
-* [Leia esta página em português](https://github.com/react-navigation/stack/blob/master/README-pt.md)
+Stack navigator para uso em iOS e Android.
 
-Stack navigator for use on iOS and Android.
+## Instalação
 
-## Installation
-
-Open a Terminal in your project's folder and run,
+Abra um terminal na pasta do seu projeto e execute:
 
 ```sh
 yarn add react-navigation-stack
 ```
 
-or
+ou
 
 ```sh
 npm install react-navigation-stack
 ```
 
-## Usage
+## Como Utilizar
 
 ```js
 import { createStackNavigator } from 'react-navigation-stack';
@@ -35,36 +33,35 @@ export default createStackNavigator({
 });
 ```
 
-## Development workflow
+## Modo de Desenvolvedor
 
-To setup the development environment, open a Terminal in the repo directory and run the following:
+Para configurar o ambiente de desenvolvimento, abra um Terminal no diretório repo e execute o seguinte:
 
 ```sh
 yarn bootstrap
 ```
 
-While developing, you can run the example app with [Expo](https://expo.io/) to test your changes:
+Durante o desenvolvimento, você pode executar o aplicativo com [Expo](https://expo.io/) para testar suas alterações:
 
 ```sh
 yarn example start
 ```
 
-Make sure your code passes TypeScript and ESLint. Run the following to verify:
+Se você utilizar typescript e eslint no seu código basta executar:
 
 ```sh
 yarn typescript
 yarn lint
 ```
-
-To fix formatting errors, run the following:
+Para corrigir erros de formatação, execute o seguinte:
 
 ```sh
 yarn lint --fix
 ```
 
-## Docs
+## Documentação
 
-Documentation can be found on the [React Navigation website](https://reactnavigation.org/docs/en/stack-navigator-2.0.html).
+A documentação pode ser consultada em [React Navigation website](https://reactnavigation.org/docs/en/stack-navigator-2.0.html).
 
 <!-- badges -->
 
