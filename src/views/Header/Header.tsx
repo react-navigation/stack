@@ -11,10 +11,15 @@ import {
   ViewStyle,
   LayoutChangeEvent,
   StyleProp,
+  TextProps,
 } from 'react-native';
 
-import { ThemeContext, ThemeColors } from '@react-navigation/core';
-import { withOrientation, SafeAreaView } from '@react-navigation/native';
+import {
+  ThemeContext,
+  ThemeColors,
+  withOrientation,
+  SafeAreaView,
+} from 'react-navigation';
 
 import HeaderTitle from './HeaderTitle';
 import HeaderBackButton from './HeaderBackButton';
@@ -25,6 +30,7 @@ import {
   HeaderLayoutPreset,
   SceneInterpolatorProps,
   HeaderProps,
+  HeaderBackButtonProps,
 } from '../../types';
 
 type Props = HeaderProps & {
@@ -124,11 +130,8 @@ const getAppBarHeight = (isLandscape: boolean) => {
 
 class Header extends React.PureComponent<Props, State> {
   static contextType = ThemeContext;
-  context!: React.ContextType<typeof ThemeContext>;
 
-  static get HEIGHT() {
-    return APPBAR_HEIGHT + STATUSBAR_HEIGHT;
-  }
+  context!: React.ContextType<typeof ThemeContext>;
 
   static defaultProps = {
     layoutInterpolator: HeaderStyleInterpolator.forLayout,
@@ -215,27 +218,27 @@ class Header extends React.PureComponent<Props, State> {
           }
         : undefined;
 
-    const HeaderTitleComponent =
+    const render =
       headerTitle && typeof headerTitle !== 'string'
-        ? headerTitle
-        : HeaderTitle;
-    return (
-      <HeaderTitleComponent
-        onLayout={onLayout}
-        allowFontScaling={!!allowFontScaling}
-        style={[
-          color ? { color } : null,
-          layoutPreset === 'center'
-            ? // eslint-disable-next-line react-native/no-inline-styles
-              { textAlign: 'center' }
-            : // eslint-disable-next-line react-native/no-inline-styles
-              { textAlign: 'left' },
-          titleStyle,
-        ]}
-      >
-        {titleString}
-      </HeaderTitleComponent>
-    );
+        ? (headerTitle as (
+            props: TextProps & { children?: string }
+          ) => React.ReactNode)
+        : (props: TextProps & { children?: string }) => (
+            <HeaderTitle {...props} />
+          );
+
+    return render({
+      onLayout,
+      allowFontScaling: Boolean(allowFontScaling),
+      style: [
+        color ? { color } : null,
+        layoutPreset === 'center'
+          ? { textAlign: 'center' }
+          : { textAlign: 'left' },
+        titleStyle,
+      ],
+      children: titleString,
+    });
   };
 
   private renderLeftComponent = (props: SubviewProps) => {
@@ -258,13 +261,16 @@ class Header extends React.PureComponent<Props, State> {
     const width = this.state.widths[props.scene.key]
       ? (this.props.layout.initWidth - this.state.widths[props.scene.key]) / 2
       : undefined;
-    const RenderedLeftComponent = options.headerLeft || HeaderBackButton;
+    const RenderedLeftComponent =
+      (options.headerLeft as React.FunctionComponent<HeaderBackButtonProps>) ||
+      HeaderBackButton;
     const goBack = () => {
       // Go back on next tick because button ripple effect needs to happen on Android
       requestAnimationFrame(() => {
         props.scene.descriptor.navigation.goBack(props.scene.descriptor.key);
       });
     };
+
     return (
       <RenderedLeftComponent
         onPress={goBack}
@@ -329,6 +335,11 @@ class Header extends React.PureComponent<Props, State> {
 
   private renderRightComponent = (props: SubviewProps) => {
     const { headerRight } = props.scene.descriptor.options;
+
+    if (typeof headerRight === 'function') {
+      return headerRight();
+    }
+
     return headerRight || null;
   };
 
@@ -508,7 +519,7 @@ class Header extends React.PureComponent<Props, State> {
     props: SubviewProps,
     name: SubviewName,
     renderer: (props: SubviewProps) => React.ReactNode,
-    styleInterpolator: (props: SceneInterpolatorProps) => any
+    styleInterpolator?: (props: SceneInterpolatorProps) => any
   ) => {
     const { scene } = props;
     const { index, isStale, key } = scene;
@@ -537,10 +548,11 @@ class Header extends React.PureComponent<Props, State> {
           styles.item,
           styles[name],
           props.style,
-          styleInterpolator({
-            ...this.props,
-            ...props,
-          }),
+          styleInterpolator &&
+            styleInterpolator({
+              ...this.props,
+              ...props,
+            }),
         ]}
       >
         {subView}
@@ -745,14 +757,14 @@ const platformContainerStylesLight = Platform.select({
   android: {
     elevation: 4,
   },
-  ios: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: ThemeColors.light.headerBorder,
-  },
-  default: {
+  web: {
     // https://github.com/necolas/react-native-web/issues/44
     // Material Design
     boxShadow: `0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12)`,
+  },
+  default: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: ThemeColors.light.headerBorder,
   },
 });
 
@@ -760,15 +772,15 @@ const platformContainerStylesDark = Platform.select({
   android: {
     elevation: 4,
   },
-  ios: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: ThemeColors.dark.headerBorder,
-  },
-  default: {
+  web: {
     // https://github.com/necolas/react-native-web/issues/44
     // Material Design
     // TODO: what to use here?
     boxShadow: `0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12)`,
+  },
+  default: {
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: ThemeColors.dark.headerBorder,
   },
 });
 
@@ -861,4 +873,8 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withOrientation(Header);
+export default Object.assign(withOrientation(Header), {
+  get HEIGHT() {
+    return APPBAR_HEIGHT + STATUSBAR_HEIGHT;
+  },
+});

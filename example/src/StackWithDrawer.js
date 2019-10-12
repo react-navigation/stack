@@ -3,8 +3,7 @@ import { Button, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { useTheme, ThemeColors } from '@react-navigation/core';
-import { Themed } from '@react-navigation/native';
+import { useTheme, ThemeColors, Themed } from 'react-navigation';
 import { MaterialIcons } from '@expo/vector-icons';
 
 // eslint-disable-next-line import/default

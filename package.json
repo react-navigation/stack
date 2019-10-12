@@ -1,6 +1,6 @@
 {
   "name": "react-navigation-stack",
-  "version": "1.5.0",
+  "version": "1.9.4",
   "description": "Stack navigator component for React Navigation",
   "main": "lib/commonjs/index.js",
   "module": "lib/module/index.js",
@@ -18,7 +18,7 @@
     "prepare": "bob build",
     "release": "release-it",
     "example": "yarn --cwd example",
-    "bootstrap": "yarn && yarn example"
+    "bootstrap": "yarn example && yarn"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
@@ -45,9 +45,7 @@
     "@babel/core": "^7.4.4",
     "@commitlint/config-conventional": "^7.5.0",
     "@react-native-community/bob": "^0.4.1",
-    "@react-navigation/core": "^3.5.0-alpha.7",
-    "@react-navigation/native": "^3.6.0-alpha.1",
-    "@release-it/conventional-changelog": "^1.0.0",
+    "@release-it/conventional-changelog": "^1.1.0",
     "@types/jest": "^24.0.12",
     "@types/react": "^16.8.14",
     "@types/react-native": "^0.57.51",
@@ -64,18 +62,18 @@
     "react-native": "~0.59.8",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-screens": "^1.0.0-alpha.22",
+    "react-navigation": "^4.0.7",
     "react-test-renderer": "~16.8.0",
-    "release-it": "^11.0.0",
+    "release-it": "^12.3.6",
     "scheduler": "^0.14.0",
     "typescript": "^3.4.5"
   },
   "peerDependencies": {
-    "@react-navigation/core": "^3.0.0",
-    "@react-navigation/native": "^3.0.0",
     "react": "*",
     "react-native": "*",
     "react-native-gesture-handler": "^1.0.0",
-    "react-native-screens": "^1.0.0 || ^1.0.0-alpha"
+    "react-native-screens": "^1.0.0 || ^1.0.0-alpha",
+    "react-navigation": "^4.0.7"
   },
   "jest": {
     "preset": "react-native",
@@ -91,7 +89,7 @@
       "<rootDir>/lib/"
     ],
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|react-navigation-deprecated-tab-navigator|@react-navigation/core|@react-navigation/native)"
+      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|react-navigation|@react-navigation/core|@react-navigation/native)"
     ],
     "testRegex": "/__tests__/.*\\.(test|spec)\\.(js|tsx?)$",
     "transform": {

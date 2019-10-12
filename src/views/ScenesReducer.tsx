@@ -1,5 +1,6 @@
 import shallowEqual from '../utils/shallowEqual';
-import { Scene, Route, NavigationState, SceneDescriptor } from '../types';
+import { Scene, NavigationStackState, SceneDescriptorMap } from '../types';
+import { NavigationRoute } from 'react-navigation';
 
 const SCENE_KEY_PREFIX = 'scene_';
 
@@ -47,7 +48,7 @@ function areScenesShallowEqual(one: Scene, two: Scene) {
 /**
  * Whether two routes are the same.
  */
-function areRoutesShallowEqual(one: Route, two: Route) {
+function areRoutesShallowEqual(one: NavigationRoute, two: NavigationRoute) {
   if (!one || !two) {
     return one === two;
   }
@@ -61,9 +62,9 @@ function areRoutesShallowEqual(one: Route, two: Route) {
 
 export default function ScenesReducer(
   scenes: Scene[],
-  nextState: NavigationState,
-  prevState: NavigationState | null,
-  descriptors: { [key: string]: SceneDescriptor }
+  nextState: NavigationStackState,
+  prevState: NavigationStackState | null,
+  descriptors: SceneDescriptorMap
 ) {
   // Always update the descriptors
   // This is a workaround for https://github.com/react-navigation/react-navigation/issues/4271

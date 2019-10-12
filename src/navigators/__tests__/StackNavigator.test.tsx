@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { StyleSheet, View } from 'react-native';
 import renderer from 'react-test-renderer';
-import { withNavigation } from '@react-navigation/core';
+import { withNavigation, NavigationScreenProp } from 'react-navigation';
 
 import createStackNavigator from '../createStackNavigator';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import createAppContainer, {
   _TESTING_ONLY_reset_container_count,
   // @ts-ignore
 } from '@react-navigation/native/src/createAppContainer';
-import { NavigationProp } from '../../types';
+import { NavigationStackProp } from '../../types';
 
 const NavigationTestUtils = {
   resetInternalState: _TESTING_ONLY_reset_container_count,
@@ -25,7 +26,7 @@ class HomeScreen extends Component {
   static navigationOptions = ({
     navigation,
   }: {
-    navigation: NavigationProp;
+    navigation: NavigationStackProp;
   }) => ({
     title: `Welcome ${
       navigation.state.params ? navigation.state.params.user : 'anonymous'
@@ -77,8 +78,8 @@ describe('StackNavigator', () => {
     const spy = jest.fn();
 
     class TestComponent extends React.Component<{
-      onPress: (navigation: NavigationProp) => undefined;
-      navigation: NavigationProp;
+      onPress: (navigation: NavigationScreenProp<any>) => undefined;
+      navigation: NavigationScreenProp<any>;
     }> {
       render() {
         return <View>{this.props.onPress(this.props.navigation)}</View>;

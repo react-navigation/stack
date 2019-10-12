@@ -11,9 +11,9 @@ import {
 import TouchableItem from '../TouchableItem';
 
 import defaultBackImage from '../assets/back-icon.png';
-import { HeaderBackbuttonProps } from '../../types';
+import { HeaderBackButtonProps } from '../../types';
 
-type Props = HeaderBackbuttonProps & {
+type Props = HeaderBackButtonProps & {
   LabelContainerComponent: React.ComponentType;
   ButtonContainerComponent: React.ComponentType;
 };
@@ -45,9 +45,7 @@ class ModularHeaderBackButton extends React.PureComponent<Props, State> {
     if (React.isValidElement(backImage)) {
       return backImage;
     } else if (backImage) {
-      const BackImage = backImage;
-
-      return <BackImage tintColor={tintColor} />;
+      return backImage({ tintColor });
     } else {
       return (
         <Image

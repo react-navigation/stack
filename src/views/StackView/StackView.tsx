@@ -1,21 +1,22 @@
 import * as React from 'react';
 
-import { StackActions } from '@react-navigation/core';
+import { Platform } from 'react-native';
+import { StackActions } from 'react-navigation';
 import StackViewLayout from './StackViewLayout';
 import Transitioner from '../Transitioner';
 import TransitionConfigs from './StackViewTransitionConfigs';
 import {
-  NavigationProp,
-  SceneDescriptor,
-  NavigationConfig,
+  NavigationStackProp,
+  SceneDescriptorMap,
+  NavigationStackConfig,
   TransitionProps,
   Scene,
 } from '../../types';
 
 type Props = {
-  navigation: NavigationProp;
-  descriptors: { [key: string]: SceneDescriptor };
-  navigationConfig: NavigationConfig;
+  navigation: NavigationStackProp;
+  descriptors: SceneDescriptorMap;
+  navigationConfig: NavigationStackConfig;
   onTransitionStart?: () => void;
   onGestureBegin?: () => void;
   onGestureCanceled?: () => void;
@@ -23,13 +24,13 @@ type Props = {
   screenProps?: unknown;
 };
 
-const USE_NATIVE_DRIVER = true;
+const USE_NATIVE_DRIVER = Platform.OS === 'android' || Platform.OS === 'ios';
 
 // NOTE(brentvatne): this was previously in defaultProps, but that is deceiving
 // because the entire object will be clobbered by navigationConfig that is
 // passed in.
 const DefaultNavigationConfig = {
-  mode: 'card',
+  mode: 'card' as const,
   cardShadowEnabled: true,
   cardOverlayEnabled: false,
 };
@@ -102,7 +103,7 @@ class StackView extends React.Component<Props> {
     return (
       <StackViewLayout
         {...navigationConfig}
-        shadowEnabled={this.getShadowEnabled()}
+        cardShadowEnabled={this.getShadowEnabled()}
         cardOverlayEnabled={this.getCardOverlayEnabled()}
         onGestureBegin={this.props.onGestureBegin}
         onGestureCanceled={this.props.onGestureCanceled}
@@ -115,8 +116,8 @@ class StackView extends React.Component<Props> {
   };
 
   private handleTransitionEnd = (
-    transition: { scene: Scene; navigation: NavigationProp },
-    lastTransition?: { scene: Scene; navigation: NavigationProp }
+    transition: { scene: Scene; navigation: NavigationStackProp },
+    lastTransition?: { scene: Scene; navigation: NavigationStackProp }
   ) => {
     const {
       navigationConfig,

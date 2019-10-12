@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
-import { Themed } from '@react-navigation/native';
+import { Themed } from 'react-navigation';
 
 function createHeaderBackgroundExample(options = {}) {
   return createStackNavigator(
