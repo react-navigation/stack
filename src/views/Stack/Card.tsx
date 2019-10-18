@@ -25,6 +25,7 @@ import {
 import memoize from '../../utils/memoize';
 import StackGestureContext from '../../utils/StackGestureContext';
 import PointerEventsView from './PointerEventsView';
+import StackAnimationIsSwipingContext from '../../utils/StackAnimationIsSwipingContext';
 
 type Props = ViewProps & {
   index: number;
@@ -842,57 +843,59 @@ export default class Card extends React.Component<Props> {
 
     return (
       <StackGestureContext.Provider value={this.gestureRef}>
-        <View pointerEvents="box-none" {...rest}>
-          <Animated.Code
-            key={gestureEnabled ? 'gesture-code' : 'no-gesture-code'}
-            exec={gestureEnabled ? this.execWithGesture : this.execNoGesture}
-          />
-          {overlayEnabled && overlayStyle ? (
-            <Animated.View
-              pointerEvents="none"
-              style={[styles.overlay, overlayStyle]}
+        <StackAnimationIsSwipingContext.Provider value={this.isSwiping}>
+          <View pointerEvents="box-none" {...rest}>
+            <Animated.Code
+              key={gestureEnabled ? 'gesture-code' : 'no-gesture-code'}
+              exec={gestureEnabled ? this.execWithGesture : this.execNoGesture}
             />
-          ) : null}
-          <Animated.View
-            style={[styles.container, containerStyle, customContainerStyle]}
-            pointerEvents="box-none"
-          >
-            <PanGestureHandler
-              ref={this.gestureRef}
-              enabled={layout.width !== 0 && gestureEnabled}
-              onGestureEvent={handleGestureEvent}
-              onHandlerStateChange={handleGestureEvent}
-              {...this.gestureActivationCriteria()}
+            {overlayEnabled && overlayStyle ? (
+              <Animated.View
+                pointerEvents="none"
+                style={[styles.overlay, overlayStyle]}
+              />
+            ) : null}
+            <Animated.View
+              style={[styles.container, containerStyle, customContainerStyle]}
+              pointerEvents="box-none"
             >
-              <Animated.View style={[styles.container, cardStyle]}>
-                {shadowEnabled && shadowStyle && !transparent ? (
-                  <Animated.View
+              <PanGestureHandler
+                ref={this.gestureRef}
+                enabled={layout.width !== 0 && gestureEnabled}
+                onGestureEvent={handleGestureEvent}
+                onHandlerStateChange={handleGestureEvent}
+                {...this.gestureActivationCriteria()}
+              >
+                <Animated.View style={[styles.container, cardStyle]}>
+                  {shadowEnabled && shadowStyle && !transparent ? (
+                    <Animated.View
+                      style={[
+                        styles.shadow,
+                        gestureDirection === 'horizontal'
+                          ? styles.shadowHorizontal
+                          : styles.shadowVertical,
+                        shadowStyle,
+                      ]}
+                      pointerEvents="none"
+                    />
+                  ) : null}
+                  <PointerEventsView
+                    active={active}
+                    progress={this.props.current}
                     style={[
-                      styles.shadow,
-                      gestureDirection === 'horizontal'
-                        ? styles.shadowHorizontal
-                        : styles.shadowVertical,
-                      shadowStyle,
+                      styles.content,
+                      overrideFlex,
+                      transparent ? styles.transparent : styles.opaque,
+                      contentStyle,
                     ]}
-                    pointerEvents="none"
-                  />
-                ) : null}
-                <PointerEventsView
-                  active={active}
-                  progress={this.props.current}
-                  style={[
-                    styles.content,
-                    overrideFlex,
-                    transparent ? styles.transparent : styles.opaque,
-                    contentStyle,
-                  ]}
-                >
-                  {children}
-                </PointerEventsView>
-              </Animated.View>
-            </PanGestureHandler>
-          </Animated.View>
-        </View>
+                  >
+                    {children}
+                  </PointerEventsView>
+                </Animated.View>
+              </PanGestureHandler>
+            </Animated.View>
+          </View>
+        </StackAnimationIsSwipingContext.Provider>
       </StackGestureContext.Provider>
     );
   }

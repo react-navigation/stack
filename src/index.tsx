@@ -37,6 +37,9 @@ export {
  */
 
 export { default as StackGestureContext } from './utils/StackGestureContext';
+export {
+  default as StackAnimationIsSwipingContext,
+} from './utils/StackAnimationIsSwipingContext';
 
 /**
  * Types
