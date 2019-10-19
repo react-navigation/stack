@@ -28,7 +28,7 @@ const ListScreen = (props: NavigationStackScreenProps) => (
 const AnotherScreen = () => (
   <StackAnimationProgressContext.Consumer>
     {progress => {
-      const fontSize = Animated.interpolate(progress.current, {
+      const fontSize = Animated.interpolate(progress, {
         inputRange: [0, 1],
         outputRange: [8, 32],
       });
@@ -42,7 +42,7 @@ const AnotherScreen = () => (
             backgroundColor: 'honeydew',
           }}
         >
-          <Animated.Text style={{ fontSize, opacity: progress.current }}>
+          <Animated.Text style={{ fontSize, opacity: progress }}>
             Animates on progress
           </Animated.Text>
         </View>

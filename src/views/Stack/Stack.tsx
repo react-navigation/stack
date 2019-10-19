@@ -441,9 +441,7 @@ export default class Stack extends React.Component<Props, State> {
                 active={isScreenActive}
                 pointerEvents="box-none"
               >
-                <StackAnimationProgressContext.Provider
-                  value={{ current, next }}
-                >
+                <StackAnimationProgressContext.Provider value={current}>
                   <StackItem
                     index={index}
                     active={index === self.length - 1}
