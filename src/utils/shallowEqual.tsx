@@ -13,6 +13,7 @@ function is(x: any, y: any) {
     return x !== 0 || y !== 0 || 1 / x === 1 / y;
   } else {
     // Step 6.a: NaN == NaN
+    // eslint-disable-next-line no-self-compare
     return x !== x && y !== y;
   }
 }

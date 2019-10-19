@@ -170,7 +170,9 @@ const Root = createStackNavigator(
   }
 );
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 useScreens();
+
 let AppContainer = createAppContainer(Root);
 
 export default () => {
