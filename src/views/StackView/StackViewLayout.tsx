@@ -194,7 +194,7 @@ class StackViewLayout extends React.Component<Props, State> {
 
   private renderHeader(scene: Scene, headerMode: HeaderMode) {
     const { options } = scene.descriptor;
-    const { header } = options;
+    const { header, headerShown } = options;
 
     if (__DEV__ && typeof header === 'string') {
       throw new Error(
@@ -202,7 +202,7 @@ class StackViewLayout extends React.Component<Props, State> {
       );
     }
 
-    if (header === null && headerMode === 'screen') {
+    if ((header === null || headerShown === false) && headerMode === 'screen') {
       return null;
     }
 

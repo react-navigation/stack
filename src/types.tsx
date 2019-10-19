@@ -99,6 +99,7 @@ export type HeaderTransitionConfig = {
 export type NavigationStackOptions = {
   title?: string;
   header?: ((props: HeaderProps) => React.ReactNode) | null;
+  headerShown?: boolean;
   headerTitle?:
     | ((props: TextProps & { children?: string }) => React.ReactNode)
     | React.ReactNode;

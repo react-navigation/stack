@@ -562,7 +562,7 @@ class Header extends React.PureComponent<Props, State> {
 
   private renderHeader = (props: SubviewProps) => {
     const { options } = props.scene.descriptor;
-    if (options.header === null) {
+    if (options.header === null || options.headerShown === false) {
       return null;
     }
     const left = this.renderLeft(props);
