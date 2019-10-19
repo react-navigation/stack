@@ -335,96 +335,99 @@ export default class Stack extends React.Component<Props, State> {
     }
 
     return (
-      <StackAnimationProgressContext.Provider value={progress}>
-        <React.Fragment>
-          <MaybeScreenContainer
-            enabled={mode !== 'modal'}
-            style={styles.container}
-            onLayout={this.handleLayout}
-          >
-            {routes.map((route, index, self) => {
-              const focused = focusedRoute.key === route.key;
-              const current = progress[route.key];
-              const scene = scenes[index];
-              const next = self[index + 1]
-                ? progress[self[index + 1].key]
-                : ANIMATED_ONE;
+      <React.Fragment>
+        <MaybeScreenContainer
+          enabled={mode !== 'modal'}
+          style={styles.container}
+          onLayout={this.handleLayout}
+        >
+          {routes.map((route, index, self) => {
+            const focused = focusedRoute.key === route.key;
+            const current = progress[route.key];
+            const scene = scenes[index];
+            const next = self[index + 1]
+              ? progress[self[index + 1].key]
+              : ANIMATED_ONE;
 
-              // Display current screen and a screen beneath. On Android screen beneath is hidden on animation finished bs of RNS's issue.
-              const isScreenActive =
-                index === self.length - 1
-                  ? 1
-                  : Platform.OS === 'android'
-                  ? cond(eq(next, 1), 0, 1)
-                  : index === self.length - 2
-                  ? 1
-                  : 0;
+            // Display current screen and a screen beneath. On Android screen beneath is hidden on animation finished bs of RNS's issue.
+            const isScreenActive =
+              index === self.length - 1
+                ? 1
+                : Platform.OS === 'android'
+                ? cond(eq(next, 1), 0, 1)
+                : index === self.length - 2
+                ? 1
+                : 0;
 
-              if (
-                process.env.NODE_ENV !== 'production' &&
-                scene.descriptor &&
-                scene.descriptor.options
-              ) {
-                validateDeprecatedOptions(scene.descriptor.options);
+            if (
+              process.env.NODE_ENV !== 'production' &&
+              scene.descriptor &&
+              scene.descriptor.options
+            ) {
+              validateDeprecatedOptions(scene.descriptor.options);
+            }
+
+            const {
+              header,
+              headerShown,
+              headerTransparent,
+              cardTransparent,
+              cardShadowEnabled,
+              cardOverlayEnabled,
+              cardStyle,
+              gestureResponseDistance,
+              gestureDirection = defaultTransitionPreset.gestureDirection,
+              transitionSpec = defaultTransitionPreset.transitionSpec,
+              cardStyleInterpolator = defaultTransitionPreset.cardStyleInterpolator,
+              headerStyleInterpolator = defaultTransitionPreset.headerStyleInterpolator,
+              gestureVelocityImpact,
+            } = scene.descriptor
+              ? scene.descriptor.options
+              : ({} as NavigationStackOptions);
+
+            let transitionConfig = {
+              transitionSpec,
+              cardStyleInterpolator,
+              headerStyleInterpolator,
+            };
+
+            // When a screen is not the last, it should use next screen's transition config
+            // Many transitions also animate the previous screen, so using 2 different transitions doesn't look right
+            // For example combining a slide and a modal transition would look wrong otherwise
+            // With this approach, combining different transition styles in the same navigator mostly looks right
+            // This will still be broken when 2 transitions have different idle state (e.g. modal presentation),
+            // but majority of the transitions look alright
+            if (index !== self.length - 1) {
+              const nextScene = scenes[index + 1];
+
+              if (nextScene) {
+                const {
+                  transitionSpec = defaultTransitionPreset.transitionSpec,
+                  cardStyleInterpolator = defaultTransitionPreset.cardStyleInterpolator,
+                  headerStyleInterpolator = defaultTransitionPreset.headerStyleInterpolator,
+                } = nextScene.descriptor
+                  ? nextScene.descriptor.options
+                  : ({} as NavigationStackOptions);
+
+                transitionConfig = {
+                  transitionSpec,
+                  cardStyleInterpolator,
+                  headerStyleInterpolator,
+                };
               }
+            }
 
-              const {
-                header,
-                headerShown,
-                headerTransparent,
-                cardTransparent,
-                cardShadowEnabled,
-                cardOverlayEnabled,
-                cardStyle,
-                gestureResponseDistance,
-                gestureDirection = defaultTransitionPreset.gestureDirection,
-                transitionSpec = defaultTransitionPreset.transitionSpec,
-                cardStyleInterpolator = defaultTransitionPreset.cardStyleInterpolator,
-                headerStyleInterpolator = defaultTransitionPreset.headerStyleInterpolator,
-                gestureVelocityImpact,
-              } = scene.descriptor
-                ? scene.descriptor.options
-                : ({} as NavigationStackOptions);
-
-              let transitionConfig = {
-                transitionSpec,
-                cardStyleInterpolator,
-                headerStyleInterpolator,
-              };
-
-              // When a screen is not the last, it should use next screen's transition config
-              // Many transitions also animate the previous screen, so using 2 different transitions doesn't look right
-              // For example combining a slide and a modal transition would look wrong otherwise
-              // With this approach, combining different transition styles in the same navigator mostly looks right
-              // This will still be broken when 2 transitions have different idle state (e.g. modal presentation),
-              // but majority of the transitions look alright
-              if (index !== self.length - 1) {
-                const nextScene = scenes[index + 1];
-
-                if (nextScene) {
-                  const {
-                    transitionSpec = defaultTransitionPreset.transitionSpec,
-                    cardStyleInterpolator = defaultTransitionPreset.cardStyleInterpolator,
-                    headerStyleInterpolator = defaultTransitionPreset.headerStyleInterpolator,
-                  } = nextScene.descriptor
-                    ? nextScene.descriptor.options
-                    : ({} as NavigationStackOptions);
-
-                  transitionConfig = {
-                    transitionSpec,
-                    cardStyleInterpolator,
-                    headerStyleInterpolator,
-                  };
-                }
-              }
-
-              return (
-                <MaybeScreen
+            return (
+              <MaybeScreen
+                key={route.key}
+                style={StyleSheet.absoluteFill}
+                enabled={mode !== 'modal'}
+                active={isScreenActive}
+                pointerEvents="box-none"
+              >
+                <StackAnimationProgressContext.Provider
                   key={route.key}
-                  style={StyleSheet.absoluteFill}
-                  enabled={mode !== 'modal'}
-                  active={isScreenActive}
-                  pointerEvents="box-none"
+                  value={{ current, next }}
                 >
                   <StackItem
                     index={index}
@@ -466,27 +469,27 @@ export default class Stack extends React.Component<Props, State> {
                     gestureVelocityImpact={gestureVelocityImpact}
                     {...transitionConfig}
                   />
-                </MaybeScreen>
-              );
-            })}
-          </MaybeScreenContainer>
-          {headerMode === 'float'
-            ? renderHeader({
-                mode: 'float',
-                layout,
-                scenes,
-                navigation,
-                getPreviousRoute,
-                onContentHeightChange: this.handleFloatingHeaderLayout,
-                styleInterpolator:
-                  focusedOptions.headerStyleInterpolator !== undefined
-                    ? focusedOptions.headerStyleInterpolator
-                    : defaultTransitionPreset.headerStyleInterpolator,
-                style: styles.floating,
-              })
-            : null}
-        </React.Fragment>
-      </StackAnimationProgressContext.Provider>
+                </StackAnimationProgressContext.Provider>
+              </MaybeScreen>
+            );
+          })}
+        </MaybeScreenContainer>
+        {headerMode === 'float'
+          ? renderHeader({
+              mode: 'float',
+              layout,
+              scenes,
+              navigation,
+              getPreviousRoute,
+              onContentHeightChange: this.handleFloatingHeaderLayout,
+              styleInterpolator:
+                focusedOptions.headerStyleInterpolator !== undefined
+                  ? focusedOptions.headerStyleInterpolator
+                  : defaultTransitionPreset.headerStyleInterpolator,
+              style: styles.floating,
+            })
+          : null}
+      </React.Fragment>
     );
   }
 }
