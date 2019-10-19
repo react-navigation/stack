@@ -111,7 +111,7 @@ class DetailsScreen extends React.Component {
 
 class HeaderlessScreen extends React.Component {
   static navigationOptions = {
-    header: null,
+    headerShown: false,
   };
 
   componentDidMount() {
