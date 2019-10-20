@@ -21,7 +21,7 @@ function createHeaderBackgroundExample(options = {}) {
         navigationOptions: {
           headerTitle: 'Login Screen',
           headerTintColor: '#fff',
-          headerBackground: (
+          headerBackground: () => (
             <View style={{ flex: 1, backgroundColor: '#FF0066' }} />
           ),
         },
@@ -41,7 +41,7 @@ function createHeaderBackgroundExample(options = {}) {
         navigationOptions: {
           headerTitle: 'Games Screen',
           headerTintColor: '#fff',
-          headerBackground: (
+          headerBackground: () => (
             <View style={{ flex: 1, backgroundColor: '#3388FF' }} />
           ),
         },

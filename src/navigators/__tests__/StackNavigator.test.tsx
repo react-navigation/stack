@@ -64,7 +64,7 @@ describe('StackNavigator', () => {
       Home: {
         screen: HomeScreen,
         navigationOptions: {
-          headerRight: <View />,
+          headerRight: () => <View />,
         },
       },
     });
@@ -90,7 +90,7 @@ describe('StackNavigator', () => {
 
     class A extends React.Component {
       static navigationOptions = {
-        headerRight: <TestComponentWithNavigation onPress={spy} />,
+        headerRight: () => <TestComponentWithNavigation onPress={spy} />,
       };
 
       render() {

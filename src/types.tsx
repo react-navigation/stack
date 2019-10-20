@@ -122,7 +122,7 @@ export type NavigationStackOptions = {
     title?: string | null;
   }) => React.ReactNode;
   headerPressColorAndroid?: string;
-  headerBackground?: React.ReactNode;
+  headerBackground?: (() => React.ReactNode) | React.ReactNode;
   headerTransparent?: boolean;
   headerStyle?: StyleProp<ViewStyle>;
   headerForceInset?: React.ComponentProps<typeof SafeAreaView>['forceInset'];
