@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
       },
       default: {
         borderBottomWidth: StyleSheet.hairlineWidth,
-	      borderBottomColor: 'rgba(156, 156, 156, 0.50)',        
+	      borderBottomColor: 'rgba(156, 156, 156, 0.50)',
       },
     }),
   },
