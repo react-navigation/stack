@@ -956,7 +956,7 @@ class StackViewLayout extends React.Component<Props, State> {
     // When using a floating header, we need to add some top
     // padding on the scene.
     const { options } = scene.descriptor;
-    const hasHeader = options.header !== null;
+    const hasHeader = options.header !== null && options.headerShown !== false;
     const headerMode = this.getHeaderMode();
 
     let floatingContainerStyle: ViewStyle = StyleSheet.absoluteFill as ViewStyle;

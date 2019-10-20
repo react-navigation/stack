@@ -6,8 +6,9 @@ function hasHeader(scene: Scene) {
   if (!scene) {
     return true;
   }
-  const { descriptor } = scene;
-  return descriptor.options.header !== null;
+  const { header, headerShown } = scene.descriptor.options;
+
+  return header !== null && headerShown !== false;
 }
 
 const crossFadeInterpolation = (
