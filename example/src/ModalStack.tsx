@@ -180,7 +180,7 @@ export default createStackNavigator(
     Modal: Modal,
     Inputs: {
       screen: InputsScreen,
-      navigationOptions: { gestureDirection: 'vertical' }
+      navigationOptions: { gestureDirection: 'vertical' },
     },
   },
   {
