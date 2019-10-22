@@ -410,7 +410,7 @@ export default class Card extends React.Component<Props> {
         eq(this.props.current, isVisible),
         call(
           [this.didMovementHappen, this.isVisible],
-          ([didMovementHappen, value]: ReadonlyArray<Binary>) => {
+          ([didMovementHappen]: ReadonlyArray<Binary>) => {
             if (didMovementHappen) {
               // if we go back to the same position,
               // let's pretend that whole animation happen
@@ -418,7 +418,7 @@ export default class Card extends React.Component<Props> {
               // It's especially vital for having inputs properly focused.
               this.handleStartInteraction();
               const { onTransitionStart } = this.props;
-              onTransitionStart && onTransitionStart({ closing: !value });
+              onTransitionStart && onTransitionStart({ closing: true });
               this.handleTransitionEnd();
               this.props.onOpen(true);
             }
