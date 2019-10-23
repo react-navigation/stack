@@ -13,6 +13,7 @@ export default class KeyboardManager extends React.Component<Props> {
   // Numeric id of the previously focused text input
   // When a gesture didn't change the tab, we can restore the focused input with this
   private previouslyFocusedTextInput: number | null = null;
+  private startTimestamp: number = 0;
 
   private handlePageChangeStart = () => {
     const input = TextInput.State.currentlyFocusedField();
@@ -22,6 +23,9 @@ export default class KeyboardManager extends React.Component<Props> {
 
     // Store the id of this input so we can refocus it if change was cancelled
     this.previouslyFocusedTextInput = input;
+
+    // Store timestamp for touch start
+    this.startTimestamp = Date.now();
   };
 
   private handlePageChangeConfirm = () => {
@@ -36,10 +40,17 @@ export default class KeyboardManager extends React.Component<Props> {
     const input = this.previouslyFocusedTextInput;
 
     if (input) {
-      TextInput.State.focusTextInput(input);
+      // If the interaction was super short we should make sure keyboard won't hide again
+      if (Date.now() - this.startTimestamp < 100) {
+        setTimeout(() => {
+          TextInput.State.focusTextInput(input);
+          this.previouslyFocusedTextInput = null;
+        }, 100);
+      } else {
+        TextInput.State.focusTextInput(input);
+        this.previouslyFocusedTextInput = null;
+      }
     }
-
-    this.previouslyFocusedTextInput = null;
   };
 
   render() {
