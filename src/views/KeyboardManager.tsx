@@ -40,7 +40,13 @@ export default class KeyboardManager extends React.Component<Props> {
     const input = this.previouslyFocusedTextInput;
 
     if (input) {
-      // If the interaction was super short we should make sure keyboard won't hide again
+      // If the interaction was super short we should make sure keyboard won't hide again.
+
+      // Too fast input refocus will result only in keyboard flashing on screen and hiding right away.
+      // During first ~100ms keyboard will be dismissed no matter what,
+      // so we have to make sure it won't interrupt input refocus logic.
+      // That's why when the interaction is shorter than 100ms we add delay so it won't hide once again.
+      // Subtracting timestamps makes us sure the delay is executed only when needed.
       if (Date.now() - this.startTimestamp < 100) {
         setTimeout(() => {
           TextInput.State.focusTextInput(input);
