@@ -6,6 +6,7 @@ import {
   NavigationStackScreenProps,
   StackAnimationProgressContext,
   StackAnimationIsSwipingContext,
+  StackAnimationIsClosingContext,
 } from 'react-navigation-stack';
 
 const ListScreen = (props: NavigationStackScreenProps) => (
@@ -52,29 +53,45 @@ const AnotherScreen = () => (
 );
 
 const YetAnotherScreen = () => (
-  <StackAnimationIsSwipingContext.Consumer>
-    {isSwiping => {
-      const opacity = Animated.interpolate(isSwiping, {
-        inputRange: [0, 1],
-        outputRange: [1, 0],
-      });
-
-      return (
-        <View
+  <View
+    style={{
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: 'papayawhip',
+    }}
+  >
+    <StackAnimationIsSwipingContext.Consumer>
+      {isSwiping => (
+        <Animated.Text
           style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'cornflowerblue',
+            fontSize: 24,
+            opacity: Animated.interpolate(isSwiping, {
+              inputRange: [0, 1],
+              outputRange: [1, 0],
+            }),
           }}
         >
-          <Animated.Text style={{ fontSize: 24, opacity }}>
-            Disappears on swipe
-          </Animated.Text>
-        </View>
-      );
-    }}
-  </StackAnimationIsSwipingContext.Consumer>
+          Disappears when swiping
+        </Animated.Text>
+      )}
+    </StackAnimationIsSwipingContext.Consumer>
+    <StackAnimationIsClosingContext.Consumer>
+      {isClosing => (
+        <Animated.Text
+          style={{
+            fontSize: 24,
+            opacity: Animated.interpolate(isClosing, {
+              inputRange: [0, 1],
+              outputRange: [1, 0],
+            }),
+          }}
+        >
+          Disappears only when closing
+        </Animated.Text>
+      )}
+    </StackAnimationIsClosingContext.Consumer>
+  </View>
 );
 
 export default createStackNavigator(

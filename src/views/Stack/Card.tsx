@@ -27,6 +27,7 @@ import StackGestureContext from '../../utils/StackGestureContext';
 import PointerEventsView from './PointerEventsView';
 import StackAnimationProgressContext from '../../utils/StackAnimationProgressContext';
 import StackAnimationIsSwipingContext from '../../utils/StackAnimationIsSwipingContext';
+import StackAnimationIsClosingContext from '../../utils/StackAnimationIsClosingContext';
 
 type Props = ViewProps & {
   index: number;
@@ -901,7 +902,11 @@ export default class Card extends React.Component<Props> {
                     <StackAnimationIsSwipingContext.Provider
                       value={this.isSwiping}
                     >
-                      {children}
+                      <StackAnimationIsClosingContext.Provider
+                        value={this.isClosing}
+                      >
+                        {children}
+                      </StackAnimationIsClosingContext.Provider>
                     </StackAnimationIsSwipingContext.Provider>
                   </StackAnimationProgressContext.Provider>
                 </PointerEventsView>
