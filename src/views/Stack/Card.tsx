@@ -25,6 +25,7 @@ import {
 import memoize from '../../utils/memoize';
 import StackGestureContext from '../../utils/StackGestureContext';
 import PointerEventsView from './PointerEventsView';
+import StackAnimationProgressContext from '../../utils/StackAnimationProgressContext';
 import StackAnimationIsSwipingContext from '../../utils/StackAnimationIsSwipingContext';
 
 type Props = ViewProps & {
@@ -851,59 +852,63 @@ export default class Card extends React.Component<Props> {
 
     return (
       <StackGestureContext.Provider value={this.gestureRef}>
-        <StackAnimationIsSwipingContext.Provider value={this.isSwiping}>
-          <View pointerEvents="box-none" {...rest}>
-            <Animated.Code
-              key={gestureEnabled ? 'gesture-code' : 'no-gesture-code'}
-              exec={gestureEnabled ? this.execWithGesture : this.execNoGesture}
-            />
-            {overlayEnabled && overlayStyle ? (
-              <Animated.View
-                pointerEvents="none"
-                style={[styles.overlay, overlayStyle]}
-              />
-            ) : null}
+        <View pointerEvents="box-none" {...rest}>
+          <Animated.Code
+            key={gestureEnabled ? 'gesture-code' : 'no-gesture-code'}
+            exec={gestureEnabled ? this.execWithGesture : this.execNoGesture}
+          />
+          {overlayEnabled && overlayStyle ? (
             <Animated.View
-              style={[styles.container, containerStyle, customContainerStyle]}
-              pointerEvents="box-none"
+              pointerEvents="none"
+              style={[styles.overlay, overlayStyle]}
+            />
+          ) : null}
+          <Animated.View
+            style={[styles.container, containerStyle, customContainerStyle]}
+            pointerEvents="box-none"
+          >
+            <PanGestureHandler
+              ref={this.gestureRef}
+              enabled={layout.width !== 0 && gestureEnabled}
+              onGestureEvent={handleGestureEvent}
+              onHandlerStateChange={handleGestureEvent}
+              {...this.gestureActivationCriteria()}
             >
-              <PanGestureHandler
-                ref={this.gestureRef}
-                enabled={layout.width !== 0 && gestureEnabled}
-                onGestureEvent={handleGestureEvent}
-                onHandlerStateChange={handleGestureEvent}
-                {...this.gestureActivationCriteria()}
-              >
-                <Animated.View style={[styles.container, cardStyle]}>
-                  {shadowEnabled && shadowStyle && !transparent ? (
-                    <Animated.View
-                      style={[
-                        styles.shadow,
-                        gestureDirection === 'horizontal'
-                          ? styles.shadowHorizontal
-                          : styles.shadowVertical,
-                        shadowStyle,
-                      ]}
-                      pointerEvents="none"
-                    />
-                  ) : null}
-                  <PointerEventsView
-                    active={active}
-                    progress={this.props.current}
+              <Animated.View style={[styles.container, cardStyle]}>
+                {shadowEnabled && shadowStyle && !transparent ? (
+                  <Animated.View
                     style={[
-                      styles.content,
-                      overrideFlex,
-                      transparent ? styles.transparent : styles.opaque,
-                      contentStyle,
+                      styles.shadow,
+                      gestureDirection === 'horizontal'
+                        ? styles.shadowHorizontal
+                        : styles.shadowVertical,
+                      shadowStyle,
                     ]}
-                  >
-                    {children}
-                  </PointerEventsView>
-                </Animated.View>
-              </PanGestureHandler>
-            </Animated.View>
-          </View>
-        </StackAnimationIsSwipingContext.Provider>
+                    pointerEvents="none"
+                  />
+                ) : null}
+                <PointerEventsView
+                  active={active}
+                  progress={this.props.current}
+                  style={[
+                    styles.content,
+                    overrideFlex,
+                    transparent ? styles.transparent : styles.opaque,
+                    contentStyle,
+                  ]}
+                >
+                  <StackAnimationProgressContext.Provider value={current}>
+                    <StackAnimationIsSwipingContext.Provider
+                      value={this.isSwiping}
+                    >
+                      {children}
+                    </StackAnimationIsSwipingContext.Provider>
+                  </StackAnimationProgressContext.Provider>
+                </PointerEventsView>
+              </Animated.View>
+            </PanGestureHandler>
+          </Animated.View>
+        </View>
       </StackGestureContext.Provider>
     );
   }

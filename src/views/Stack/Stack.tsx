@@ -28,7 +28,6 @@ import {
   SceneDescriptorMap,
   NavigationStackOptions,
 } from '../../types';
-import StackAnimationProgressContext from '../../utils/StackAnimationProgressContext';
 
 type ProgressValues = {
   [key: string]: Animated.Value<number>;
@@ -441,52 +440,48 @@ export default class Stack extends React.Component<Props, State> {
                 active={isScreenActive}
                 pointerEvents="box-none"
               >
-                <StackAnimationProgressContext.Provider value={current}>
-                  <StackItem
-                    index={index}
-                    active={index === self.length - 1}
-                    focused={focused}
-                    closing={closingRoutesKeys.includes(route.key)}
-                    layout={layout}
-                    current={current}
-                    scene={scene}
-                    previousScene={scenes[index - 1]}
-                    navigation={navigation}
-                    safeAreaInsetTop={safeAreaInsetTop}
-                    safeAreaInsetRight={safeAreaInsetRight}
-                    safeAreaInsetBottom={safeAreaInsetBottom}
-                    safeAreaInsetLeft={safeAreaInsetLeft}
-                    cardTransparent={cardTransparent}
-                    cardOverlayEnabled={cardOverlayEnabled}
-                    cardShadowEnabled={cardShadowEnabled}
-                    cardStyle={cardStyle}
-                    onPageChangeStart={onPageChangeStart}
-                    onPageChangeConfirm={onPageChangeConfirm}
-                    onPageChangeCancel={onPageChangeCancel}
-                    floatingHeaderHeight={floatingHeaderHeights[route.key]}
-                    headerShown={header !== null && headerShown !== false}
-                    getPreviousRoute={getPreviousRoute}
-                    headerMode={headerMode}
-                    headerTransparent={headerTransparent}
-                    renderHeader={renderHeader}
-                    renderScene={renderScene}
-                    onOpenRoute={onOpenRoute}
-                    onCloseRoute={onCloseRoute}
-                    onTransitionStart={this.handleTransitionStart}
-                    onTransitionEnd={this.handleTransitionEnd}
-                    onGoBack={onGoBack}
-                    gestureDirection={gestureDirection}
-                    transitionSpec={transitionSpec}
-                    cardStyleInterpolator={cardStyleInterpolator}
-                    headerStyleInterpolator={headerStyleInterpolator}
-                    gestureEnabled={
-                      index !== 0 && getGesturesEnabled({ route })
-                    }
-                    gestureResponseDistance={gestureResponseDistance}
-                    gestureVelocityImpact={gestureVelocityImpact}
-                    {...transitionConfig}
-                  />
-                </StackAnimationProgressContext.Provider>
+                <StackItem
+                  index={index}
+                  active={index === self.length - 1}
+                  focused={focused}
+                  closing={closingRoutesKeys.includes(route.key)}
+                  layout={layout}
+                  current={current}
+                  scene={scene}
+                  previousScene={scenes[index - 1]}
+                  navigation={navigation}
+                  safeAreaInsetTop={safeAreaInsetTop}
+                  safeAreaInsetRight={safeAreaInsetRight}
+                  safeAreaInsetBottom={safeAreaInsetBottom}
+                  safeAreaInsetLeft={safeAreaInsetLeft}
+                  cardTransparent={cardTransparent}
+                  cardOverlayEnabled={cardOverlayEnabled}
+                  cardShadowEnabled={cardShadowEnabled}
+                  cardStyle={cardStyle}
+                  onPageChangeStart={onPageChangeStart}
+                  onPageChangeConfirm={onPageChangeConfirm}
+                  onPageChangeCancel={onPageChangeCancel}
+                  floatingHeaderHeight={floatingHeaderHeights[route.key]}
+                  headerShown={header !== null && headerShown !== false}
+                  getPreviousRoute={getPreviousRoute}
+                  headerMode={headerMode}
+                  headerTransparent={headerTransparent}
+                  renderHeader={renderHeader}
+                  renderScene={renderScene}
+                  onOpenRoute={onOpenRoute}
+                  onCloseRoute={onCloseRoute}
+                  onTransitionStart={this.handleTransitionStart}
+                  onTransitionEnd={this.handleTransitionEnd}
+                  onGoBack={onGoBack}
+                  gestureDirection={gestureDirection}
+                  transitionSpec={transitionSpec}
+                  cardStyleInterpolator={cardStyleInterpolator}
+                  headerStyleInterpolator={headerStyleInterpolator}
+                  gestureEnabled={index !== 0 && getGesturesEnabled({ route })}
+                  gestureResponseDistance={gestureResponseDistance}
+                  gestureVelocityImpact={gestureVelocityImpact}
+                  {...transitionConfig}
+                />
               </MaybeScreen>
             );
           })}
