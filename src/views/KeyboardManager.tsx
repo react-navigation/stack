@@ -14,15 +14,20 @@ export default class KeyboardManager extends React.Component<Props> {
   // When a gesture didn't change the tab, we can restore the focused input with this
   private previouslyFocusedTextInput: number | null = null;
   private startTimestamp: number = 0;
-  private keyboardTimeout: NodeJS.Timeout | null = null;
+  private keyboardTimeout: NodeJS.Timeout | undefined;
 
-  componentWillUnmount = () => {
-    if (this.keyboardTimeout !== null) {
+  clearKeyboardTimeout = () => {
+    if (this.keyboardTimeout) {
       clearTimeout(this.keyboardTimeout);
     }
   };
 
+  componentWillUnmount = () => {
+    this.clearKeyboardTimeout();
+  };
+
   private handlePageChangeStart = () => {
+    this.clearKeyboardTimeout();
     const input = TextInput.State.currentlyFocusedField();
 
     // When a page change begins, blur the currently focused input
@@ -36,6 +41,7 @@ export default class KeyboardManager extends React.Component<Props> {
   };
 
   private handlePageChangeConfirm = () => {
+    this.clearKeyboardTimeout();
     Keyboard.dismiss();
 
     // Cleanup the ID on successful page change
@@ -43,6 +49,7 @@ export default class KeyboardManager extends React.Component<Props> {
   };
 
   private handlePageChangeCancel = () => {
+    this.clearKeyboardTimeout();
     // The page didn't change, we should restore the focus of text input
     const input = this.previouslyFocusedTextInput;
 
