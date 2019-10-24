@@ -14,6 +14,13 @@ export default class KeyboardManager extends React.Component<Props> {
   // When a gesture didn't change the tab, we can restore the focused input with this
   private previouslyFocusedTextInput: number | null = null;
   private startTimestamp: number = 0;
+  private keyboardTimeout: NodeJS.Timer | null = null;
+
+  componentWillUnmount = () => {
+    if (this.keyboardTimeout !== null) {
+      global.clearTimeout(this.keyboardTimeout);
+    }
+  };
 
   private handlePageChangeStart = () => {
     const input = TextInput.State.currentlyFocusedField();
@@ -48,7 +55,7 @@ export default class KeyboardManager extends React.Component<Props> {
       // That's why when the interaction is shorter than 100ms we add delay so it won't hide once again.
       // Subtracting timestamps makes us sure the delay is executed only when needed.
       if (Date.now() - this.startTimestamp < 100) {
-        setTimeout(() => {
+        this.keyboardTimeout = setTimeout(() => {
           TextInput.State.focusTextInput(input);
           this.previouslyFocusedTextInput = null;
         }, 100);
