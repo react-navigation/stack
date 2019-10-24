@@ -14,11 +14,11 @@ export default class KeyboardManager extends React.Component<Props> {
   // When a gesture didn't change the tab, we can restore the focused input with this
   private previouslyFocusedTextInput: number | null = null;
   private startTimestamp: number = 0;
-  private keyboardTimeout: NodeJS.Timer | null = null;
+  private keyboardTimeout: NodeJS.Timeout | null = null;
 
   componentWillUnmount = () => {
     if (this.keyboardTimeout !== null) {
-      global.clearTimeout(this.keyboardTimeout);
+      clearTimeout(this.keyboardTimeout);
     }
   };
 
