@@ -8,6 +8,7 @@ import {
   StyleSheet,
   LayoutChangeEvent,
 } from 'react-native';
+import { ThemeContext, ThemeColors } from 'react-navigation';
 
 import TouchableItem from '../TouchableItem';
 
@@ -34,6 +35,9 @@ class HeaderBackButton extends React.PureComponent<Props, State> {
     }),
   };
 
+  static contextType = ThemeContext;
+  context!: React.ContextType<typeof ThemeContext>;
+
   state: State = {};
 
   private handleTextLayout = (e: LayoutChangeEvent) => {
@@ -46,7 +50,12 @@ class HeaderBackButton extends React.PureComponent<Props, State> {
   };
 
   private renderBackImage() {
-    const { backImage, backTitleVisible, tintColor } = this.props;
+    const { backImage, backTitleVisible } = this.props;
+
+    let { tintColor } = this.props;
+    if (!tintColor && Platform.OS === 'android') {
+      tintColor = ThemeColors[this.context].label;
+    }
 
     let title = this.getTitleText();
 
