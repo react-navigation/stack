@@ -913,7 +913,9 @@ export default class Card extends React.Component<Props> {
                     contentStyle,
                   ]}
                 >
-                  <StackAnimationProgressContext.Provider value={current}>
+                  <StackAnimationProgressContext.Provider
+                    value={next || current}
+                  >
                     <StackAnimationIsSwipingContext.Provider
                       value={this.isSwiping}
                     >
