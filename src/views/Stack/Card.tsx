@@ -558,7 +558,7 @@ export default class Card extends React.Component<Props> {
       cond(
         eq(this.direction, DIRECTION_HORIZONTAL),
         multiply(
-          this.gestureUntraversed,
+          this.velocityUntraversed,
           I18nManager.isRTL ? MINUS_ONE_NODE : TRUE_NODE
         ),
         multiply(this.velocityUntraversed, this.verticalGestureDirection)
