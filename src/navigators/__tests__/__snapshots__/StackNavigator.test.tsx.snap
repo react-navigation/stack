@@ -288,6 +288,7 @@ Array [
             }
           >
             <Text
+              numberOfLines={1}
               onLayout={[Function]}
               style={
                 Array [
@@ -627,6 +628,7 @@ Array [
             }
           >
             <Text
+              numberOfLines={1}
               onLayout={[Function]}
               style={
                 Array [
