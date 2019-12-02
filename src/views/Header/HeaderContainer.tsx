@@ -109,9 +109,7 @@ export default function HeaderContainer({
                       })
                   : undefined
               }
-              pointerEvents={
-                isFocused ? 'box-none' : 'none'
-              }
+              pointerEvents={isFocused ? 'box-none' : 'none'}
               accessibilityElementsHidden={!isFocused}
               importantForAccessibility={
                 isFocused ? 'auto' : 'no-hide-descendants'
