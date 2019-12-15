@@ -8,10 +8,11 @@ import { StackNavigationProp, StackNavigationOptions } from './vendor/types';
 
 export type NavigationStackScreenProps<
   Params = NavigationParams,
-  ScreenProps = unknown
+  ScreenProps = unknown,
+  NextParams = NavigationParams
 > = {
   theme: SupportedThemes;
-  navigation: StackNavigationProp<NavigationRoute, Params>;
+  navigation: StackNavigationProp<NavigationRoute, Params, NextParams>;
   screenProps: ScreenProps;
 };
 
