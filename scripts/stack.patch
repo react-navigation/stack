@@ -176,7 +176,7 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
  
  export type StackNavigationEventMap = {
    /**
-@@ -26,42 +41,29 @@
+@@ -26,42 +41,30 @@
    transitionEnd: { closing: boolean };
  };
  
