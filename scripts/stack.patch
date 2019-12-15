@@ -173,19 +173,19 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
 +  | 'didFocus'
 +  | 'willBlur'
 +  | 'didBlur';
-
+ 
  export type StackNavigationEventMap = {
    /**
 @@ -26,42 +41,29 @@
    transitionEnd: { closing: boolean };
  };
-
+ 
 -export type StackNavigationHelpers = NavigationHelpers<
 -  ParamListBase,
 -  StackNavigationEventMap
 ->;
 +export type StackNavigationHelpers = NavigationProp<NavigationStackState>
-
+ 
  export type StackNavigationProp<
 -  ParamList extends ParamListBase,
 -  RouteName extends keyof ParamList = string
@@ -219,7 +219,7 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
 -  popToTop(): void;
 +State = NavigationRoute,
 +Params = NavigationParams,
-+NextParams = NavigationParams,
++NextParams = NavigationParams
 +> = NavigationScreenProp<State, Params, NextParams> & {
 +  push: (
 +    routeName: string,
@@ -239,7 +239,7 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
 +    callback: NavigationEventCallback
 +  ) => NavigationEventSubscription;
  };
-
+ 
  export type Layout = { width: number; height: number };
 @@ -229,24 +231,27 @@
    /**
@@ -252,7 +252,7 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
     */
    styleInterpolator: StackHeaderStyleInterpolator;
  };
-
+ 
 -export type StackDescriptor = Descriptor<
 -  ParamListBase,
 -  string,
@@ -264,11 +264,11 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
 +  StackNavigationOptions,
 +  StackNavigationProp
 +>
-
+ 
  export type StackDescriptorMap = {
    [key: string]: StackDescriptor;
  };
-
+ 
 +export type TransitionCallbackProps = {
 +  closing: boolean;
 +};
@@ -283,7 +283,7 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
 +    onTransitionStart?: (props: TransitionCallbackProps) => void;
 +    onTransitionEnd?: (props: TransitionCallbackProps) => void;
    };
-
+ 
  export type StackNavigationConfig = {
 diff -ruN node_modules/@react-navigation/stack/src/views/Header/Header.tsx src/vendor/views/Header/Header.tsx
 --- node_modules/@react-navigation/stack/src/views/Header/Header.tsx	2019-12-14 22:46:16.000000000 +0100
@@ -292,7 +292,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/Header.tsx src/v
  import * as React from 'react';
 -import { StackActions } from '@react-navigation/routers';
 +import { StackActions } from 'react-navigation';
-
+ 
  import HeaderSegment from './HeaderSegment';
  import { StackHeaderProps, StackHeaderTitleProps } from '../../types';
 @@ -21,7 +21,7 @@
@@ -301,9 +301,9 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/Header.tsx src/v
        ? options.title
 -      : scene.route.name;
 +      : scene.route.routeName;
-
+ 
    let leftLabel;
-
+ 
 @@ -37,7 +37,7 @@
          ? o.headerTitle
          : o.title !== undefined
@@ -311,7 +311,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/Header.tsx src/v
 -        : previous.route.name;
 +        : previous.route.routeName;
    }
-
+ 
    return (
 @@ -55,11 +55,8 @@
        }
@@ -339,9 +339,9 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderBackButton
  import TouchableItem from '../TouchableItem';
  import { StackHeaderLeftButtonProps } from '../../types';
 +import useTheme from '../../../utils/useTheme';
-
+ 
  type Props = StackHeaderLeftButtonProps;
-
+ 
 diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderBackground.tsx src/vendor/views/Header/HeaderBackground.tsx
 --- node_modules/@react-navigation/stack/src/views/Header/HeaderBackground.tsx	2019-12-14 22:46:16.000000000 +0100
 +++ src/vendor/views/Header/HeaderBackground.tsx	2019-12-14 23:05:39.000000000 +0100
@@ -351,7 +351,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderBackground
  import Animated from 'react-native-reanimated';
 -import { useTheme } from '@react-navigation/native';
 +import useTheme from '../../../utils/useTheme';
-
+ 
  export default function HeaderBackground({ style, ...rest }: ViewProps) {
    const { colors } = useTheme();
 diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderContainer.tsx src/vendor/views/Header/HeaderContainer.tsx
@@ -369,7 +369,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderContainer.
 +import { NavigationContext } from 'react-navigation';
 +import { NavigationState as StackNavigationState } from 'react-navigation';
  import { EdgeInsets } from 'react-native-safe-area-context';
-
+ 
  import Header from './Header';
  import { forStatic } from '../../TransitionConfigs/HeaderStyleInterpolators';
  import {
@@ -387,7 +387,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderContainer.
 +          navigation: scene.descriptor.navigation as StackNavigationProp,
            styleInterpolator: isHeaderStatic ? forStatic : styleInterpolator,
          };
-
+ 
 diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderSegment.tsx src/vendor/views/Header/HeaderSegment.tsx
 --- node_modules/@react-navigation/stack/src/views/Header/HeaderSegment.tsx	2019-12-14 22:46:16.000000000 +0100
 +++ src/vendor/views/Header/HeaderSegment.tsx	2019-12-14 22:55:33.000000000 +0100
@@ -408,7 +408,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderSegment.ts
 +  scene: Scene<NavigationRoute>;
    styleInterpolator: StackHeaderStyleInterpolator;
  };
-
+ 
 diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderTitle.tsx src/vendor/views/Header/HeaderTitle.tsx
 --- node_modules/@react-navigation/stack/src/views/Header/HeaderTitle.tsx	2019-12-14 22:46:16.000000000 +0100
 +++ src/vendor/views/Header/HeaderTitle.tsx	2019-12-14 23:05:46.000000000 +0100
@@ -418,7 +418,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Header/HeaderTitle.tsx 
  import Animated from 'react-native-reanimated';
 -import { useTheme } from '@react-navigation/native';
 +import useTheme from '../../../utils/useTheme';
-
+ 
  type Props = TextProps & {
    tintColor?: string;
 diff -ruN node_modules/@react-navigation/stack/src/views/Stack/CardContainer.tsx src/vendor/views/Stack/CardContainer.tsx
@@ -442,7 +442,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/CardContainer.tsx
 +  StackHeaderMode,
 +  TransitionPreset,
 +} from '../../types';
-
+ 
  type Props = TransitionPreset & {
    index: number;
 diff -ruN node_modules/@react-navigation/stack/src/views/Stack/CardStack.tsx src/vendor/views/Stack/CardStack.tsx
@@ -455,7 +455,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/CardStack.tsx src
 -import { Route } from '@react-navigation/native';
 -import { StackNavigationState } from '@react-navigation/routers';
 +import { NavigationState as StackNavigationState } from 'react-navigation';
-
+ 
  import { getDefaultHeaderHeight } from '../Header/HeaderSegment';
  import { Props as HeaderContainerProps } from '../Header/HeaderContainer';
 @@ -22,7 +21,9 @@
@@ -471,7 +471,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/CardStack.tsx src
 @@ -350,6 +351,14 @@
                  ? 1
                  : 0;
-
+ 
 +            if (
 +              process.env.NODE_ENV !== 'production' &&
 +              scene.descriptor &&
@@ -493,7 +493,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
 -import { Route } from '@react-navigation/native';
 -import { StackActions, StackNavigationState } from '@react-navigation/routers';
 +import { StackActions, NavigationState as StackNavigationState, SceneView } from 'react-navigation';
-
+ 
  import CardStack from './CardStack';
  import KeyboardManager from '../KeyboardManager';
 @@ -11,6 +10,7 @@
@@ -510,12 +510,12 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
    descriptors: StackDescriptorMap;
 +  screenProps: unknown;
  };
-
+ 
  type State = {
 @@ -259,26 +260,42 @@
        return null;
      }
-
+ 
 -    return descriptor.render();
 +    const { navigation, getComponent } = descriptor;
 +    const SceneComponent = getComponent();
@@ -528,11 +528,11 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
 +      />
 +    );
    };
-
+ 
    private renderHeader = (props: HeaderContainerProps) => {
      return <HeaderContainer {...props} />;
    };
-
+ 
 -  private handleGoBack = ({ route }: { route: Route<string> }) => {
 -    const { state, navigation } = this.props;
 +  private handleTransitionComplete = ({
@@ -545,7 +545,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
 +      StackActions.completeTransition({ toChildKey: route.key })
 +    );
 +  };
-
+ 
 +  private handleGoBack = ({ route }: { route: Route<string> }) => {
      // This event will trigger when a gesture ends
      // We need to perform the transition before removing the route completely
@@ -557,7 +557,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
 +    // @ts-ignore
 +    this.props.navigation.dispatch(StackActions.pop({ key: route.key }));
    };
-
+ 
    private handleOpenRoute = ({ route }: { route: Route<string> }) => {
 +    this.handleTransitionComplete({ route });
      this.setState(state => ({
@@ -565,7 +565,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
          ? state.routes.filter(r => !state.replacingRouteKeys.includes(r.key))
 @@ -290,6 +307,13 @@
    };
-
+ 
    private handleCloseRoute = ({ route }: { route: Route<string> }) => {
 +    const index = this.state.routes.findIndex(r => r.key === route.key);
 +    // While closing route we need to point to the previous one assuming that
@@ -576,7 +576,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
 +
      // This event will trigger when the animation for closing the route ends
      // In this case, we need to clean up any state tracking the route and pop it immediately
-
+ 
 @@ -304,22 +328,26 @@
    private handleTransitionStart = (
      { route }: { route: Route<string> },
@@ -595,7 +595,7 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
 +      descriptor.options.onTransitionStart &&
 +      descriptor.options.onTransitionStart({ closing });
 +  }
-
+ 
    private handleTransitionEnd = (
      { route }: { route: Route<string> },
      closing: boolean
@@ -613,6 +613,6 @@ diff -ruN node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src
 +      descriptor.options.onTransitionStart &&
 +      descriptor.options.onTransitionStart({ closing });
 +  }
-
+ 
    render() {
      const {
