@@ -176,7 +176,7 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
  
  export type StackNavigationEventMap = {
    /**
-@@ -26,42 +41,29 @@
+@@ -26,42 +41,30 @@
    transitionEnd: { closing: boolean };
  };
  
@@ -218,16 +218,17 @@ diff -ruN node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.ts
 -   */
 -  popToTop(): void;
 +State = NavigationRoute,
-+Params = NavigationParams
-+> = NavigationScreenProp<State, Params> & {
++Params = NavigationParams,
++NextParams = NavigationParams
++> = NavigationScreenProp<State, Params, NextParams> & {
 +  push: (
 +    routeName: string,
-+    params?: NavigationParams,
++    params?: NextParams,
 +    action?: NavigationNavigateAction
 +  ) => boolean;
 +  replace: (
 +    routeName: string,
-+    params?: NavigationParams,
++    params?: NextParams,
 +    action?: NavigationNavigateAction
 +  ) => boolean;
 +  reset: (actions: NavigationAction[], index: number) => boolean;
