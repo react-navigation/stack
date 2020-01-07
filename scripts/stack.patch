@@ -1,6 +1,6 @@
 diff -Naur node_modules/@react-navigation/stack/src/index.tsx src/vendor/index.tsx
---- node_modules/@react-navigation/stack/src/index.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/index.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/index.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/index.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -3,11 +3,6 @@
  import * as TransitionSpecs from './TransitionConfigs/TransitionSpecs';
  import * as TransitionPresets from './TransitionConfigs/TransitionPresets';
@@ -28,8 +28,8 @@ diff -Naur node_modules/@react-navigation/stack/src/index.tsx src/vendor/index.t
    StackHeaderTitleProps,
    StackCardInterpolatedStyle,
 diff -Naur node_modules/@react-navigation/stack/src/navigators/createStackNavigator.tsx src/vendor/navigators/createStackNavigator.tsx
---- node_modules/@react-navigation/stack/src/navigators/createStackNavigator.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/navigators/createStackNavigator.tsx	1970-01-01 01:00:00.000000000 +0100
+--- node_modules/@react-navigation/stack/src/navigators/createStackNavigator.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/navigators/createStackNavigator.tsx	1969-12-31 19:00:00.000000000 -0500
 @@ -1,77 +0,0 @@
 -import * as React from 'react';
 -import {
@@ -109,8 +109,8 @@ diff -Naur node_modules/@react-navigation/stack/src/navigators/createStackNaviga
 -  typeof StackNavigator
 ->(StackNavigator);
 diff -Naur node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.tsx
---- node_modules/@react-navigation/stack/src/types.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/types.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/types.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/types.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -8,13 +8,28 @@
  } from 'react-native';
  import { EdgeInsets } from 'react-native-safe-area-context';
@@ -255,8 +255,8 @@ diff -Naur node_modules/@react-navigation/stack/src/types.tsx src/vendor/types.t
  
  export type StackNavigationConfig = {
 diff -Naur node_modules/@react-navigation/stack/src/views/Header/Header.tsx src/vendor/views/Header/Header.tsx
---- node_modules/@react-navigation/stack/src/views/Header/Header.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Header/Header.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Header/Header.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Header/Header.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -1,5 +1,5 @@
  import * as React from 'react';
 -import { StackActions } from '@react-navigation/routers';
@@ -297,8 +297,8 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Header/Header.tsx src/
        }
        styleInterpolator={styleInterpolator}
 diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderBackButton.tsx src/vendor/views/Header/HeaderBackButton.tsx
---- node_modules/@react-navigation/stack/src/views/Header/HeaderBackButton.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Header/HeaderBackButton.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Header/HeaderBackButton.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Header/HeaderBackButton.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -8,9 +8,9 @@
    StyleSheet,
    LayoutChangeEvent,
@@ -311,8 +311,8 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderBackButto
  
  type Props = StackHeaderLeftButtonProps;
 diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderBackground.tsx src/vendor/views/Header/HeaderBackground.tsx
---- node_modules/@react-navigation/stack/src/views/Header/HeaderBackground.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Header/HeaderBackground.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Header/HeaderBackground.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Header/HeaderBackground.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -1,6 +1,6 @@
  import * as React from 'react';
  import { Animated, StyleSheet, Platform, ViewProps } from 'react-native';
@@ -322,8 +322,8 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderBackgroun
  export default function HeaderBackground({ style, ...rest }: ViewProps) {
    const { colors } = useTheme();
 diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderContainer.tsx src/vendor/views/Header/HeaderContainer.tsx
---- node_modules/@react-navigation/stack/src/views/Header/HeaderContainer.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Header/HeaderContainer.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Header/HeaderContainer.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Header/HeaderContainer.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -1,16 +1,13 @@
  import * as React from 'react';
  import { View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
@@ -356,8 +356,8 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderContainer
          };
  
 diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderSegment.tsx src/vendor/views/Header/HeaderSegment.tsx
---- node_modules/@react-navigation/stack/src/views/Header/HeaderSegment.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Header/HeaderSegment.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Header/HeaderSegment.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Header/HeaderSegment.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -8,7 +8,7 @@
    ViewStyle,
  } from 'react-native';
@@ -377,8 +377,8 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderSegment.t
  };
  
 diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderTitle.tsx src/vendor/views/Header/HeaderTitle.tsx
---- node_modules/@react-navigation/stack/src/views/Header/HeaderTitle.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Header/HeaderTitle.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Header/HeaderTitle.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Header/HeaderTitle.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -1,6 +1,6 @@
  import * as React from 'react';
  import { Animated, StyleSheet, Platform, TextProps } from 'react-native';
@@ -388,9 +388,9 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Header/HeaderTitle.tsx
  type Props = TextProps & {
    tintColor?: string;
 diff -Naur node_modules/@react-navigation/stack/src/views/Stack/Card.tsx src/vendor/views/Stack/Card.tsx
---- node_modules/@react-navigation/stack/src/views/Stack/Card.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Stack/Card.tsx	2020-01-05 15:37:12.000000000 +0100
-@@ -452,7 +452,7 @@
+--- node_modules/@react-navigation/stack/src/views/Stack/Card.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Stack/Card.tsx	2020-01-07 01:25:42.000000000 -0500
+@@ -483,7 +483,7 @@
                    pointerEvents="none"
                  />
                ) : null}
@@ -399,9 +399,547 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Stack/Card.tsx src/ven
                  <StackGestureRefContext.Provider value={this.gestureRef}>
                    <CardAnimationContext.Provider value={animationContext}>
                      {children}
+diff -Naur node_modules/@react-navigation/stack/src/views/Stack/Card.tsx.orig src/vendor/views/Stack/Card.tsx.orig
+--- node_modules/@react-navigation/stack/src/views/Stack/Card.tsx.orig	1969-12-31 19:00:00.000000000 -0500
++++ src/vendor/views/Stack/Card.tsx.orig	2020-01-07 01:25:42.000000000 -0500
+@@ -0,0 +1,534 @@
++import * as React from 'react';
++import {
++  Animated,
++  View,
++  StyleSheet,
++  ViewProps,
++  StyleProp,
++  ViewStyle,
++  Platform,
++  InteractionManager,
++} from 'react-native';
++import {
++  PanGestureHandler,
++  State as GestureState,
++  PanGestureHandlerGestureEvent,
++} from 'react-native-gesture-handler';
++import { EdgeInsets } from 'react-native-safe-area-context';
++import Color from 'color';
++import StackGestureRefContext from '../../utils/GestureHandlerRefContext';
++import CardAnimationContext from '../../utils/CardAnimationContext';
++import getDistanceForDirection from '../../utils/getDistanceForDirection';
++import getInvertedMultiplier from '../../utils/getInvertedMultiplier';
++import memoize from '../../utils/memoize';
++import {
++  TransitionSpec,
++  StackCardStyleInterpolator,
++  GestureDirection,
++  Layout,
++} from '../../types';
++
++type Props = ViewProps & {
++  index: number;
++  closing?: boolean;
++  next?: Animated.AnimatedInterpolation;
++  current: Animated.AnimatedInterpolation;
++  gesture: Animated.Value;
++  layout: Layout;
++  insets: EdgeInsets;
++  gestureDirection: GestureDirection;
++  onOpen: () => void;
++  onClose: () => void;
++  onTransitionStart?: (props: { closing: boolean }) => void;
++  onGestureBegin?: () => void;
++  onGestureCanceled?: () => void;
++  onGestureEnd?: () => void;
++  children: React.ReactNode;
++  overlayEnabled: boolean;
++  shadowEnabled: boolean;
++  gestureEnabled: boolean;
++  gestureResponseDistance?: {
++    vertical?: number;
++    horizontal?: number;
++  };
++  gestureVelocityImpact: number;
++  transitionSpec: {
++    open: TransitionSpec;
++    close: TransitionSpec;
++  };
++  styleInterpolator: StackCardStyleInterpolator;
++  containerStyle?: StyleProp<ViewStyle>;
++  contentStyle?: StyleProp<ViewStyle>;
++};
++
++const GESTURE_VELOCITY_IMPACT = 0.3;
++
++const TRUE = 1;
++const FALSE = 0;
++
++/**
++ * The distance of touch start from the edge of the screen where the gesture will be recognized
++ */
++const GESTURE_RESPONSE_DISTANCE_HORIZONTAL = 50;
++const GESTURE_RESPONSE_DISTANCE_VERTICAL = 135;
++
++export default class Card extends React.Component<Props> {
++  static defaultProps = {
++    overlayEnabled: Platform.OS !== 'ios',
++    shadowEnabled: true,
++    gestureEnabled: true,
++    gestureVelocityImpact: GESTURE_VELOCITY_IMPACT,
++  };
++
++  componentDidMount() {
++    this.animate({ closing: this.props.closing });
++  }
++
++  componentDidUpdate(prevProps: Props) {
++    const { layout, gestureDirection, closing } = this.props;
++    const { width, height } = layout;
++
++    if (width !== prevProps.layout.width) {
++      this.layout.width.setValue(width);
++    }
++
++    if (height !== prevProps.layout.height) {
++      this.layout.height.setValue(height);
++    }
++
++    if (gestureDirection !== prevProps.gestureDirection) {
++      this.inverted.setValue(getInvertedMultiplier(gestureDirection));
++    }
++
++    if (
++      this.getAnimateToValue(this.props) !== this.getAnimateToValue(prevProps)
++    ) {
++      // We need to trigger the animation when route was closed
++      // Thr route might have been closed by a `POP` action or by a gesture
++      // When route was closed due to a gesture, the animation would've happened already
++      // It's still important to trigger the animation so that `onClose` is called
++      // If `onClose` is not called, cleanup step won't be performed for gestures
++      this.animate({ closing });
++    }
++  }
++
++  componentWillUnmount() {
++    this.handleEndInteraction();
++  }
++
++  private isClosing = new Animated.Value(FALSE);
++
++  private inverted = new Animated.Value(
++    getInvertedMultiplier(this.props.gestureDirection)
++  );
++
++  private layout = {
++    width: new Animated.Value(this.props.layout.width),
++    height: new Animated.Value(this.props.layout.height),
++  };
++
++  private isSwiping = new Animated.Value(FALSE);
++
++  private interactionHandle: number | undefined;
++
++  private animate = ({
++    closing,
++    velocity,
++  }: {
++    closing?: boolean;
++    velocity?: number;
++  }) => {
++    const {
++      gesture,
++      transitionSpec,
++      onOpen,
++      onClose,
++      onTransitionStart,
++    } = this.props;
++
++    const toValue = this.getAnimateToValue({
++      ...this.props,
++      closing,
++    });
++
++    const spec = closing ? transitionSpec.close : transitionSpec.open;
++
++    const animation =
++      spec.animation === 'spring' ? Animated.spring : Animated.timing;
++
++    this.setPointerEventsEnabled(!closing);
++    this.handleStartInteraction();
++
++    onTransitionStart?.({ closing: Boolean(closing) });
++    animation(gesture, {
++      ...spec.config,
++      velocity,
++      toValue,
++      useNativeDriver: true,
++      isInteraction: false,
++    }).start(({ finished }) => {
++      this.handleEndInteraction();
++
++      if (finished) {
++        if (closing) {
++          onClose();
++        } else {
++          onOpen();
++        }
++      }
++    });
++  };
++
++  private getAnimateToValue = ({
++    closing,
++    layout,
++    gestureDirection,
++  }: {
++    closing?: boolean;
++    layout: Layout;
++    gestureDirection: GestureDirection;
++  }) => {
++    if (!closing) {
++      return 0;
++    }
++
++    return getDistanceForDirection(layout, gestureDirection);
++  };
++
++  private setPointerEventsEnabled = (enabled: boolean) => {
++    const pointerEvents = enabled ? 'box-none' : 'none';
++
++    this.content.current &&
++      this.content.current.setNativeProps({ pointerEvents });
++  };
++
++  private content = React.createRef<View>();
++
++  private handleStartInteraction = () => {
++    if (this.interactionHandle === undefined) {
++      this.interactionHandle = InteractionManager.createInteractionHandle();
++    }
++  };
++
++  private handleEndInteraction = () => {
++    if (this.interactionHandle !== undefined) {
++      InteractionManager.clearInteractionHandle(this.interactionHandle);
++      this.interactionHandle = undefined;
++    }
++  };
++
++  private handleGestureStateChange = ({
++    nativeEvent,
++  }: PanGestureHandlerGestureEvent) => {
++    const {
++      layout,
++      onGestureBegin,
++      onGestureCanceled,
++      onGestureEnd,
++      gestureDirection,
++      gestureVelocityImpact,
++    } = this.props;
++
++    switch (nativeEvent.state) {
++      case GestureState.BEGAN:
++        this.isSwiping.setValue(TRUE);
++        this.handleStartInteraction();
++        onGestureBegin?.();
++        break;
++      case GestureState.CANCELLED:
++        this.isSwiping.setValue(FALSE);
++        this.handleEndInteraction();
++        onGestureCanceled?.();
++        break;
++      case GestureState.END: {
++        this.isSwiping.setValue(FALSE);
++
++        let distance;
++        let translation;
++        let velocity;
++
++        if (
++          gestureDirection === 'vertical' ||
++          gestureDirection === 'vertical-inverted'
++        ) {
++          distance = layout.height;
++          translation = nativeEvent.translationY;
++          velocity = nativeEvent.velocityY;
++        } else {
++          distance = layout.width;
++          translation = nativeEvent.translationX;
++          velocity = nativeEvent.velocityX;
++        }
++
++        const closing =
++          Math.abs(translation + velocity * gestureVelocityImpact) >
++          distance / 2
++            ? velocity !== 0 || translation !== 0
++            : false;
++
++        this.animate({ closing, velocity });
++        onGestureEnd?.();
++        break;
++      }
++    }
++  };
++
++  // Memoize this to avoid extra work on re-render
++  private getInterpolatedStyle = memoize(
++    (
++      styleInterpolator: StackCardStyleInterpolator,
++      index: number,
++      current: Animated.AnimatedInterpolation,
++      next: Animated.AnimatedInterpolation | undefined,
++      layout: Layout,
++      insetTop: number,
++      insetRight: number,
++      insetBottom: number,
++      insetLeft: number
++    ) =>
++      styleInterpolator({
++        index,
++        current: { progress: current },
++        next: next && { progress: next },
++        closing: this.isClosing,
++        swiping: this.isSwiping,
++        inverted: this.inverted,
++        layouts: {
++          screen: layout,
++        },
++        insets: {
++          top: insetTop,
++          right: insetRight,
++          bottom: insetBottom,
++          left: insetLeft,
++        },
++      })
++  );
++
++  // Keep track of the animation context when deps changes.
++  private getCardAnimationContext = memoize(
++    (
++      index: number,
++      current: Animated.AnimatedInterpolation,
++      next: Animated.AnimatedInterpolation | undefined,
++      layout: Layout,
++      insetTop: number,
++      insetRight: number,
++      insetBottom: number,
++      insetLeft: number
++    ) => ({
++      index,
++      current: { progress: current },
++      next: next && { progress: next },
++      closing: this.isClosing,
++      swiping: this.isSwiping,
++      inverted: this.inverted,
++      layouts: {
++        screen: layout,
++      },
++      insets: {
++        top: insetTop,
++        right: insetRight,
++        bottom: insetBottom,
++        left: insetLeft,
++      },
++    })
++  );
++
++  private gestureActivationCriteria() {
++    const { layout, gestureDirection, gestureResponseDistance } = this.props;
++
++    const distance =
++      gestureDirection === 'vertical' ||
++      gestureDirection === 'vertical-inverted'
++        ? gestureResponseDistance?.vertical !== undefined
++          ? gestureResponseDistance.vertical
++          : GESTURE_RESPONSE_DISTANCE_VERTICAL
++        : gestureResponseDistance?.horizontal !== undefined
++        ? gestureResponseDistance.horizontal
++        : GESTURE_RESPONSE_DISTANCE_HORIZONTAL;
++
++    if (gestureDirection === 'vertical') {
++      return {
++        maxDeltaX: 15,
++        minOffsetY: 5,
++        hitSlop: { bottom: -layout.height + distance },
++      };
++    } else if (gestureDirection === 'vertical-inverted') {
++      return {
++        maxDeltaX: 15,
++        minOffsetY: -5,
++        hitSlop: { top: -layout.height + distance },
++      };
++    } else {
++      const hitSlop = -layout.width + distance;
++      const invertedMultiplier = getInvertedMultiplier(gestureDirection);
++
++      if (invertedMultiplier === 1) {
++        return {
++          minOffsetX: 5,
++          maxDeltaY: 20,
++          hitSlop: { right: hitSlop },
++        };
++      } else {
++        return {
++          minOffsetX: -5,
++          maxDeltaY: 20,
++          hitSlop: { left: hitSlop },
++        };
++      }
++    }
++  }
++
++  private gestureRef: React.Ref<PanGestureHandler> = React.createRef();
++
++  render() {
++    const {
++      styleInterpolator,
++      index,
++      current,
++      gesture,
++      next,
++      layout,
++      insets,
++      overlayEnabled,
++      shadowEnabled,
++      gestureEnabled,
++      gestureDirection,
++      children,
++      containerStyle: customContainerStyle,
++      contentStyle,
++      ...rest
++    } = this.props;
++
++    const interpolatedStyle = this.getInterpolatedStyle(
++      styleInterpolator,
++      index,
++      current,
++      next,
++      layout,
++      insets.top,
++      insets.right,
++      insets.bottom,
++      insets.left
++    );
++
++    const animationContext = this.getCardAnimationContext(
++      index,
++      current,
++      next,
++      layout,
++      insets.top,
++      insets.right,
++      insets.bottom,
++      insets.left
++    );
++
++    const {
++      containerStyle,
++      cardStyle,
++      overlayStyle,
++      shadowStyle,
++    } = interpolatedStyle;
++
++    const handleGestureEvent = gestureEnabled
++      ? Animated.event(
++          [
++            {
++              nativeEvent:
++                gestureDirection === 'vertical' ||
++                gestureDirection === 'vertical-inverted'
++                  ? { translationY: gesture }
++                  : { translationX: gesture },
++            },
++          ],
++          { useNativeDriver: true }
++        )
++      : undefined;
++
++    const { backgroundColor } = StyleSheet.flatten(contentStyle || {});
++    const isTransparent = backgroundColor
++      ? Color(backgroundColor).alpha() === 0
++      : false;
++
++    return (
++      <View pointerEvents="box-none" {...rest}>
++        {overlayEnabled && overlayStyle ? (
++          <Animated.View
++            pointerEvents="none"
++            style={[styles.overlay, overlayStyle]}
++          />
++        ) : null}
++        <Animated.View
++          style={[styles.container, containerStyle, customContainerStyle]}
++          pointerEvents="box-none"
++        >
++          <PanGestureHandler
++            ref={this.gestureRef}
++            enabled={layout.width !== 0 && gestureEnabled}
++            onGestureEvent={handleGestureEvent}
++            onHandlerStateChange={this.handleGestureStateChange}
++            {...this.gestureActivationCriteria()}
++          >
++            <Animated.View style={[styles.container, cardStyle]}>
++              {shadowEnabled && shadowStyle && !isTransparent ? (
++                <Animated.View
++                  style={[
++                    styles.shadow,
++                    gestureDirection === 'horizontal'
++                      ? styles.shadowHorizontal
++                      : styles.shadowVertical,
++                    shadowStyle,
++                  ]}
++                  pointerEvents="none"
++                />
++              ) : null}
++              <View ref={this.content} style={[styles.content, contentStyle]}>
++                <StackGestureRefContext.Provider value={this.gestureRef}>
++                  <CardAnimationContext.Provider value={animationContext}>
++                    {children}
++                  </CardAnimationContext.Provider>
++                </StackGestureRefContext.Provider>
++              </View>
++            </Animated.View>
++          </PanGestureHandler>
++        </Animated.View>
++      </View>
++    );
++  }
++}
++
++const styles = StyleSheet.create({
++  container: {
++    flex: 1,
++  },
++  content: {
++    flex: 1,
++    overflow: 'hidden',
++  },
++  overlay: {
++    ...StyleSheet.absoluteFillObject,
++    backgroundColor: '#000',
++  },
++  shadow: {
++    position: 'absolute',
++    backgroundColor: '#fff',
++    shadowRadius: 5,
++    shadowColor: '#000',
++    shadowOpacity: 0.3,
++  },
++  shadowHorizontal: {
++    top: 0,
++    left: 0,
++    bottom: 0,
++    width: 3,
++    shadowOffset: { width: -1, height: 1 },
++  },
++  shadowVertical: {
++    top: 0,
++    left: 0,
++    right: 0,
++    height: 3,
++    shadowOffset: { width: 1, height: -1 },
++  },
++});
 diff -Naur node_modules/@react-navigation/stack/src/views/Stack/CardContainer.tsx src/vendor/views/Stack/CardContainer.tsx
---- node_modules/@react-navigation/stack/src/views/Stack/CardContainer.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Stack/CardContainer.tsx	2020-01-05 15:37:43.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Stack/CardContainer.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Stack/CardContainer.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -1,11 +1,17 @@
  import * as React from 'react';
  import { Animated, View, StyleSheet, StyleProp, ViewStyle } from 'react-native';
@@ -433,8 +971,8 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Stack/CardContainer.ts
      >
        <View style={styles.container}>
 diff -Naur node_modules/@react-navigation/stack/src/views/Stack/CardStack.tsx src/vendor/views/Stack/CardStack.tsx
---- node_modules/@react-navigation/stack/src/views/Stack/CardStack.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Stack/CardStack.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Stack/CardStack.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Stack/CardStack.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -11,8 +11,7 @@
  import { EdgeInsets } from 'react-native-safe-area-context';
  // eslint-disable-next-line import/no-unresolved
@@ -454,8 +992,8 @@ diff -Naur node_modules/@react-navigation/stack/src/views/Stack/CardStack.tsx sr
    StackHeaderMode,
    StackCardMode,
 diff -Naur node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx src/vendor/views/Stack/StackView.tsx
---- node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx	2020-01-05 15:33:46.000000000 +0100
-+++ src/vendor/views/Stack/StackView.tsx	2020-01-05 15:37:12.000000000 +0100
+--- node_modules/@react-navigation/stack/src/views/Stack/StackView.tsx	2020-01-06 23:22:26.000000000 -0500
++++ src/vendor/views/Stack/StackView.tsx	2020-01-07 01:25:42.000000000 -0500
 @@ -1,8 +1,11 @@
  import * as React from 'react';
  import { Platform } from 'react-native';
