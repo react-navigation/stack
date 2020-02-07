@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
       },
       android: {
         fontSize: 20,
-        fontWeight: '500',
+        fontWeight: 'bold',
         color: 'rgba(0, 0, 0, .9)',
         marginHorizontal: 16,
       },
