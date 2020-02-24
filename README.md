@@ -1,3 +1,7 @@
+This package has been moved to https://github.com/react-navigation/react-navigation/tree/master/packages/stack
+
+---
+
 # React Navigation Stack
 
 [![Build Status][build-badge]][build]
